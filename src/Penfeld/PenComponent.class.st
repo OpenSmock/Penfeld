@@ -1,5 +1,5 @@
 Class {
-	#name : #PenModel,
+	#name : #PenComponent,
 	#superclass : #Object,
 	#traits : 'TPenIdentifiable',
 	#classTraits : 'TPenIdentifiable classTrait',
@@ -11,31 +11,31 @@ Class {
 }
 
 { #category : #'instance creation' }
-PenModel class >> key: aSymbol [
+PenComponent class >> key: aSymbol [
 	^ self basicNew initialize; key: aSymbol
 ]
 
 { #category : #'instance creation' }
-PenModel class >> new [
+PenComponent class >> new [
 	^ self key: #dock
 ]
 
 { #category : #accessing }
-PenModel >> description [
+PenComponent >> description [
 	^ description
 ]
 
 { #category : #accessing }
-PenModel >> description: anObject [
+PenComponent >> description: anObject [
 	description := anObject
 ]
 
 { #category : #accessing }
-PenModel >> key [
+PenComponent >> key [
 	^ key
 ]
 
 { #category : #accessing }
-PenModel >> key: anObject [
+PenComponent >> key: anObject [
 	key := anObject
 ]

@@ -10,10 +10,10 @@ PenBlocContainerDresser >> doAfterApplyStyle [
 
 	"Position"
 	var := self model position.
-	var ifNotNil: [ self model interactor relocate: var ].
+	var ifNotNil: [ self model engineElement relocate: var ].
 
 	"Width and Height"
-	self model interactor constraintsDo: [ :c |
+	self model engineElement constraintsDo: [ :c |
 		self model width ifNotNil: [ c horizontal exact: self model width pref ].
 		self model height ifNotNil: [ c vertical exact: self model height pref ] 
 	]
@@ -21,16 +21,16 @@ PenBlocContainerDresser >> doAfterApplyStyle [
 
 { #category : #dressing }
 PenBlocContainerDresser >> doBeforeApplyStyle [
-	self model interactor layout: BlBasicLayout new.
-	self model interactor constraintsDo: [ :c |
+	self model engineElement layout: BlBasicLayout new.
+	self model engineElement constraintsDo: [ :c |
 		self model width ifNil: [ c horizontal matchParent ].
 		self model height ifNil: [ c vertical matchParent ] 
 	]
 ]
 
 { #category : #initialization }
-PenBlocContainerDresser >> initInteractor [
-	self model interactor: BlElement new.
+PenBlocContainerDresser >> initEngineElement [
+	self model engineElement: BlElement new.
 	(self model layout isKindOf: PenLinearLayout)
 		ifTrue: [ self model layout isHorizontal 
 			ifTrue: [ BlLinearLayout horizontal ]
@@ -38,5 +38,5 @@ PenBlocContainerDresser >> initInteractor [
 		ifFalse: [  ].
 		
 	self model elements do: [ :each |
-		self model interactor addChild: each interactor ]
+		self model engineElement addChild: each engineElement ]
 ]

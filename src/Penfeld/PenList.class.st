@@ -21,9 +21,11 @@ PenList >> addAllItems: aList [
 
 { #category : #items }
 PenList >> addItem: anItem [
+	| eventBinding |
 	items add: anItem.
 	anItem parent: self.
-	anItem addAutoInstalledCallback: [ self select: anItem ] for: PenEventSymbol action
+	eventBinding := anItem addCallback: [ self select: anItem ] for: PenEventSymbol action.
+	eventBinding autoBind
 ]
 
 { #category : #accessing }
@@ -155,6 +157,13 @@ PenList >> selectedIndexList: anObject [
 { #category : #accessing }
 PenList >> selection [
 	^ self selectedIndexList 
+]
+
+{ #category : #events }
+PenList >> selectionChangedEvent [
+	self eventBindings do: [ :eventBinding |
+		(eventBinding symbol = PenEventSymbol selectionChanged)
+			ifTrue: [ eventBinding callback value ]].
 ]
 
 { #category : #accessing }

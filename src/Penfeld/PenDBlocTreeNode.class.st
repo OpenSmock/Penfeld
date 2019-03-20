@@ -16,7 +16,7 @@ PenDBlocTreeNode class >> styleSelector [
 PenDBlocTreeNode >> applyStyle: aStyle [
 	| background |
 	background := self getBackground: aStyle.
-	background ifNotNil: [ self model interactor background: background ].
+	background ifNotNil: [ self model engineElement background: background ].
 ]
 
 { #category : #rendering }
@@ -25,17 +25,17 @@ PenDBlocTreeNode >> doBeforeApplyStyle [
 	points := self model isExpanded
 		ifTrue: [ { 0@0. 8@0. 4@6 } ]
 		ifFalse: [ { 0@0. 6@4. 0@8 } ].
-	icon := self model interactor childNamed: #icon.
+	icon := self model engineElement childNamed: #icon.
 	icon geometry: (BlPolygon vertices: points).
 ]
 
 { #category : #initialization }
-PenDBlocTreeNode >> initInteractor [
+PenDBlocTreeNode >> initEngineElement [
 	| points icon |
-	self model interactor: BlElement new.
-	self model interactor layout: BlLinearLayout horizontal.
+	self model engineElement: BlElement new.
+	self model engineElement layout: BlLinearLayout horizontal.
 	
-	self model interactor addChild: (BlElement new size: ((self model deepLevel - 1) * 10) @ 1) as: #blank.
+	self model engineElement addChild: (BlElement new size: ((self model deepLevel - 1) * 10) @ 1) as: #blank.
 	
 	points := self model isExpanded
 		ifTrue: [ { 0@0. 8@0. 4@6 } ]
@@ -47,15 +47,15 @@ PenDBlocTreeNode >> initInteractor [
 	icon border: BlBorder empty.
 	icon margin: (BlInsets all: 3).
 	icon constraintsDo: [ :c | c linear vertical alignCenter ].
-	self model interactor addChild: icon as: #icon.
+	self model engineElement addChild: icon as: #icon.
 	
-	self model interactor addChild: self model content interactor .
-	self model interactor constraintsDo: [ :c |
+	self model engineElement addChild: self model content engineElement .
+	self model engineElement constraintsDo: [ :c |
 		c horizontal matchParent.
 		c vertical fitContent].
 	
 	iconPushed := false.
-	icon := self model interactor childNamed: #icon.
+	icon := self model engineElement childNamed: #icon.
 	icon when: BlMouseDownEvent do: [ :e | self whenMouseDownEventOnIcon ].
 	icon when: BlMouseUpEvent do: [ :e | self whenMouseUpEventOnIcon ].
 	icon when: BlMouseLeaveEvent do: [ :e | self whenMouseLeaveEventOnIcon ].

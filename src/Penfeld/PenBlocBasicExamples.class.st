@@ -11,14 +11,14 @@ PenBlocBasicExamples class >> example10ComboBox [
 	10 timesRepeat: [ 
 		model add: (
 			PenComboBox new 
-				addAllItems: (PenModel withAllSubclasses collect: [ :c | PenLabel new 
+				addAllItems: (PenComponent withAllSubclasses collect: [ :c | PenLabel new 
 					name: c name; 
 					dresser: PenBlocLabel new ]);
 				sortingBlock: [ :a :b | a text < b text ];
 				yourself)].
 	model build.
 	self 
-		openInWindow: model interactor  
+		openInWindow: model engineElement  
 		named: self name
 		extent: 300@300
 ]

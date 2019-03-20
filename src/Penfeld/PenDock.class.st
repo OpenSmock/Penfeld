@@ -1,6 +1,6 @@
 Class {
 	#name : #PenDock,
-	#superclass : #PenModel,
+	#superclass : #PenComponent,
 	#classTraits : 'TPenIndexable classTrait + TPenPositionable classTrait',
 	#instVars : [
 		'docks'

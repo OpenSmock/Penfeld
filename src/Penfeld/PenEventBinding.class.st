@@ -3,7 +3,7 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'callback',
-		'autoInstall'
+		'autoBound'
 	],
 	#category : #'Penfeld-Events'
 }
@@ -25,13 +25,8 @@ PenEventBinding class >> forAll: aList do: aBlock [
 ]
 
 { #category : #accessing }
-PenEventBinding >> autoInstall [
-	autoInstall := true
-]
-
-{ #category : #accessing }
-PenEventBinding >> autoInstalled [
-	^ autoInstall
+PenEventBinding >> autoBind [
+	autoBound := true
 ]
 
 { #category : #accessing }
@@ -47,17 +42,17 @@ PenEventBinding >> callback: aBlock [
 { #category : #initialization }
 PenEventBinding >> initialize [
 	super initialize.
-	autoInstall := false
+	autoBound := false
+]
+
+{ #category : #accessing }
+PenEventBinding >> isAutoBound [
+	^ autoBound
 ]
 
 { #category : #testing }
 PenEventBinding >> isCompositeEvent [
 	^ false
-]
-
-{ #category : #testing }
-PenEventBinding >> isInstalled [
-	^ autoInstall 
 ]
 
 { #category : #testing }

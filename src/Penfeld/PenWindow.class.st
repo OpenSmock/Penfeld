@@ -31,7 +31,7 @@ PenWindow >> addDock: aDock [
 
 { #category : #opening }
 PenWindow >> close [
-	self interactor close
+	self engineElement close
 ]
 
 { #category : #opening }
@@ -57,12 +57,12 @@ PenWindow >> displayViewDock: aDock [
 			ifNil: [ self height: 600 asLength ]
 	].
 	
-	self interactor: (BlSpace new
+	self engineElement: (BlSpace new
 		extent: self width pref @ self height pref;
 		title: self title;
 		yourself).
-	self interactor root addChild: element interactor.
-	self interactor show
+	self engineElement root addChild: element engineElement.
+	self engineElement show
 ]
 
 { #category : #accessing }

@@ -6,21 +6,21 @@ Class {
 
 { #category : #styling }
 PenBlocMorphicWindowDresser >> backgroundColor: aValue [
-	self model interactor root background: aValue.
+	self model engineElement root background: aValue.
 ]
 
 { #category : #dressing }
-PenBlocMorphicWindowDresser >> initInteractor [
+PenBlocMorphicWindowDresser >> initEngineElement [
 	| element |
 	element := self model docks first view displayComponent.
 
-	self model interactor: (BlSpace new
+	self model engineElement: (BlSpace new
 		extent: self model width pref @ self model height pref;
 		title: self model title;
 		yourself).
 		
-	self model interactor root addChild: element interactor.
-	self model interactor show
+	self model engineElement root addChild: element engineElement.
+	self model engineElement show
 		
 	
 ]

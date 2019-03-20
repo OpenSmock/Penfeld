@@ -50,7 +50,7 @@ PenRadioGroup >> radioButtons [
 
 { #category : #events }
 PenRadioGroup >> selectionChangedEvent [
-	self callbacks do: [ :eventBinding |
+	self eventBindings do: [ :eventBinding |
 		(eventBinding symbol = PenEventSymbol selectionChanged)
 			ifTrue: [ eventBinding callback value ]].
 ]

@@ -1,6 +1,6 @@
 Class {
 	#name : #PenWorkspace,
-	#superclass : #PenModel,
+	#superclass : #PenComponent,
 	#instVars : [
 		'windows'
 	],

@@ -5,12 +5,12 @@ Class {
 }
 
 { #category : #dressing }
-PenBlocRadioGroupDresser >> initInteractor [
-	self model interactor: BlElement new.
-	self model interactor layout: BlLinearLayout vertical.
-	self model interactor constraintsDo: [ :c |
+PenBlocRadioGroupDresser >> initEngineElement [
+	self model engineElement: BlElement new.
+	self model engineElement layout: BlLinearLayout vertical.
+	self model engineElement constraintsDo: [ :c |
 		c horizontal fitContent.
 		c vertical fitContent ].
 	self model radioButtons do: [ :each |
-		self model interactor addChild: each interactor ]
+		self model engineElement addChild: each engineElement ]
 ]

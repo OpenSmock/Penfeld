@@ -13,7 +13,7 @@ PenAbstractDresser >> dress [
 ]
 
 { #category : #dressing }
-PenAbstractDresser >> initInteractor [
+PenAbstractDresser >> initEngineElement [
 	^ self subclassResponsibility 
 ]
 

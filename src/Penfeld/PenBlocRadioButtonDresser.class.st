@@ -12,7 +12,7 @@ Class {
 { #category : #styling }
 PenBlocRadioButtonDresser >> backgroundColor: aValue [
 	| box |
-	box := self model interactor childNamed: #box.
+	box := self model engineElement childNamed: #box.
 	box background: aValue
 ]
 
@@ -44,14 +44,14 @@ PenBlocRadioButtonDresser >> border: aValue [
 	].
 
 	border := borderBuilder build.
-	(self model interactor childNamed: #box) border: border.
-	(self model interactor childNamed: #check) background: paint.
+	(self model engineElement childNamed: #box) border: border.
+	(self model engineElement childNamed: #check) background: paint.
 ]
 
 { #category : #styling }
 PenBlocRadioButtonDresser >> color: aValue [
 	| textElement |
-	textElement := self model interactor childNamed: #text
+	textElement := self model engineElement childNamed: #text
 		ifFound: [ :anElement | anElement ]
 		ifNone: [ ^ self ].
 	textElement text foreground: aValue
@@ -63,25 +63,25 @@ PenBlocRadioButtonDresser >> doAfterApplyStyle [
 
 	"Position"
 	var := self model position.
-	var ifNotNil: [ self model interactor relocate: var ].
+	var ifNotNil: [ self model engineElement relocate: var ].
 
 	"Width"
 	var := self model width.
-	var ifNotNil: [ self model interactor width: var pref ].
+	var ifNotNil: [ self model engineElement width: var pref ].
 	
 	"Height"
 	var := self model height.
-	var ifNotNil: [ self model interactor height: var pref ].
+	var ifNotNil: [ self model engineElement height: var pref ].
 	
 	"Apply roped text"
-	self model interactor childNamed: #text
+	self model engineElement childNamed: #text
 		ifFound: [ :anElement | anElement text: ropedText ]
 		ifNone: [].
 ]
 
 { #category : #dressing }
 PenBlocRadioButtonDresser >> doBeforeApplyStyle [ 
-	(self model interactor childNamed: #check) visibility: (self model value
+	(self model engineElement childNamed: #check) visibility: (self model value
 		ifTrue: [ BlVisibility visible ]
 		ifFalse: [ BlVisibility gone ]).
 		
@@ -101,7 +101,7 @@ PenBlocRadioButtonDresser >> fontSize: aValue [
 
 	ropedText fontSize: size.
 	
-	box := self model interactor childNamed: #box.
+	box := self model engineElement childNamed: #box.
 	box geometry: (BlEllipse diameter: size - 3).
 	box size: (size - 3) asPoint.
 	
@@ -111,10 +111,10 @@ PenBlocRadioButtonDresser >> fontSize: aValue [
 ]
 
 { #category : #dressing }
-PenBlocRadioButtonDresser >> initInteractor [
+PenBlocRadioButtonDresser >> initEngineElement [
 	| box check layout |
 	
-	self model interactor: BlElement new.
+	self model engineElement: BlElement new.
 	self model isLabelAfter
 		ifTrue: [ 
 			layout := BlLinearLayout horizontal leftToRight.
@@ -124,8 +124,8 @@ PenBlocRadioButtonDresser >> initInteractor [
 			layout := BlLinearLayout horizontal rightToLeft.
 			layout alignTopRight.
 		].
-	self model interactor layout: layout.
-	self model interactor constraintsDo: [ :c |
+	self model engineElement layout: layout.
+	self model engineElement constraintsDo: [ :c |
 		c horizontal fitContent.
 		c vertical fitContent ].
 	
@@ -142,13 +142,13 @@ PenBlocRadioButtonDresser >> initInteractor [
 	box geometry: (BlEllipse diameter: 12).
 	box size: 12@12.
 	
-	self model interactor addChild: box as: #box.
-	self model interactor addChild: BlTextElement new as: #text.
+	self model engineElement addChild: box as: #box.
+	self model engineElement addChild: BlTextElement new as: #text.
 	
 	pushed := false.
-	self model interactor when: BlMouseDownEvent do: [ :e | self whenMouseDownEvent ].
-	self model interactor when: BlMouseUpEvent do: [ :e | self whenMouseUpEvent ].
-	self model interactor when: BlMouseLeaveEvent do: [ :e | self whenMouseLeaveEvent ].
+	self model engineElement when: BlMouseDownEvent do: [ :e | self whenMouseDownEvent ].
+	self model engineElement when: BlMouseUpEvent do: [ :e | self whenMouseUpEvent ].
+	self model engineElement when: BlMouseLeaveEvent do: [ :e | self whenMouseLeaveEvent ].
 ]
 
 { #category : #events }

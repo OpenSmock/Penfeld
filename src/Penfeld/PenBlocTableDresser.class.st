@@ -10,7 +10,7 @@ Class {
 
 { #category : #styling }
 PenBlocTableDresser >> backgroundColor: aValue [
-	self model interactor background: aValue
+	self model engineElement background: aValue
 ]
 
 { #category : #styling }
@@ -36,26 +36,26 @@ PenBlocTableDresser >> border: aValue [
 			]
 		]
 	].
-	self model interactor border: borderBuilder build.
+	self model engineElement border: borderBuilder build.
 ]
 
 { #category : #dressing }
 PenBlocTableDresser >> doBeforeApplyStyle [
 	| listElements |
 	listElements := self model items collect: [ :item | 
-		item interactor ].
-	listElements addFirst: self model header interactor.
+		item engineElement ].
+	listElements addFirst: self model header engineElement.
 	dataSource elements: listElements.
-	self model interactor dataSource: dataSource.
+	self model engineElement dataSource: dataSource.
 	dataSource notifyChanged
 ]
 
 { #category : #dressing }
-PenBlocTableDresser >> initInteractor [
+PenBlocTableDresser >> initEngineElement [
 	dataSource := PenInfiniteDataSource new.
 	
-	self model interactor: PenInfiniteListElement new.
-	self model interactor constraintsDo: [ :c |
+	self model engineElement: PenInfiniteListElement new.
+	self model engineElement constraintsDo: [ :c |
 		c horizontal matchParent.
 		c vertical matchParent ].
 	
@@ -63,9 +63,9 @@ PenBlocTableDresser >> initInteractor [
 
 	pushedItem := false.
 	self model items do: [ :item |
-		item interactor when: BlMouseDownEvent do: [ :e | self whenMouseDownEventOn: item ].
-		item interactor when: BlMouseUpEvent do: [ :e | self whenMouseUpEventOn: item ].
-		item interactor when: BlMouseLeaveEvent do: [ :e | self whenMouseLeaveEventOn: item ].].
+		item engineElement when: BlMouseDownEvent do: [ :e | self whenMouseDownEventOn: item ].
+		item engineElement when: BlMouseUpEvent do: [ :e | self whenMouseUpEventOn: item ].
+		item engineElement when: BlMouseLeaveEvent do: [ :e | self whenMouseLeaveEventOn: item ].].
 ]
 
 { #category : #events }

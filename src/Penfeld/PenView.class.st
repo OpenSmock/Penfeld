@@ -1,6 +1,6 @@
 Class {
 	#name : #PenView,
-	#superclass : #PenModel,
+	#superclass : #PenComponent,
 	#instVars : [
 		'dock',
 		'displayComponent'

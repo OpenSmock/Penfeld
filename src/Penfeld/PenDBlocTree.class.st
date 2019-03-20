@@ -16,25 +16,25 @@ PenDBlocTree class >> styleSelector [
 PenDBlocTree >> applyStyle: aStyle [
 	| background |
 	background := self getBackground: aStyle.
-	background ifNotNil: [ self model interactor background: background ].
+	background ifNotNil: [ self model engineElement background: background ].
 ]
 
 { #category : #dressing }
 PenDBlocTree >> doBeforeApplyStyle [
 	| listElements |
 	listElements := self model getExpandedNodesAsList collect: [ :item | 
-		item interactor ].
+		item engineElement ].
 	dataSource elements: listElements.
 	dataSource notifyChanged
 ]
 
 { #category : #initialization }
-PenDBlocTree >> initInteractor [
-	self model interactor: PFInfiniteListElement new.
-	self model interactor constraintsDo: [ :c |
+PenDBlocTree >> initEngineElement [
+	self model engineElement: PFInfiniteListElement new.
+	self model engineElement constraintsDo: [ :c |
 		c horizontal matchParent.
 		c vertical matchParent ].
 	
 	dataSource := PFInfiniteDataSource new.
-	self model interactor dataSource: dataSource.
+	self model engineElement dataSource: dataSource.
 ]

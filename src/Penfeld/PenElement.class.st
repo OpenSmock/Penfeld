@@ -6,7 +6,7 @@ Class {
 
 { #category : #events }
 PenElement >> actionEvent [
-	callbacks do: [ :eventBinding |
+	eventBindings do: [ :eventBinding |
 		(eventBinding symbol = PenEventSymbol action)
 			ifTrue: [ eventBinding callback value ]] 
 ]
@@ -14,7 +14,7 @@ PenElement >> actionEvent [
 { #category : #events }
 PenElement >> clickEvent: anEvent [
 	| list |
-	list := callbacks 
+	list := eventBindings 
 		at: PenEventSymbol click
 		ifAbsent: [ ^nil ].
 	list do: [ :callback |
@@ -23,7 +23,9 @@ PenElement >> clickEvent: anEvent [
 
 { #category : #'api - events' }
 PenElement >> onActionDo: aBlock [
-	self addAutoInstalledCallback: aBlock for: PenEventSymbol action
+	| eventBinding |
+	eventBinding := self addCallback: aBlock for: PenEventSymbol action.
+	eventBinding autoBind
 ]
 
 { #category : #'api - events' }

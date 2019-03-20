@@ -13,7 +13,7 @@ PenBlocTreeExamples class >> example [
 	model sortingBlock: [ :a :b | a name < b name ].
 	model build.
 	self
-		openInWindow: model interactor 
+		openInWindow: model engineElement 
 		named: self name 
 		extent: 300@500 
 ]
@@ -28,7 +28,7 @@ PenBlocTreeExamples class >> exampleExpandAll [
 	model expandAll.
 	model build.
 	self
-		openInWindow: model interactor 
+		openInWindow: model engineElement 
 		named: self name 
 		extent: 300@500 
 ]
@@ -45,7 +45,7 @@ PenBlocTreeExamples class >> examplePropagateClosure [
 	model propagateCollapse: true.
 	model build.
 	self
-		openInWindow: model interactor 
+		openInWindow: model engineElement 
 		named: self name 
 		extent: 300@500 
 ]
@@ -60,7 +60,7 @@ PenBlocTreeExamples class >> exampleWithRoot [
 	model sortingBlock: [ :a :b | a name < b name ].
 	model build.
 	self
-		openInWindow: model interactor 
+		openInWindow: model engineElement 
 		named: self name 
 		extent: 300@500 
 ]

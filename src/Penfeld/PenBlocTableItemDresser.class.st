@@ -6,14 +6,14 @@ Class {
 
 { #category : #styling }
 PenBlocTableItemDresser >> backgroundColor: aValue [
-	self model interactor background: aValue
+	self model engineElement background: aValue
 ]
 
 { #category : #dressing }
-PenBlocTableItemDresser >> initInteractor [
-	self model interactor: BlElement new.
-	self model interactor layout: BlLinearLayout horizontal.
-	self model interactor constraintsDo: [ :c |
+PenBlocTableItemDresser >> initEngineElement [
+	self model engineElement: BlElement new.
+	self model engineElement layout: BlLinearLayout horizontal.
+	self model engineElement constraintsDo: [ :c |
 		c horizontal matchParent.
 		c vertical fitContent ].
 	
@@ -22,8 +22,8 @@ PenBlocTableItemDresser >> initInteractor [
 		selector := section selector.
 		fixedSize := section size.
 		item := self model contentAtSection: selector.
-		fixedSize ifNotNil: [ item interactor constraintsDo: [ :c | c horizontal exact: fixedSize ]].
-		self model interactor addChild: item interactor as: selector].
+		fixedSize ifNotNil: [ item engineElement constraintsDo: [ :c | c horizontal exact: fixedSize ]].
+		self model engineElement addChild: item engineElement as: selector].
 ]
 
 { #category : #styling }
@@ -32,8 +32,8 @@ PenBlocTableItemDresser >> sectionsOrderChanged: aModel [
 	temp := Dictionary new.
 	aModel parent sections do: [ :section | | selector |
 		selector := section selector.
-		temp at: selector put: (aModel interactor childNamed: selector).
-		aModel interactor removeChildNamed: selector ].
+		temp at: selector put: (aModel engineElement childNamed: selector).
+		aModel engineElement removeChildNamed: selector ].
 	aModel parent sections do: [ :section |
-		aModel interactor addChild: (temp at: section selector) ]
+		aModel engineElement addChild: (temp at: section selector) ]
 ]

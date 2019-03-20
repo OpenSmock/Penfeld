@@ -29,7 +29,7 @@ PenDBlocComboBox >> applyActiveStyleButton [
 { #category : #dressing }
 PenDBlocComboBox >> applyButtonStyle: aStyle [
 	| button background border |
-	button := (self model interactor childNamed: #top)
+	button := (self model engineElement childNamed: #top)
 		childNamed: #button.
 	background := self getBackground: aStyle.
 	background ifNotNil: [ button background: background ].
@@ -79,7 +79,7 @@ PenDBlocComboBox >> applyStyleSheetWithPseudoClass: aPseudoClassSymbol [
 { #category : #dressing }
 PenDBlocComboBox >> applyStyleTop: aStyle [
 	| top selectedItem button background border triangle string ropedText |
-	top := self model interactor childNamed: #top.
+	top := self model engineElement childNamed: #top.
 	selectedItem := top childNamed: #selectedItem.
 	button := top childNamed: #button.
 	triangle := button childNamed: #triangle.
@@ -123,33 +123,33 @@ PenDBlocComboBox >> buttonReceiveMouseUpEvent [
 
 { #category : #protocol }
 PenDBlocComboBox >> hideList [
-	self model interactor space root removeChildNamed: #comboBoxList.
+	self model engineElement space root removeChildNamed: #comboBoxList.
 	listDisplayed := false.
 ]
 
 { #category : #initialization }
-PenDBlocComboBox >> initInteractor [
+PenDBlocComboBox >> initEngineElement [
 	| button |
 	listDisplayed := false.
 	
-	self model interactor: BlElement new.
-	self model interactor layout: BlLinearLayout vertical.
-	self model interactor constraintsDo: [ :c |
+	self model engineElement: BlElement new.
+	self model engineElement layout: BlLinearLayout vertical.
+	self model engineElement constraintsDo: [ :c |
 		c horizontal fitContent.
 		c vertical fitContent ].
 	self initTop.
 	self initList.
 	
-	button := self model interactor childNamed: #button.
+	button := self model engineElement childNamed: #button.
 	button when: BlMouseDownEvent do: [ :e | self buttonReceiveMouseDownEvent ].
 	button when: BlMouseUpEvent do: [ :e | self buttonReceiveMouseUpEvent ].
 	button when: BlMouseLeaveEvent do: [ :e | self buttonReceiveMouseLeaveEvent ].
 	
 	pushedItem := false.
 	self model items do: [ :item |
-		item interactor when: BlMouseDownEvent do: [ :e | self whenMouseDownEventOn: item ].
-		item interactor when: BlMouseUpEvent do: [ :e | self whenMouseUpEventOn: item ].
-		item interactor when: BlMouseLeaveEvent do: [ :e | self whenMouseLeaveEventOn: item ]].
+		item engineElement when: BlMouseDownEvent do: [ :e | self whenMouseDownEventOn: item ].
+		item engineElement when: BlMouseUpEvent do: [ :e | self whenMouseUpEventOn: item ].
+		item engineElement when: BlMouseLeaveEvent do: [ :e | self whenMouseLeaveEventOn: item ]].
 ]
 
 { #category : #initialization }
@@ -162,7 +162,7 @@ PenDBlocComboBox >> initList [
 		c vertical exact: 120]. 
 	
 	listElements := self model items collect: [ :item | 
-		item interactor 
+		item engineElement 
 			constraintsDo: [ :c | c horizontal matchParent ];
 			yourself ].
 	dataSource elements: listElements.
@@ -202,7 +202,7 @@ PenDBlocComboBox >> initTop [
 	group addChild: selectedItemGroup as: #selectedItem.
 	group addChild: button as: #button.
 	
-	self model interactor addChild: group as: #top.
+	self model engineElement addChild: group as: #top.
 ]
 
 { #category : #dressing }
@@ -218,10 +218,10 @@ PenDBlocComboBox >> resetButtonStyles [
 { #category : #protocol }
 PenDBlocComboBox >> showList [
 	listDisplayed := true.
-	list relocate: self model interactor positionInSpace + (0 @ 20). 
-	self model interactor space root childNamed: #comboBoxList
+	list relocate: self model engineElement positionInSpace + (0 @ 20). 
+	self model engineElement space root childNamed: #comboBoxList
 		ifFound: [ :e | self halt: 'TODO: close the first comboBox before open a second.' ]
-		ifNone: [ self model interactor space root addChild: list as: #comboBoxList ]
+		ifNone: [ self model engineElement space root addChild: list as: #comboBoxList ]
 ]
 
 { #category : #'as yet unclassified' }

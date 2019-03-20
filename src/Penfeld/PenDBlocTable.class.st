@@ -17,28 +17,28 @@ PenDBlocTable class >> styleSelector [
 PenDBlocTable >> applyStyle: aStyle [
 	| background border |
 	background := self getBackground: aStyle.
-	background ifNotNil: [ self model interactor background: background ].
+	background ifNotNil: [ self model engineElement background: background ].
 	border := self getBorder: aStyle.
-	border ifNotNil: [ self model interactor border: border ].
+	border ifNotNil: [ self model engineElement border: border ].
 ]
 
 { #category : #dressing }
 PenDBlocTable >> doBeforeApplyStyle [
 	| listElements |
 	listElements := self model items collect: [ :item | 
-		item interactor ].
-	listElements addFirst: self model header interactor.
+		item engineElement ].
+	listElements addFirst: self model header engineElement.
 	dataSource elements: listElements.
-	self model interactor dataSource: dataSource.
+	self model engineElement dataSource: dataSource.
 	dataSource notifyChanged
 ]
 
 { #category : #initialization }
-PenDBlocTable >> initInteractor [
+PenDBlocTable >> initEngineElement [
 	dataSource := PFInfiniteDataSource new.
 	
-	self model interactor: PFInfiniteListElement new.
-	self model interactor constraintsDo: [ :c |
+	self model engineElement: PFInfiniteListElement new.
+	self model engineElement constraintsDo: [ :c |
 		c horizontal matchParent.
 		c vertical matchParent ].
 	
@@ -46,9 +46,9 @@ PenDBlocTable >> initInteractor [
 
 	pushedItem := false.
 	self model items do: [ :item |
-		item interactor when: BlMouseDownEvent do: [ :e | self whenMouseDownEventOn: item ].
-		item interactor when: BlMouseUpEvent do: [ :e | self whenMouseUpEventOn: item ].
-		item interactor when: BlMouseLeaveEvent do: [ :e | self whenMouseLeaveEventOn: item ].].
+		item engineElement when: BlMouseDownEvent do: [ :e | self whenMouseDownEventOn: item ].
+		item engineElement when: BlMouseUpEvent do: [ :e | self whenMouseUpEventOn: item ].
+		item engineElement when: BlMouseLeaveEvent do: [ :e | self whenMouseLeaveEventOn: item ].].
 ]
 
 { #category : #events }

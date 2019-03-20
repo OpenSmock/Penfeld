@@ -23,7 +23,7 @@ PenBlocTableItemHeaderDresser >> dragEnd: anEvent [
 			[i < sections size] whileTrue: [ 
 				| boundsInSpace middle |
 				i := i + 1.
-				boundsInSpace := (self model content at: (sections at: i) selector) interactor boundsInSpace.
+				boundsInSpace := (self model content at: (sections at: i) selector) engineElement boundsInSpace.
 				middle := (boundsInSpace corner x - boundsInSpace origin x) / 2  + boundsInSpace origin x.
 				dragEndPosition x > middle ifTrue: 
 					[ self model parent moveSection: draggedSection after: (sections at: i) ]]]
@@ -32,7 +32,7 @@ PenBlocTableItemHeaderDresser >> dragEnd: anEvent [
 			[i > 1] whileTrue: [ 
 				| boundsInSpace middle |
 				i := i - 1.
-				boundsInSpace := (self model content at: (sections at: i) selector) interactor boundsInSpace.
+				boundsInSpace := (self model content at: (sections at: i) selector) engineElement boundsInSpace.
 				middle := (boundsInSpace corner x - boundsInSpace origin x) / 2 + boundsInSpace origin x.
 				dragEndPosition x < middle ifTrue: 
 					[ self model parent moveSection: draggedSection before: (sections at: i) ]]]
@@ -44,19 +44,19 @@ PenBlocTableItemHeaderDresser >> dragStart: anEvent [
 	anEvent consumed: true.
 	dragStartPosition := anEvent position.
 	self model content keysAndValuesDo: [ :key :value |
-		(value interactor containsGlobalPoint: dragStartPosition)
+		(value engineElement containsGlobalPoint: dragStartPosition)
 			ifTrue: [ draggedSelector := key ]].
 	draggedSection := self model parent sections detect: [ :section |
 		section selector = draggedSelector ].
 ]
 
 { #category : #dressing }
-PenBlocTableItemHeaderDresser >> initInteractor [
-	super initInteractor.
+PenBlocTableItemHeaderDresser >> initEngineElement [
+	super initEngineElement.
 	
 	self model parent dragSections ifFalse: [ ^self ].
 	
-	self model interactor children do: [ :each |
+	self model engineElement children do: [ :each |
 		each when: BlDragStartEvent do: [ :e | self dragStart: e ].
 		each when: BlDragEndEvent do: [ :e | self dragEnd: e ] ]
 ]

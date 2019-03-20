@@ -18,7 +18,7 @@ Class {
 { #category : #styling }
 PenBlocSliderDresser >> backgroundColor: aValue [
 	| cursor |
-	cursor := self model interactor childNamed: #cursor.
+	cursor := self model engineElement childNamed: #cursor.
 	cursor background: aValue.
 ]
 
@@ -50,13 +50,13 @@ PenBlocSliderDresser >> border: aValue [
 			]
 		]
 	].
-	(self model interactor childNamed: #cursor) border: borderBuilder build.
+	(self model engineElement childNamed: #cursor) border: borderBuilder build.
 ]
 
 { #category : #styling }
 PenBlocSliderDresser >> color: aValue [ 
 	| bar |
-	bar := self model interactor childNamed: #bar.
+	bar := self model engineElement childNamed: #bar.
 	bar background: aValue.
 ]
 
@@ -66,27 +66,27 @@ PenBlocSliderDresser >> doAfterApplyStyle [
 
 	"Position"
 	var := self model position.
-	var ifNotNil: [ self model interactor relocate: var ].
+	var ifNotNil: [ self model engineElement relocate: var ].
 
 	"Width"
 	var := self model width.
-	var ifNotNil: [ self model interactor width: var pref ].
+	var ifNotNil: [ self model engineElement width: var pref ].
 	
 	"Height"
 	var := self model height.
-	var ifNotNil: [ self model interactor height: var pref ]
+	var ifNotNil: [ self model engineElement height: var pref ]
 ]
 
 { #category : #dressing }
 PenBlocSliderDresser >> doBeforeApplyStyle [
 	| cursor x |
 	x := (self model fraction * barSize x) asInteger.
-	cursor := self model interactor childNamed: #cursor.
+	cursor := self model engineElement childNamed: #cursor.
 	cursor relocate: x @ 0
 ]
 
 { #category : #dressing }
-PenBlocSliderDresser >> initInteractor [
+PenBlocSliderDresser >> initEngineElement [
 	| bar |
 	cursorSize := 8@15.
 	barSize := 200@5.
@@ -97,16 +97,16 @@ PenBlocSliderDresser >> initInteractor [
 	bar relocate: barPosition.
 	bar border: BlBorder empty.
 	
-	self model interactor: BlElement new.
-	self model interactor size: sliderSize.
-	self model interactor addChild: bar as: #bar.
-	self model interactor addChild: (BlRectangle new extent: 8@15 ) asElement as: #cursor.
+	self model engineElement: BlElement new.
+	self model engineElement size: sliderSize.
+	self model engineElement addChild: bar as: #bar.
+	self model engineElement addChild: (BlRectangle new extent: 8@15 ) asElement as: #cursor.
 	
 	minX := 0.
 	maxX := self model dresser barSize x.
-	self model interactor when: BlDragStartEvent do: [ :e | self whenDragStartEvent: e ].
-	self model interactor when: BlDragEvent do: [ :e | self whenDragEvent: e ].
-	self model interactor when: BlDragEndEvent do: [ :e | self whenDragEndEvent: e ].
+	self model engineElement when: BlDragStartEvent do: [ :e | self whenDragStartEvent: e ].
+	self model engineElement when: BlDragEvent do: [ :e | self whenDragEvent: e ].
+	self model engineElement when: BlDragEndEvent do: [ :e | self whenDragEndEvent: e ].
 
 ]
 

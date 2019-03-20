@@ -19,7 +19,7 @@ PenBlocComboBoxDresser >> backgroundColor: aValue [
 		button background: aValue.
 	]
 	ifFalse: [ 
-		self model interactor background: aValue.	
+		self model engineElement background: aValue.	
 		(button childNamed: #triangle) background: aValue
 	]
 ]
@@ -47,7 +47,7 @@ PenBlocComboBoxDresser >> border: aValue [
 			]
 		]
 	].
-	self model interactor border: borderBuilder build.
+	self model engineElement border: borderBuilder build.
 ]
 
 { #category : #events }
@@ -72,32 +72,32 @@ PenBlocComboBoxDresser >> buttonReceiveMouseUpEvent [
 
 { #category : #protocol }
 PenBlocComboBoxDresser >> hideList [
-	self model interactor space root removeChildNamed: #comboBoxList.
+	self model engineElement space root removeChildNamed: #comboBoxList.
 	listDisplayed := false.
 ]
 
 { #category : #dressing }
-PenBlocComboBoxDresser >> initInteractor [
+PenBlocComboBoxDresser >> initEngineElement [
 	listDisplayed := false.
 	
-	self model interactor: BlElement new.
-	self model interactor layout: BlLinearLayout vertical.
-	self model interactor constraintsDo: [ :c |
+	self model engineElement: BlElement new.
+	self model engineElement layout: BlLinearLayout vertical.
+	self model engineElement constraintsDo: [ :c |
 		c horizontal fitContent.
 		c vertical fitContent ].
 	self initTop.
 	self initList.
 	
-	button := self model interactor childNamed: #button.
+	button := self model engineElement childNamed: #button.
 	button when: BlMouseDownEvent do: [ :e | self buttonReceiveMouseDownEvent ].
 	button when: BlMouseUpEvent do: [ :e | self buttonReceiveMouseUpEvent ].
 	button when: BlMouseLeaveEvent do: [ :e | self buttonReceiveMouseLeaveEvent ].
 	
 	pushedItem := false.
 	self model items do: [ :item |
-		item interactor when: BlMouseDownEvent do: [ :e | self whenMouseDownEventOn: item ].
-		item interactor when: BlMouseUpEvent do: [ :e | self whenMouseUpEventOn: item ].
-		item interactor when: BlMouseLeaveEvent do: [ :e | self whenMouseLeaveEventOn: item ]].
+		item engineElement when: BlMouseDownEvent do: [ :e | self whenMouseDownEventOn: item ].
+		item engineElement when: BlMouseUpEvent do: [ :e | self whenMouseUpEventOn: item ].
+		item engineElement when: BlMouseLeaveEvent do: [ :e | self whenMouseLeaveEventOn: item ]].
 ]
 
 { #category : #dressing }
@@ -110,7 +110,7 @@ PenBlocComboBoxDresser >> initList [
 		c vertical exact: 120]. 
 	
 	listElements := self model items collect: [ :item | 
-		item interactor 
+		item engineElement 
 			constraintsDo: [ :c | c horizontal matchParent ];
 			yourself ].
 	dataSource elements: listElements.
@@ -150,16 +150,16 @@ PenBlocComboBoxDresser >> initTop [
 	group addChild: selectedItemGroup as: #selectedItem.
 	group addChild: button as: #button.
 	
-	self model interactor addChild: group as: #top.
+	self model engineElement addChild: group as: #top.
 ]
 
 { #category : #protocol }
 PenBlocComboBoxDresser >> showList [
 	listDisplayed := true.
-	list relocate: self model interactor positionInSpace + (0 @ 20). 
-	self model interactor space root childNamed: #comboBoxList
+	list relocate: self model engineElement positionInSpace + (0 @ 20). 
+	self model engineElement space root childNamed: #comboBoxList
 		ifFound: [ :e | self halt: 'TODO: close the first comboBox before open a second.' ]
-		ifNone: [ self model interactor space root addChild: list as: #comboBoxList ]
+		ifNone: [ self model engineElement space root addChild: list as: #comboBoxList ]
 ]
 
 { #category : #protocol }

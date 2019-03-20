@@ -10,8 +10,8 @@ Class {
 { #category : #dressing }
 PenDBlocScrollBar >> applyButtonStyle: aStyle [
 	| button1 button2 background border |
-	button1 := self model interactor childNamed: #button1.
-	button2 := self model interactor childNamed: #button2.
+	button1 := self model engineElement childNamed: #button1.
+	button2 := self model engineElement childNamed: #button2.
 	background := self getBackground: aStyle.
 	background ifNotNil: [ 
 		button1 background: background.
@@ -37,7 +37,7 @@ PenDBlocScrollBar >> applyStyleSheet [
 { #category : #initialization }
 PenDBlocScrollBar >> initBar [
 	| bar |
-	bar := self model interactor childNamed: #bar.
+	bar := self model engineElement childNamed: #bar.
 	bar constraintsDo: [ :c |
 		c horizontal matchParent.
 		c vertical matchParent ]
@@ -46,13 +46,13 @@ PenDBlocScrollBar >> initBar [
 { #category : #initialization }
 PenDBlocScrollBar >> initButtons [
 	| button |
-	button := self model interactor childNamed: #button1.
+	button := self model engineElement childNamed: #button1.
 	button layout: BlFrameLayout new.
 	button constraintsDo: [ :c |
 		c horizontal exact: 20.
 		c vertical exact: 20 ].
 	
-	button := self model interactor childNamed: #button2.
+	button := self model engineElement childNamed: #button2.
 	button layout: BlFrameLayout new.
 	button constraintsDo: [ :c |
 		c horizontal exact: 20.
@@ -61,15 +61,15 @@ PenDBlocScrollBar >> initButtons [
 ]
 
 { #category : #initialization }
-PenDBlocScrollBar >> initInteractor [
-	self model interactor: BlElement new.
+PenDBlocScrollBar >> initEngineElement [
+	self model engineElement: BlElement new.
 	self model isHorizontal
 		ifTrue: [ 
-			self model interactor layout: BlLinearLayout horizontal.
+			self model engineElement layout: BlLinearLayout horizontal.
 			self model constraintsDo: [ :c | 
 				c horizontal exact: self model size.
 				c vertical fitContent. ] ]
-		ifFalse: [ self model interactor layout: BlLinearLayout vertical.
+		ifFalse: [ self model engineElement layout: BlLinearLayout vertical.
 			self model constraintsDo: [ :c | 
 				c horizontal fitContent. 
 				c vertical exact: self model size.]  ].

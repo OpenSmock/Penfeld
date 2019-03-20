@@ -10,3 +10,10 @@ Class {
 PenInput >> styleName [
 	^ #input
 ]
+
+{ #category : #events }
+PenInput >> valueChangedEvent [
+	self eventBindings do: [ :eventBinding |
+		(eventBinding symbol = PenEventSymbol valueChanged)
+			ifTrue: [ eventBinding callback value ]].
+]

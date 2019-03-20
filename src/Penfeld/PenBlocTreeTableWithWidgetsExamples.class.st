@@ -32,7 +32,7 @@ PenBlocTreeTableWithWidgetsExamples class >> example [
 	model sortingBlock: [ :a :b | a name < b name ].
 	model build.
 	self
-		openInWindow: model interactor 
+		openInWindow: model engineElement 
 		named: self name 
 		extent: 500@600 
 ]

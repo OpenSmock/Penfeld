@@ -74,6 +74,13 @@ PenTreeTable >> sections: aCollection [
 	sections := aCollection
 ]
 
+{ #category : #events }
+PenTreeTable >> selectionChangedEvent [
+	self eventBindings do: [ :eventBinding |
+		(eventBinding symbol = PenEventSymbol selectionChanged)
+			ifTrue: [ eventBinding callback value ]].
+]
+
 { #category : #accessing }
 PenTreeTable >> showHeader [
 	^ showHeader

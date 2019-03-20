@@ -100,3 +100,10 @@ PenSlider >> updateFraction: aNumber [
 PenSlider >> value [
 	^ interval at: index
 ]
+
+{ #category : #events }
+PenSlider >> valueChangedEvent [
+	self eventBindings do: [ :eventBinding |
+		(eventBinding symbol = PenEventSymbol valueChanged)
+			ifTrue: [ eventBinding callback value ]].
+]

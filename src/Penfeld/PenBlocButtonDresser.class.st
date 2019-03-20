@@ -10,7 +10,7 @@ Class {
 
 { #category : #styling }
 PenBlocButtonDresser >> backgroundColor: aValue [
-	self model interactor background: aValue
+	self model engineElement background: aValue
 ]
 
 { #category : #styling }
@@ -36,13 +36,13 @@ PenBlocButtonDresser >> border: aValue [
 			]
 		]
 	].
-	self model interactor border: borderBuilder build.
+	self model engineElement border: borderBuilder build.
 ]
 
 { #category : #styling }
 PenBlocButtonDresser >> color: aValue [
 	| textElement |
-	textElement := self model interactor childNamed: #text
+	textElement := self model engineElement childNamed: #text
 		ifFound: [ :anElement | anElement ]
 		ifNone: [ ^ self ].
 	textElement text foreground: aValue
@@ -54,18 +54,18 @@ PenBlocButtonDresser >> doAfterApplyStyle [
 
 	"Position"
 	var := self model position.
-	var ifNotNil: [ self model interactor relocate: var ].
+	var ifNotNil: [ self model engineElement relocate: var ].
 
 	"Width"
 	var := self model width.
-	var ifNotNil: [ self model interactor width: var pref ].
+	var ifNotNil: [ self model engineElement width: var pref ].
 	
 	"Height"
 	var := self model height.
-	var ifNotNil: [ self model interactor height: var pref ].
+	var ifNotNil: [ self model engineElement height: var pref ].
 	
 	"Apply roped text"
-	self model interactor childNamed: #text
+	self model engineElement childNamed: #text
 		ifFound: [ :anElement | anElement text: ropedText ]
 		ifNone: [].
 ]
@@ -87,25 +87,25 @@ PenBlocButtonDresser >> fontSize: aValue [
 
 { #category : #styling }
 PenBlocButtonDresser >> height: aValue [
-	self model interactor height: aValue
+	self model engineElement height: aValue
 ]
 
 { #category : #dressing }
-PenBlocButtonDresser >> initInteractor [
-	self model interactor: BlElement new.
-	self model interactor layout: BlFrameLayout new.
-	self model interactor addChild: BlTextElement new as: #text.
+PenBlocButtonDresser >> initEngineElement [
+	self model engineElement: BlElement new.
+	self model engineElement layout: BlFrameLayout new.
+	self model engineElement addChild: BlTextElement new as: #text.
 	
 	pushed := false.
-	self model interactor when: BlMouseDownEvent do: [ :e | self whenMouseDownEvent ].
-	self model interactor when: BlMouseUpEvent do: [ :e | self whenMouseUpEvent ].
-	self model interactor when: BlMouseLeaveEvent do: [ :e | self whenMouseLeaveEvent ].
+	self model engineElement when: BlMouseDownEvent do: [ :e | self whenMouseDownEvent ].
+	self model engineElement when: BlMouseUpEvent do: [ :e | self whenMouseUpEvent ].
+	self model engineElement when: BlMouseLeaveEvent do: [ :e | self whenMouseLeaveEvent ].
 ]
 
 { #category : #styling }
 PenBlocButtonDresser >> textAlign: aValue [
 	| textElement |
-	textElement := self model interactor childNamed: #text
+	textElement := self model engineElement childNamed: #text
 		ifFound: [ :anElement | anElement ]
 		ifNone: [ ^ self ].
 	textElement constraintsDo: [:c | 
@@ -138,5 +138,5 @@ PenBlocButtonDresser >> whenMouseUpEvent [
 
 { #category : #styling }
 PenBlocButtonDresser >> width: aValue [
-	self model interactor width: aValue
+	self model engineElement width: aValue
 ]

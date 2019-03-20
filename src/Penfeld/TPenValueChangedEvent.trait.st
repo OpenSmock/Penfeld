@@ -10,7 +10,7 @@ TPenValueChangedEvent >> onValueChangedDo: aBlock [
 
 { #category : #events }
 TPenValueChangedEvent >> valueChangedEvent [
-	self callbacks do: [ :eventBinding |
+	self eventBindings do: [ :eventBinding |
 		(eventBinding symbol = PenEventSymbol valueChanged)
 			ifTrue: [ eventBinding callback value ]].
 ]

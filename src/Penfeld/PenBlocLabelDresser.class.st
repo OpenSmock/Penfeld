@@ -9,12 +9,12 @@ Class {
 
 { #category : #styling }
 PenBlocLabelDresser >> backgroundColor: aValue [
-	self model interactor background: aValue
+	self model engineElement background: aValue
 ]
 
 { #category : #styling }
 PenBlocLabelDresser >> color: aValue [
-	self model interactor text foreground: aValue
+	self model engineElement text foreground: aValue
 ]
 
 { #category : #rendering }
@@ -23,10 +23,10 @@ PenBlocLabelDresser >> doAfterApplyStyle [
 
 	"Position"
 	var := self model position.
-	var ifNotNil: [ self model interactor relocate: var ].
+	var ifNotNil: [ self model engineElement relocate: var ].
 
 	"Apply roped text"
-	self model interactor text: ropedText 
+	self model engineElement text: ropedText 
 ]
 
 { #category : #dressing }
@@ -45,13 +45,13 @@ PenBlocLabelDresser >> fontSize: aValue [
 ]
 
 { #category : #dressing }
-PenBlocLabelDresser >> initInteractor [
-	self model interactor: BlTextElement new.
+PenBlocLabelDresser >> initEngineElement [
+	self model engineElement: BlTextElement new.
 ]
 
 { #category : #styling }
 PenBlocLabelDresser >> textAlign: aValue [
-	self model interactor constraintsDo: [:c | 
+	self model engineElement constraintsDo: [:c | 
 		aValue = #center 
 		ifTrue: [ 
 			c frame horizontal alignCenter.

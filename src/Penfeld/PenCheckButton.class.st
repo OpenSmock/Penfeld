@@ -17,9 +17,11 @@ PenCheckButton >> check [
 
 { #category : #initialization }
 PenCheckButton >> initialize [
+	| eventBinding |
 	super initialize.
 	value := false.
-	self addAutoInstalledCallback: [ self toggle ] for: PenEventSymbol action
+	eventBinding := self addCallback: [ self toggle ] for: PenEventSymbol action.
+	eventBinding autoBind
 ]
 
 { #category : #'api - events' }
@@ -73,4 +75,11 @@ PenCheckButton >> value: aBoolean [
 	value := aBoolean.
 	self valueChangedEvent.
 	self refresh
+]
+
+{ #category : #events }
+PenCheckButton >> valueChangedEvent [
+	self eventBindings do: [ :eventBinding |
+		(eventBinding symbol = PenEventSymbol valueChanged)
+			ifTrue: [ eventBinding callback value ]].
 ]

@@ -16,7 +16,7 @@ PenDBlocTreeTableNode class >> styleSelector [
 PenDBlocTreeTableNode >> applyStyle: aStyle [
 	| background |
 	background := self getBackground: aStyle.
-	background ifNotNil: [ self model interactor background: background ].
+	background ifNotNil: [ self model engineElement background: background ].
 ]
 
 { #category : #rendering }
@@ -25,17 +25,17 @@ PenDBlocTreeTableNode >> doBeforeApplyStyle [
 	points := self model isExpanded
 		ifTrue: [ { 0@0. 8@0. 4@6 } ]
 		ifFalse: [ { 0@0. 6@4. 0@8 } ].
-	icon := self model interactor childNamed: #icon.
+	icon := self model engineElement childNamed: #icon.
 	icon geometry: (BlPolygon vertices: points).
 ]
 
 { #category : #initialization }
-PenDBlocTreeTableNode >> initInteractor [
+PenDBlocTreeTableNode >> initEngineElement [
 	| treeSection points icon |
-	self model interactor: BlElement new.
-	self model interactor layout: BlLinearLayout horizontal.
+	self model engineElement: BlElement new.
+	self model engineElement layout: BlLinearLayout horizontal.
 	
-	self model interactor constraintsDo: [ :c |
+	self model engineElement constraintsDo: [ :c |
 		c horizontal matchParent.
 		c vertical fitContent ].
 	
@@ -50,10 +50,10 @@ PenDBlocTreeTableNode >> initInteractor [
 	icon border: BlBorder empty.
 	icon margin: (BlInsets all: 3).
 	icon constraintsDo: [ :c | c linear vertical alignCenter ].
-	treeSection interactor 
+	treeSection engineElement 
 		addChildFirst: icon 
 		as: #icon.
-	treeSection interactor 
+	treeSection engineElement 
 		addChildFirst: (BlElement new size: ((self model deepLevel - 1) * 10) @ 1) 
 		as: #blank.
 	
@@ -62,11 +62,11 @@ PenDBlocTreeTableNode >> initInteractor [
 		selector := section selector.
 		fixedSize := section size.
 		item := self model contentAtSection: selector.
-		fixedSize ifNotNil: [ item interactor constraintsDo: [ :c | c horizontal exact: fixedSize ]].
-		self model interactor addChild: item interactor as: selector].
+		fixedSize ifNotNil: [ item engineElement constraintsDo: [ :c | c horizontal exact: fixedSize ]].
+		self model engineElement addChild: item engineElement as: selector].
 	
 	iconPushed := false.
-	icon := (self model interactor childNamed: self model tree treeSectionSelector)
+	icon := (self model engineElement childNamed: self model tree treeSectionSelector)
 		childNamed: #icon.
 	icon when: BlMouseDownEvent do: [ :e | self whenMouseDownEventOnIcon ].
 	icon when: BlMouseUpEvent do: [ :e | self whenMouseUpEventOnIcon ].
@@ -80,10 +80,10 @@ PenDBlocTreeTableNode >> sectionsOrderChanged: aModel [
 	temp := Dictionary new.
 	aModel tree sections do: [ :section | | selector |
 		selector := section selector.
-		temp at: selector put: (aModel interactor childNamed: selector).
-		aModel interactor removeChildNamed: selector ].
+		temp at: selector put: (aModel engineElement childNamed: selector).
+		aModel engineElement removeChildNamed: selector ].
 	aModel tree sections do: [ :section |
-		aModel interactor addChild: (temp at: section selector) ]
+		aModel engineElement addChild: (temp at: section selector) ]
 ]
 
 { #category : #events }

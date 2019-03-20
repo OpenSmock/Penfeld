@@ -16,9 +16,9 @@ PenDisplayComponentTest >> testAddAllCallbackFor [
 		with: PenEventSymbol mouseUp.
 
 	node on: symbols do: [ self inform: 'Custom declaration' ].
-	self assert: node callbacks size equals: 1.
+	self assert: node eventBindings size equals: 1.
 	
-	binding := node callbacks first.
+	binding := node eventBindings first.
 	self assert: (binding symbols includesAll: symbols).
 ]
 
@@ -26,23 +26,23 @@ PenDisplayComponentTest >> testAddAllCallbackFor [
 PenDisplayComponentTest >> testAddCallbackFor [
 	| node binding |
 	node := PenInteractionElement new.
-	self assert: node callbacks isEmpty.
+	self assert: node eventBindings isEmpty.
 	
 	"Add a first callback"
 	node onClickDo: [ self inform: 'Click' ].
-	self assert: node callbacks size equals: 1.
-	binding := node callbacks first.
+	self assert: node eventBindings size equals: 1.
+	binding := node eventBindings first.
 	self assert: binding symbol equals: PenEventSymbol click.
 	
 	"Add a second callback on same event"
 	node onClickDo: [ self inform: 'Click2' ].
-	self assert: node callbacks size equals: 2.
-	binding := node callbacks second.
+	self assert: node eventBindings size equals: 2.
+	binding := node eventBindings second.
 	self assert: binding symbol equals: PenEventSymbol click.
 	
 	"Add an other callback"
 	node onMouseDownDo: [ self inform: 'MouseDown' ].
-	self assert: node callbacks size equals: 3.
-	binding := node callbacks third.
+	self assert: node eventBindings size equals: 3.
+	binding := node eventBindings third.
 	self assert: binding symbol equals: PenEventSymbol mouseDown.
 ]

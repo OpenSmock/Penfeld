@@ -17,17 +17,17 @@ PenDBlocTreeTable >> applyOddStyleOn: aModel [
 	| style background |
 	style := aModel stylesheet declarations at: 'tr:nth-child(odd)' ifAbsent: [ ^self ].
 	background := self getBackground: style.
-	background ifNotNil: [ aModel interactor background: background ]
+	background ifNotNil: [ aModel engineElement background: background ]
 ]
 
 { #category : #dressing }
 PenDBlocTreeTable >> applyStyle: aStyle [
 	| background border |
 	background := self getBackground: aStyle.
-	background ifNotNil: [ self model interactor background: background ].
+	background ifNotNil: [ self model engineElement background: background ].
 	border := self getBorder: aStyle.
-	border ifNotNil: [ self model interactor border: border.
-		self model interactor outskirts: BlOutskirts outside. ].
+	border ifNotNil: [ self model engineElement border: border.
+		self model engineElement outskirts: BlOutskirts outside. ].
 ]
 
 { #category : #dressing }
@@ -38,20 +38,20 @@ PenDBlocTreeTable >> doBeforeApplyStyle [
 		i = 0 
 			ifTrue: [ i := 1 ]
 			ifFalse: [ i := 0. self applyOddStyleOn: item ].
-		item interactor ].
+		item engineElement ].
 	self model showHeader ifTrue: 
-		[ listElements addFirst: self model header interactor ].
+		[ listElements addFirst: self model header engineElement ].
 	dataSource elements: listElements.
-	self model interactor dataSource: dataSource.
+	self model engineElement dataSource: dataSource.
 	dataSource notifyChanged
 ]
 
 { #category : #initialization }
-PenDBlocTreeTable >> initInteractor [
+PenDBlocTreeTable >> initEngineElement [
 	dataSource := PFInfiniteDataSource new.
 	
-	self model interactor: PFInfiniteListElement new.
-	self model interactor constraintsDo: [ :c |
+	self model engineElement: PFInfiniteListElement new.
+	self model engineElement constraintsDo: [ :c |
 		c horizontal matchParent.
 		c vertical matchParent ].
 ]

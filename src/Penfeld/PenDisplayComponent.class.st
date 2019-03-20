@@ -1,16 +1,14 @@
 Class {
 	#name : #PenDisplayComponent,
-	#superclass : #PenModel,
+	#superclass : #PenComponent,
 	#traits : 'TCSSStyleable',
 	#classTraits : 'TCSSStyleable classTrait',
 	#instVars : [
 		'dresser',
-		'interactor',
 		'engine',
 		'dressersMap',
 		'stylesheet',
 		'styleClasses',
-		'callbacks',
 		'visible',
 		'built',
 		'parent',
@@ -19,7 +17,9 @@ Class {
 		'height',
 		'transformation',
 		'alignment',
-		'pseudoClasses'
+		'pseudoClasses',
+		'engineElement',
+		'eventBindings'
 	],
 	#category : #'Penfeld-Core'
 }
@@ -31,25 +31,17 @@ PenDisplayComponent >> activatePseudoClass: aSymbol [
 ]
 
 { #category : #private }
-PenDisplayComponent >> addAutoInstalledCallback: aBlock for: anEventSymbol [
-	| binding |
-	binding := PenEventBinding for: anEventSymbol do: aBlock.
-	binding autoInstall.
-	callbacks add: binding.
-]
-
-{ #category : #private }
 PenDisplayComponent >> addCallback: aBlock for: anEventSymbol [
 	| binding |
 	binding := PenEventBinding for: anEventSymbol do: aBlock.
-	callbacks add: binding.
+	eventBindings add: binding.
 ]
 
 { #category : #private }
 PenDisplayComponent >> addCallback: aBlock forAll: anEventSymbolList [
 	| binding |
 	binding := PenEventBinding forAll: anEventSymbolList do: aBlock.
-	callbacks add: binding.
+	eventBindings add: binding.
 ]
 
 { #category : #accessing }
@@ -66,23 +58,18 @@ PenDisplayComponent >> build [
 	self stylesheet ifNil: [ self stylesheet: PenStylesheet current ].
 	
 	self dresser ifNil: [ self dresser: (self chooseDresserFor: self) new ].
-	self dresser initInteractor.
+	self dresser initEngineElement.
 	self dresser dress.
 	
 	eventStrategy := self dresser eventStrategy.
-	callbacks do: 
+	eventBindings do: 
 	[ 
 		:eventBinding | 
-		(eventBinding isInstalled and: [ eventBinding isSimpleEvent ])
+		(eventBinding isAutoBound and: [ eventBinding isSimpleEvent ])
 			ifTrue: [ eventStrategy install: eventBinding symbol on: self ]
 	].
 
 	built := true.
-]
-
-{ #category : #'private-accessing' }
-PenDisplayComponent >> callbacks [
-	^ callbacks
 ]
 
 { #category : #building }
@@ -150,6 +137,21 @@ PenDisplayComponent >> engine: anObject [
 ]
 
 { #category : #accessing }
+PenDisplayComponent >> engineElement [
+	^ engineElement
+]
+
+{ #category : #accessing }
+PenDisplayComponent >> engineElement: anObject [
+	engineElement := anObject
+]
+
+{ #category : #'private-accessing' }
+PenDisplayComponent >> eventBindings [
+	^ eventBindings
+]
+
+{ #category : #accessing }
 PenDisplayComponent >> height [
 	^ height
 ]
@@ -165,17 +167,7 @@ PenDisplayComponent >> initialize [
 	built := false.
 	styleClasses := OrderedCollection new.
 	pseudoClasses := Set new.
-	callbacks := OrderedCollection new.
-]
-
-{ #category : #accessing }
-PenDisplayComponent >> interactor [
-	^ interactor
-]
-
-{ #category : #accessing }
-PenDisplayComponent >> interactor: anInteractor [
-	interactor := anInteractor
+	eventBindings := OrderedCollection new.
 ]
 
 { #category : #testing }

@@ -10,7 +10,7 @@ TPenSelectionChangedEvent >> onSelectionChangedDo: aBlock [
 
 { #category : #events }
 TPenSelectionChangedEvent >> selectionChangedEvent [
-	self callbacks do: [ :eventBinding |
+	self eventBindings do: [ :eventBinding |
 		(eventBinding symbol = PenEventSymbol selectionChanged)
 			ifTrue: [ eventBinding callback value ]].
 ]

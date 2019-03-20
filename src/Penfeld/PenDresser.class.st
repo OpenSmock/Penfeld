@@ -84,7 +84,7 @@ PenDresser >> helperRgba: args [
 ]
 
 { #category : #dressing }
-PenDresser >> initInteractor [
+PenDresser >> initEngineElement [
 	^ self subclassResponsibility
 ]
 

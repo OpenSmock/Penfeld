@@ -1,6 +1,6 @@
 Class {
 	#name : #PenApplication,
-	#superclass : #PenModel,
+	#superclass : #PenComponent,
 	#instVars : [
 		'workspaces'
 	],

@@ -20,7 +20,7 @@ PenBlocTreeTableExamples class >> example [
 	model sortingBlock: [ :a :b | a name < b name ].
 	model build.
 	self
-		openInWindow: model interactor 
+		openInWindow: model engineElement 
 		named: self name 
 		extent: 400@500 
 ]
@@ -44,7 +44,7 @@ PenBlocTreeTableExamples class >> exampleWithHeader [
 	model sortingBlock: [ :a :b | a name < b name ].
 	model build.
 	self
-		openInWindow: model interactor 
+		openInWindow: model engineElement 
 		named: self name 
 		extent: 400@500 
 ]
