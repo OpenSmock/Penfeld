@@ -19,7 +19,7 @@ PenTableItem >> checkContent [
 	self table sections do: [ :section |
 		content 
 			at: section selector 
-			ifAbsent: [ content at: section selector put: PenGroupOld new ] ]
+			ifAbsent: [ content at: section selector put: PenContainer new ] ]
 ]
 
 { #category : #accessing }

@@ -35,10 +35,10 @@ PenTreeNode >> content [
 ]
 
 { #category : #accessing }
-PenTreeNode >> content: aGroup [
-	content := aGroup isGroup
-		ifTrue: [ aGroup ]
-		ifFalse: [ PenGroupOld new add: aGroup ].
+PenTreeNode >> content: aContainer [
+	content := aContainer isContainer
+		ifTrue: [ aContainer ]
+		ifFalse: [ PenContainer new addElement: aContainer ].
 	content parent: self.
 	
 ]

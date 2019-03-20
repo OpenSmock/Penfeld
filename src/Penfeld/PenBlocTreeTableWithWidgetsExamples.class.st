@@ -55,7 +55,7 @@ PenBlocTreeTableWithWidgetsExamples class >> nodeForClass:  aClass [
 	| node |
 	node := PenTreeTableNode new.
 	node name: aClass name.
-	node dresser: PFDBlocTreeTableNode new.
+	node dresser: PenBlocTreeTableNodeDresser new.
 	node forSection: #name put: 
 		(PenLabel new text: aClass name).
 	node forSection: #numberOfSubclasses put: 
@@ -73,11 +73,8 @@ PenBlocTreeTableWithWidgetsExamples class >> nodeForClass:  aClass [
 PenBlocTreeTableWithWidgetsExamples class >> radioGroup [
 	^  PenRadioGroup new addAll: 
 		((1 to: 5) collect: [ :i |
-			PenRadioButton new 
-				label: 'Radio Button ', i printString;
-				dresser: PFDBlocRadioButtonsGroup new;
-				dresser: PFDBlocRadioButton new;
-				yourself. ] ).
+			PenRadioButton  new 
+				label: 'Radio Button ', i printString. ] ).
 ]
 
 { #category : #'see class side' }

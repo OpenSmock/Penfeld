@@ -28,6 +28,18 @@ PenBlocContainerExamples class >> example1 [
 	window open
 ]
 
+{ #category : #examples }
+PenBlocContainerExamples class >> example2 [
+	| container label |
+	label := PenLabel new 
+		text: (String loremIpsum: 30).
+		
+	container := PenContainer new 
+		addElement: label.
+	
+	container openInInternalWindow 
+]
+
 { #category : #'see class side' }
 PenBlocContainerExamples >> seeClassSide [ 
 ]

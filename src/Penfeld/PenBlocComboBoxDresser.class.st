@@ -66,7 +66,7 @@ PenBlocComboBoxDresser >> buttonReceiveMouseLeaveEvent [
 PenBlocComboBoxDresser >> buttonReceiveMouseUpEvent [
 	buttonPushed ifFalse: [^ self].
 	self toggleList.
-	self model refreshStyle.
+	self model refresh.
 	buttonPushed := false.
 ]
 
@@ -171,7 +171,7 @@ PenBlocComboBoxDresser >> toggleList [
 
 { #category : #events }
 PenBlocComboBoxDresser >> whenMouseDownEventOn: anItem [ 
-	anItem refreshStyle.
+	anItem refresh.
 	pushedItem := anItem.
 ]
 
@@ -179,14 +179,14 @@ PenBlocComboBoxDresser >> whenMouseDownEventOn: anItem [
 PenBlocComboBoxDresser >> whenMouseLeaveEventOn: anItem [
 	pushedItem = anItem
 		ifTrue: 
-			[ anItem refreshStyle.
+			[ anItem refresh.
 			pushedItem := nil].
 ]
 
 { #category : #events }
 PenBlocComboBoxDresser >> whenMouseUpEventOn: anItem [
 	(pushedItem notNil and: [anItem = pushedItem]) ifTrue: [
-		self model refreshStyle.
+		self model refresh.
 		self hideList.
 		pushedItem := nil].
 ]

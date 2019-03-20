@@ -45,7 +45,7 @@ PenComboBox >> select: anItem [
 	anItem ifNil: [ ^self ].
 	super select: anItem.
 	self flag: 'temp : there is a pb with a click event received twice'.
-	self refreshStyle.
+	self refresh
 ]
 
 { #category : #accessing }

@@ -35,6 +35,7 @@ PenDisplayComponent >> addCallback: aBlock for: anEventSymbol [
 	| binding |
 	binding := PenEventBinding for: anEventSymbol do: aBlock.
 	eventBindings add: binding.
+	^ binding
 ]
 
 { #category : #private }
@@ -42,12 +43,13 @@ PenDisplayComponent >> addCallback: aBlock forAll: anEventSymbolList [
 	| binding |
 	binding := PenEventBinding forAll: anEventSymbolList do: aBlock.
 	eventBindings add: binding.
+	^ binding
 ]
 
 { #category : #accessing }
 PenDisplayComponent >> addStyleClass: aSymbol [
 	self styleClasses add: aSymbol.
-	self refreshStyle
+	self refresh
 ]
 
 { #category : #building }
@@ -96,7 +98,7 @@ TBD"
 { #category : #accessing }
 PenDisplayComponent >> clearAllPseudoClass [
 	self pseudoClasses removeAll.
-	self refreshStyle 
+	self refresh
 ]
 
 { #category : #accessing }
@@ -238,16 +240,10 @@ PenDisplayComponent >> refresh [
 	self isBuilt ifTrue: [ self dresser dress ]
 ]
 
-{ #category : #building }
-PenDisplayComponent >> refreshStyle [
-	self deprecated: 'use refresh'.
-	self isBuilt ifTrue: [ self dresser dress ]
-]
-
 { #category : #accessing }
 PenDisplayComponent >> removeStyleClass: aSymbol [
 	self styleClasses remove: aSymbol.
-	self refreshStyle 
+	self refresh
 ]
 
 { #category : #accessing }

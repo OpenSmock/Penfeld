@@ -40,7 +40,7 @@ PenStylesheet class >> light [
 		#disabledColor -> '#787878'.
 		#buttonBackgroundColor -> '#D2D2D2'.
 	} asDictionary).
-	PenDisplayComponent allInstancesDo: [ :component | component refreshStyle ].
+	PenDisplayComponent allInstancesDo: [ :component | component refresh ].
 	^ self current
 ]
 

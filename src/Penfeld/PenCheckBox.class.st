@@ -32,7 +32,7 @@ PenCheckBox >> isLabelBefore [
 { #category : #accessing }
 PenCheckBox >> label: aString [
 	self flag: 'symbolic utility ?'.
-	self name: aString.
+	self text: aString.
 ]
 
 { #category : #accessing }

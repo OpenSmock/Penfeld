@@ -20,6 +20,11 @@ PenDBlocTree >> applyStyle: aStyle [
 ]
 
 { #category : #dressing }
+PenDBlocTree >> backgroundColor: aValue [
+	self model engineElement background: aValue
+]
+
+{ #category : #dressing }
 PenDBlocTree >> doBeforeApplyStyle [
 	| listElements |
 	listElements := self model getExpandedNodesAsList collect: [ :item | 

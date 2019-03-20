@@ -70,20 +70,23 @@ PenBlocTableDresser >> initEngineElement [
 
 { #category : #events }
 PenBlocTableDresser >> whenMouseDownEventOn: anItem [ 
-	anItem refreshStyle.
+	anItem activatePseudoClass: #active.
+	anItem refresh.
 	pushedItem := anItem.
 ]
 
 { #category : #events }
 PenBlocTableDresser >> whenMouseLeaveEventOn: anItem [
 	pushedItem = anItem ifFalse: [ ^ self ].
-	anItem refreshStyle.
+	anItem deactivatePseudoClass: #active.
+	anItem refresh.
 	pushedItem := nil.
 ]
 
 { #category : #events }
 PenBlocTableDresser >> whenMouseUpEventOn: anItem [
 	(pushedItem notNil and: [anItem = pushedItem]) ifTrue: [
-		pushedItem refreshStyle.
+		pushedItem deactivatePseudoClass: #active.
+		pushedItem refresh.
 		pushedItem := nil].
 ]

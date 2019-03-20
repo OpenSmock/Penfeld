@@ -9,68 +9,52 @@ PenBlocTreeExamples class >> example [
 	| model |
 	model := PenTree new.
 	model root: (self nodeForClass: Model).
-	model dresser: PFDBlocTree new.
-	model sortingBlock: [ :a :b | a name < b name ].
-	model build.
-	self
-		openInWindow: model engineElement 
-		named: self name 
-		extent: 300@500 
+	model dresser: PenBlocTreeDresser new.
+	model sortingBlock: [ :a :b | a key < b key ].
+	model openInInternalWindow
 ]
 
 { #category : #examples }
 PenBlocTreeExamples class >> exampleExpandAll [
-	| model |
-	model := PenTree new.
-	model root: (self nodeForClass: Model).
-	model dresser: PFDBlocTree new.
-	model sortingBlock: [ :a :b | a name < b name ].
-	model expandAll.
-	model build.
-	self
-		openInWindow: model engineElement 
-		named: self name 
-		extent: 300@500 
+	| component |
+	component := PenTree new.
+	component root: (self nodeForClass: Model).
+	component dresser: PenBlocTreeDresser new.
+	component sortingBlock: [ :a :b | a key < b key ].
+	component expandAll.
+	component openInInternalWindow 
 ]
 
 { #category : #examples }
 PenBlocTreeExamples class >> examplePropagateClosure [
-	| model |
-	model := PenTree new.
-	model root: (self nodeForClass: Model).
-	model dresser: PFDBlocTree new.
-	model sortingBlock: [ :a :b | a name < b name ].
-	model expandAll.
-	model showRoot: true.
-	model propagateCollapse: true.
-	model build.
-	self
-		openInWindow: model engineElement 
-		named: self name 
-		extent: 300@500 
+	| component |
+	component := PenTree new.
+	component root: (self nodeForClass: Model).
+	component dresser: PenBlocTreeDresser new.
+	component sortingBlock: [ :a :b | a key < b key ].
+	component expandAll.
+	component showRoot: true.
+	component propagateCollapse: true.
+	component openInInternalWindow 
 ]
 
 { #category : #examples }
 PenBlocTreeExamples class >> exampleWithRoot [
-	| model |
-	model := PenTree new.
-	model root: (self nodeForClass: Model).
-	model showRoot: true.
-	model dresser: PFDBlocTree new.
-	model sortingBlock: [ :a :b | a name < b name ].
-	model build.
-	self
-		openInWindow: model engineElement 
-		named: self name 
-		extent: 300@500 
+	| component |
+	component := PenTree new.
+	component root: (self nodeForClass: Model).
+	component showRoot: true.
+	component dresser: PenBlocTreeDresser new.
+	component sortingBlock: [ :a :b | a key < b key ].
+	component openInInternalWindow 
 ]
 
 { #category : #'examples - instance creation' }
 PenBlocTreeExamples class >> nodeForClass: aClass [
 	| node |
 	node := PenTreeNode new.
-	node name: aClass name.
-	node dresser: PFDBlocTreeNode new.
+	node key: aClass name asSymbol.
+	node dresser: PenBlocTreeNodeDresser new.
 	node content: (PenLabel new text: aClass name).
 	aClass subclasses do: [ :subclass | 
 		node addNode: (self nodeForClass: subclass)].

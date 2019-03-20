@@ -21,38 +21,37 @@ PenBlocTableExamples class >> allSubclasses: aClass [
 
 { #category : #examples }
 PenBlocTableExamples class >> example [
-	| model |
-	model := PenTable new.
-	model sections: { 
+	| component |
+	component := PenTable new.
+	component sections: { 
 		PenSection new selector: #name.
 		PenSection new selector: #numberOfSubclasses; size: 40.
 		PenSection new selector: #numberOfVariables; size: 40 }.
-	model header: self header.
-	model addAllItems: (self allSubclasses: Model).
-	model dresser: PenBlocTableDresser new.
-	model sortingBlock: [ :a :b | a key < b key ].
-	model dragSections: true.
-	model allowToSelect: true.
-	model openInInternalWindow.
-	model inspect
+	component header: self header.
+	component addAllItems: (self allSubclasses: Model).
+	component dresser: PenBlocTableDresser new.
+	component sortingBlock: [ :a :b | a key < b key ].
+	component dragSections: true.
+	component allowToSelect: true.
+	component openInInternalWindow.
 ]
 
 { #category : #examples }
 PenBlocTableExamples class >> exampleMultiSelection [
-	| model |
-	model := PenTable new.
-	model sections: { 
+	| component |
+	component := PenTable new.
+	component sections: { 
 		PenSection new selector: #name.
 		PenSection new selector: #numberOfSubclasses; size: 40.
 		PenSection new selector: #numberOfVariables; size: 40 }.
-	model header: self header.
-	model addAllItems: (self allSubclasses: Model).
-	model dresser: PenBlocTableDresser new.
-	model sortingBlock: [ :a :b | a name < b name ].
-	model dragSections: true.
-	model allowToSelect: true.
-	model multiSelection: true.
-	model openInInternalWindow
+	component header: self header.
+	component addAllItems: (self allSubclasses: Model).
+	component dresser: PenBlocTableDresser new.
+	component sortingBlock: [ :a :b | a key < b key ].
+	component dragSections: true.
+	component allowToSelect: true.
+	component multiSelection: true.
+	component openInInternalWindow
 ]
 
 { #category : #'examples - instance creation' }

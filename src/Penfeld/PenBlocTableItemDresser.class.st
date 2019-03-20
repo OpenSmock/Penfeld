@@ -10,20 +10,35 @@ PenBlocTableItemDresser >> backgroundColor: aValue [
 ]
 
 { #category : #dressing }
+PenBlocTableItemDresser >> doBeforeApplyStyle [ 
+	self model parent sections do: [ :section | 
+		| selector content fixedSize |
+		selector := section selector.
+		fixedSize := section size.
+		content := self model contentAtSection: selector.
+		fixedSize ifNotNil: [ 
+			content engineElement constraintsDo: [ :c | 
+				c horizontal exact: fixedSize ]
+			].
+		].
+]
+
+{ #category : #dressing }
 PenBlocTableItemDresser >> initEngineElement [
 	self model engineElement: BlElement new.
 	self model engineElement layout: BlLinearLayout horizontal.
 	self model engineElement constraintsDo: [ :c |
 		c horizontal matchParent.
-		c vertical fitContent ].
+		c vertical exact: 20. self flag: 'fitContent give 0 height because child matchParent ...' 
+	].
 	
 	self model parent sections do: [ :section | 
-		| selector item fixedSize |
+		| selector content fixedSize |
 		selector := section selector.
 		fixedSize := section size.
-		item := self model contentAtSection: selector.
-		fixedSize ifNotNil: [ item engineElement constraintsDo: [ :c | c horizontal exact: fixedSize ]].
-		self model engineElement addChild: item engineElement as: selector].
+		content := self model contentAtSection: selector.
+		fixedSize ifNotNil: [ content engineElement constraintsDo: [ :c | c horizontal exact: fixedSize ]].
+		self model engineElement addChild: content engineElement as: selector].
 ]
 
 { #category : #styling }

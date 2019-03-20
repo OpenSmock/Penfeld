@@ -108,15 +108,6 @@ PenList >> refresh [
 		(sortedList at: i) activatePseudoClass: #checked ]
 ]
 
-{ #category : #dressing }
-PenList >> refreshStyle [
-	| sortedList |
-	super refreshStyle.
-	sortedList := self items.
-	self selectedIndexList do: [ :i |
-		(sortedList at: i) activatePseudoClass: #checked ]
-]
-
 { #category : #selecting }
 PenList >> select: anItem [
 	| index |

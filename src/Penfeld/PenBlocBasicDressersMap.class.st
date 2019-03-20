@@ -13,8 +13,8 @@ PenBlocBasicDressersMap >> initMap [
 		at: PenButton put: PenBlocButtonDresser ;
 		at: PenCheckBox put: PenBlocCheckBoxDresser ;
 		at: PenList put: PenBlocListDresser ;
-		at: PenTree put: PenDBlocTree ;
-		at: PenTreeNode put: PenDBlocTreeNode ;
+		at: PenTree put: PenBlocTreeDresser ;
+		at: PenTreeNode put: PenBlocTreeNodeDresser ;
 		at: PenTreeTable put: PenDBlocTreeTable ;
 		at: PenTreeTableNode put: PenDBlocTreeTableNode ;
 		at: PenComboBox put: PenBlocComboBoxDresser ;
