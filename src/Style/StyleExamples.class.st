@@ -7,7 +7,7 @@ Class {
 { #category : #'as yet unclassified' }
 StyleExamples class >> buttons [
 
-	^ CSSParser
+	^ StyleParser
 		parse:
 			'
 	BlButton { 
@@ -37,7 +37,7 @@ StyleExamples class >> buttons [
 
 { #category : #'as yet unclassified' }
 StyleExamples class >> example1 [
-	(CSSParser  
+	(StyleParser  
 		parse:'
 .foo.bar:hovered > .bar:focused, BlButton.blue .text, .box { 
 	opacity: 0.50;
@@ -66,7 +66,7 @@ StyleExamples class >> example1 [
 
 { #category : #'as yet unclassified' }
 StyleExamples class >> example2 [
-	(CSSParser  
+	(StyleParser  
 		parse:'
 .foo.bar:hovered > .bar:focused, BlButton.blue .text, .box { 
 	opacity: 0.50;
@@ -76,7 +76,7 @@ StyleExamples class >> example2 [
 
 { #category : #'as yet unclassified' }
 StyleExamples class >> example3WithMedia [
-	(CSSParser  
+	(StyleParser  
 		parse:'
 .foo.bar:hovered > .bar:focused, BlButton.blue .text, .box { 
 	opacity: 0.50;
@@ -94,7 +94,7 @@ StyleExamples class >> example3WithMedia [
 
 { #category : #'as yet unclassified' }
 StyleExamples class >> example4 [
-	^(CSSParser  
+	^(StyleParser  
 		parse:'
 		
 .test { 

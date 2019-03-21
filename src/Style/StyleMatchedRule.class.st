@@ -17,7 +17,7 @@ Class {
 StyleMatchedRule >> computedStyles [
 	^ self declarations
 		collect: [ :d | 
-			CSSStyle new
+			StyleStyle new
 				selector: self selector;
 				declaration: d;
 				conditions: self conditions;
@@ -27,7 +27,7 @@ StyleMatchedRule >> computedStyles [
 { #category : #'as yet unclassified' }
 StyleMatchedRule >> computedTransitions [
 	^ self transitions
-		collect: [ :t | CSSTransition new
+		collect: [ :t | StyleTransition new
 				selector: self selector;
 				transition: t;
 				yourself ]

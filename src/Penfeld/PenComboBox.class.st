@@ -50,8 +50,8 @@ PenComboBox >> select: anItem [
 
 { #category : #accessing }
 PenComboBox >> selectedItemString [
-	self selectedIndexList isEmpty ifTrue: [ ^ nil ].
-	^ (self items at: self selectedIndexList first) name. 
+	self selectedIndexList isEmpty ifTrue: [ ^ '' ].
+	^ (self items at: self selection) text. 
 ]
 
 { #category : #accessing }

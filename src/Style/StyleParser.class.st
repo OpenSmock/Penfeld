@@ -8,12 +8,12 @@ Class {
 StyleParser >> arrayToken [
 	^ super arrayToken
 		==>
-			[ :nodes | CssArrayValue value: (nodes parsedValue first collect: [ :item | item value ]) ]
+			[ :nodes | StyleArrayValue value: (nodes parsedValue first collect: [ :item | item value ]) ]
 ]
 
 { #category : #'grammar relation' }
 StyleParser >> childRelationToken [
-	^ super childRelationToken ==> [ :nodes| CssRelation CHILD ]
+	^ super childRelationToken ==> [ :nodes| StyleRelation CHILD ]
 ]
 
 { #category : #'grammar selector' }
@@ -33,7 +33,7 @@ StyleParser >> convertPropertyName: aString [
 { #category : #'as yet unclassified' }
 StyleParser >> createSimpleSelector: anItem [
 	| theSelector |
-	theSelector := CssSimpleSelector new
+	theSelector := StyleSimpleSelector new
 		name: anItem first first;
 		id: anItem first second;
 		yourself.
@@ -51,14 +51,14 @@ StyleParser >> declaration [
 			[ :nodes | 
 			nodes first = #transition
 				ifTrue:
-					[ CssTransitionDeclaration new
+					[ StyleTransitionDeclaration new
 						property: nodes third value first;
 						duration: nodes third value second;
 						timingFunction: (nodes third value at: 3 ifAbsent: [ #linear ]);
 						delay: (nodes third value at: 4 ifAbsent: [ 0 ]);
 						yourself ]
 				ifFalse:
-					[ CssPropertyDeclaration new
+					[ StylePropertyDeclaration new
 						property: nodes first;
 						value: nodes third;
 						important: (nodes at: 4) isNotNil;
@@ -72,7 +72,7 @@ StyleParser >> declarations [
 
 { #category : #'grammar relation' }
 StyleParser >> descendantRelationToken [
-	^ super descendantRelationToken ==> [ :nodes| CssRelation DESCENDANT ]
+	^ super descendantRelationToken ==> [ :nodes| StyleRelation DESCENDANT ]
 ]
 
 { #category : #'grammar value' }
@@ -97,14 +97,14 @@ StyleParser >> functionToken [
 			val := nodes parsedValue.
 			funct := val first.
 			args := val second.
-			(CssFunction value: funct) args: args ]
+			(StyleFunction value: funct) args: args ]
 ]
 
 { #category : #'grammar value' }
 StyleParser >> hexcolorToken [
 	^ super hexcolorToken
 		==>
-			[ :nodes | CssColorValue value: (Color fromHexString: nodes inputValue allButFirst) ]
+			[ :nodes | StyleColorValue value: (Color fromHexString: nodes inputValue allButFirst) ]
 ]
 
 { #category : #'grammar selector' }
@@ -125,8 +125,8 @@ StyleParser >> identToken [
 			| val |
 			val := nodes parsedValue.
 			(Color respondsTo: val)
-				ifTrue: [ CssColorValue value: (Color perform: val) ]
-				ifFalse: [ CssSymbolValue value: val ] ]
+				ifTrue: [ StyleColorValue value: (Color perform: val) ]
+				ifFalse: [ StyleSymbolValue value: val ] ]
 ]
 
 { #category : #'grammar value' }
@@ -138,7 +138,7 @@ StyleParser >> intNumber [
 StyleParser >> listToken [
 	^ super listToken
 		==>
-			[ :nodes | CssArrayValue value: (nodes withIndexSelect: [ :e :i | i odd]) ]
+			[ :nodes | StyleArrayValue value: (nodes withIndexSelect: [ :e :i | i odd]) ]
 ]
 
 { #category : #'grammar media' }
@@ -146,7 +146,7 @@ StyleParser >> media [
 	^ super media
 		==>
 			[ :nodes | 
-			CssMedia new
+			StyleMedia new
 				conditions: nodes second first first;
 				rules: nodes second third asOrderedCollection;
 				yourself ]
@@ -166,7 +166,7 @@ StyleParser >> mediaConditions [
 StyleParser >> mediaDefaultTypeWithConditions [
 	^ super mediaDefaultTypeWithConditions
 		==> [ :nodes | 
-			CssMediaCondition new
+			StyleMediaCondition new
 				type: #default;
 				conditions: nodes;
 				yourself ]
@@ -186,7 +186,7 @@ StyleParser >> mediaTypeToken [
 StyleParser >> mediaTypeWithConditions [
 	^ super mediaTypeWithConditions
 		==> [ :nodes | 
-			CssMediaCondition new
+			StyleMediaCondition new
 				type: nodes first;
 				conditions: nodes second second;
 				yourself ]
@@ -199,7 +199,7 @@ StyleParser >> nameSelectorToken [
 
 { #category : #'grammar value' }
 StyleParser >> numberToken [
-	^ super numberToken ==> [ :nodes | CssNumberValue value value: nodes parsedValue ]
+	^ super numberToken ==> [ :nodes | StyleNumberValue value value: nodes parsedValue ]
 ]
 
 { #category : #'grammar value' }
@@ -223,7 +223,7 @@ StyleParser >> rule [
 	^ super rule
 		==> [ :nodes | | collection |
 			collection := nodes third ifNil: [ OrderedCollection new ].
-			CssRule new
+			StyleRule new
 				selectors: nodes first;
 				declarations: collection;
 				yourself ]
@@ -246,7 +246,7 @@ StyleParser >> selector [
 			theSelectors size = 1
 				ifTrue: [ finalSelector := theSelectors first ]
 				ifFalse:
-					[ finalSelector := CssCompoundSelector new
+					[ finalSelector := StyleCompoundSelector new
 						selectors: theSelectors;
 						relationships: theRelations;
 						update;
@@ -266,7 +266,7 @@ StyleParser >> string [
 
 { #category : #'grammar value' }
 StyleParser >> stringToken [
-	^ super stringToken ==> [ :nodes | CssStringValue value value: nodes parsedValue ]
+	^ super stringToken ==> [ :nodes | StyleStringValue value value: nodes parsedValue ]
 ]
 
 { #category : #grammar }
@@ -274,7 +274,7 @@ StyleParser >> stylesheet [
 	^ super stylesheet
 		==> [ :nodes | 
 			| ss |
-			ss := CssStylesheet new.
+			ss := StyleStylesheet new.
 			nodes do: [ :item | item addTo: ss ].
 			ss ]
 ]
@@ -284,7 +284,7 @@ StyleParser >> typedValue [
 	^ super typedValue
 		==>
 			[ :nodes | 
-			CssValue
+			StyleValue
 				perform: nodes parsedValue second asSymbol asMutator
 				with: nodes parsedValue first ]
 ]

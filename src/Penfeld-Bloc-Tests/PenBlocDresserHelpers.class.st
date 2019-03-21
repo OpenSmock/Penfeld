@@ -16,7 +16,7 @@ PenBlocDresserHelpers >> setUp [
 PenBlocDresserHelpers >> testLinearGradient [ 
 	| function gradient expectedGradient |
 	dresser := PenBlocDresser new.
-	function := (CssFunction value: #linearGradient) args: { Color red. Color yellow } asArray.
+	function := (StyleFunction value: #linearGradient) args: { Color red. Color yellow } asArray.
 	
 	gradient := dresser helperLinearGradient: function args.
 	
@@ -34,7 +34,7 @@ PenBlocDresserHelpers >> testLinearGradient [
 PenBlocDresserHelpers >> testLinearGradientDiagonal [ 
 	| function gradient expectedGradient |
 	dresser := PenBlocDresser new.
-	function := (CssFunction value: #linearGradient) args: 
+	function := (StyleFunction value: #linearGradient) args: 
 		{ #( #to #bottom #right ).
 		Color red. 
 		Color yellow } asArray.
@@ -55,7 +55,7 @@ PenBlocDresserHelpers >> testLinearGradientDiagonal [
 PenBlocDresserHelpers >> testLinearGradientMultipleColorStops [
 	| function gradient expectedGradient |
 	dresser := PenBlocDresser new.	
-	function := (CssFunction value: #linearGradient) args: { 
+	function := (StyleFunction value: #linearGradient) args: { 
 		#(#to #right). 
 		Color red. 
 		Color orange.
@@ -85,10 +85,10 @@ PenBlocDresserHelpers >> testLinearGradientMultipleColorStops [
 PenBlocDresserHelpers >> testLinearGradientRgba [
 	| function gradient expectedGradient |
 	dresser := PenBlocDresser new.	
-	function := (CssFunction value: #linearGradient) args: {
+	function := (StyleFunction value: #linearGradient) args: {
 		#(#to #right).
-		(CssFunction value: #rgba) args: { 0. 0. 0. 0 } asArray.
-		(CssFunction value: #rgba) args: { 255. 0. 0. 1 } asArray
+		(StyleFunction value: #rgba) args: { 0. 0. 0. 0 } asArray.
+		(StyleFunction value: #rgba) args: { 255. 0. 0. 1 } asArray
 	} asArray.
 	
 	gradient := dresser helperLinearGradient: function args.
@@ -107,7 +107,7 @@ PenBlocDresserHelpers >> testLinearGradientRgba [
 PenBlocDresserHelpers >> testLinearGradientWithAngle [
 	| function gradient expectedGradient |
 	dresser := PenBlocDresser new.	
-	function := (CssFunction value: #linearGradient) args: {
+	function := (StyleFunction value: #linearGradient) args: {
 		{ -90. #deg } asArray.
 		Color red.
 		Color yellow

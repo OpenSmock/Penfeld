@@ -21,10 +21,9 @@ PenBlocContainerDresser >> doAfterApplyStyle [
 
 { #category : #dressing }
 PenBlocContainerDresser >> doBeforeApplyStyle [
-	self model engineElement layout: BlBasicLayout new.
 	self model engineElement constraintsDo: [ :c |
-		self model width ifNil: [ c horizontal matchParent ].
-		self model height ifNil: [ c vertical matchParent ] 
+		c horizontal matchParent.
+		c vertical matchParent
 	]
 ]
 

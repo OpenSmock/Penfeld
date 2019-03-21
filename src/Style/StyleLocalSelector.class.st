@@ -26,7 +26,7 @@ StyleLocalSelector >> matchesStyleable: aStyleable [
 
 { #category : #'as yet unclassified' }
 StyleLocalSelector >> origin [
-	^ CSSOrigin INLINE
+	^ StyleOrigin INLINE
 ]
 
 { #category : #accessing }

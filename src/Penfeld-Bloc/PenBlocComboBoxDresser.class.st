@@ -7,7 +7,8 @@ Class {
 		'listDisplayed',
 		'pushedItem',
 		'buttonPushed',
-		'button'
+		'button',
+		'ropedText'
 	],
 	#category : #'Penfeld-Bloc-Dressers'
 }
@@ -68,6 +69,20 @@ PenBlocComboBoxDresser >> buttonReceiveMouseUpEvent [
 	self toggleList.
 	self model refresh.
 	buttonPushed := false.
+]
+
+{ #category : #dressing }
+PenBlocComboBoxDresser >> doAfterApplyStyle [
+	
+	"Apply roped text"
+	self model engineElement childNamed: #text
+		ifFound: [ :anElement | anElement text: ropedText ]
+		ifNone: [].
+]
+
+{ #category : #dressing }
+PenBlocComboBoxDresser >> doBeforeApplyStyle [
+	ropedText := self model selectedItemString asRopedText
 ]
 
 { #category : #protocol }

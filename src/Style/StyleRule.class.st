@@ -38,7 +38,7 @@ StyleRule >> declare: anAssoc [
 StyleRule >> declare: anAssoc important: aBoolean [
 	self declarations
 		add:
-			(CSSPropertyDeclaration new
+			(StylePropertyDeclaration new
 				property: anAssoc key;
 				value: anAssoc value asBlStyleValue;
 				rule: self;
@@ -50,7 +50,7 @@ StyleRule >> declare: anAssoc important: aBoolean [
 StyleRule >> declareTransition: anAssoc [
 	self transitions
 		add:
-			(CSSTransitionDeclaration new
+			(StyleTransitionDeclaration new
 				property: anAssoc key;
 				valuesFromArray: anAssoc value;
 				rule: self;

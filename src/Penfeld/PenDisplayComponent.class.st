@@ -1,8 +1,8 @@
 Class {
 	#name : #PenDisplayComponent,
 	#superclass : #PenComponent,
-	#traits : 'TCSSStyleable',
-	#classTraits : 'TCSSStyleable classTrait',
+	#traits : 'TStyStyleable',
+	#classTraits : 'TStyStyleable classTrait',
 	#instVars : [
 		'dresser',
 		'engine',

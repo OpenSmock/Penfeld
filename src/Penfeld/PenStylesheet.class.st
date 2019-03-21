@@ -16,7 +16,7 @@ PenStylesheet class >> current [
 { #category : #styles }
 PenStylesheet class >> dark [
 	<script: 'self dark'>
-	Current := CssParser parse: (self stylesheet: {
+	Current := StyleParser parse: (self stylesheet: {
 		#textColor -> '#E6E6E6'.
 		#backgroundColor -> '#141414'.
 		#borderColor -> '#C8C8C8'.
@@ -31,7 +31,7 @@ PenStylesheet class >> dark [
 { #category : #styles }
 PenStylesheet class >> light [
 	<script: 'self light'>
-	Current := CssParser parse: (self stylesheet: {
+	Current := StyleParser parse: (self stylesheet: {
 		#textColor -> '#1E1E1E'.
 		#backgroundColor -> '#F0F0F0'.
 		#borderColor -> '#505050'.

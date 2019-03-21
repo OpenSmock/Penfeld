@@ -81,7 +81,7 @@ StyleStylesheetContainer >> computeStyleNodesFrom: aStyleable stylesheets: aStyl
 { #category : #'as yet unclassified' }
 StyleStylesheetContainer >> initialize [
 	super initialize.
-	super add: (CSSStylesheet origin: CSSOrigin USER).
+	super add: (StyleStylesheet origin: StyleOrigin USER).
 ]
 
 { #category : #'adding/removing' }

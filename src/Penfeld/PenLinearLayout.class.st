@@ -19,7 +19,6 @@ PenLinearLayout class >> vertical [
 
 { #category : #initialization }
 PenLinearLayout >> initialize: anOrientation [
-	super initialize.
 	orientation := anOrientation 
 ]
 

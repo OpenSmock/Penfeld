@@ -46,8 +46,8 @@ StyleStylesheet >> file: anObject [
 { #category : #'as yet unclassified' }
 StyleStylesheet >> for: aSelectorString style: aBlock [
 	| theSelectors theRule |
-	theSelectors := CSSParser parseSelectors: aSelectorString.
-	theRule := CSSRule new.
+	theSelectors := StyleParser parseSelectors: aSelectorString.
+	theRule := StyleRule new.
 	theRule
 		selectors: theSelectors;
 		stylesheet: self.
@@ -71,7 +71,7 @@ StyleStylesheet >> matchingMediaRulesFor: aStyleable [
 					r selectors
 						detect: [ :s | s matchesStyleable: aStyleable ]
 						ifFound: [ :s |  matchedRules add:
-									(CSSMatchedRule new
+									(StyleMatchedRule new
 										selector: s;
 										declarations: r declarations;
 										transitions: r transitions;

@@ -27,7 +27,7 @@ StyleMediaCondition >> heightOf: aTarget value: aValue [
 { #category : #testing }
 StyleMediaCondition >> isValidOn: aTarget [
 	| typeTarget |
-	typeTarget := CSSMediaTarget
+	typeTarget := StyleMediaTarget
 		perform: (self type , 'On:') asSymbol
 		with: aTarget.
 	conditions

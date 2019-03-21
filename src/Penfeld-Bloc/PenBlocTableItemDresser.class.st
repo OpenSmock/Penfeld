@@ -29,7 +29,7 @@ PenBlocTableItemDresser >> initEngineElement [
 	self model engineElement layout: BlLinearLayout horizontal.
 	self model engineElement constraintsDo: [ :c |
 		c horizontal matchParent.
-		c vertical exact: 20. self flag: 'fitContent give 0 height because child matchParent ...' 
+		c vertical fitContent.
 	].
 	
 	self model parent sections do: [ :section | 
