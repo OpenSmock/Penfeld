@@ -8,7 +8,7 @@ Class {
 StyleParser >> arrayToken [
 	^ super arrayToken
 		==>
-			[ :nodes | StyleArrayValue value: (nodes parsedValue first collect: [ :item | item value ]) ]
+			[ :nodes | self halt. StyleArrayValue value: (nodes parsedValue first collect: [ :item | item value ]) ]
 ]
 
 { #category : #'grammar relation' }
@@ -94,6 +94,7 @@ StyleParser >> functionToken [
 		==>
 			[ :nodes | 
 			| val funct args |
+			self halt.
 			val := nodes parsedValue.
 			funct := val first.
 			args := val second.
@@ -138,7 +139,7 @@ StyleParser >> intNumber [
 StyleParser >> listToken [
 	^ super listToken
 		==>
-			[ :nodes | StyleArrayValue value: (nodes withIndexSelect: [ :e :i | i odd]) ]
+			[ :nodes | self halt. StyleArrayValue value: (nodes withIndexSelect: [ :e :i | i odd]) ]
 ]
 
 { #category : #'grammar media' }
@@ -284,6 +285,7 @@ StyleParser >> typedValue [
 	^ super typedValue
 		==>
 			[ :nodes | 
+			self halt.
 			StyleValue
 				perform: nodes parsedValue second asSymbol asMutator
 				with: nodes parsedValue first ]

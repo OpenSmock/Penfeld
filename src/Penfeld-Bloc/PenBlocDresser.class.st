@@ -26,7 +26,6 @@ PenBlocDresser >> helperLinearGradient: args [
 	| colors frac stops direction |
 	colors := OrderedCollection new.
 	frac := OrderedCollection new.
-	direction := 0@0.
 	
 	args do: [ :arg |
 		arg isColor 
@@ -36,6 +35,7 @@ PenBlocDresser >> helperLinearGradient: args [
 				ifTrue: [ 
 					arg first isSymbol ifTrue: 
 					[ 
+						direction := 0@0.
 						arg do: [ :e |
 							e = #bottom ifTrue: [ direction := direction + (0@1) ].
 							e = #top ifTrue: [ direction := direction + (0@ -1) ].
@@ -70,7 +70,7 @@ PenBlocDresser >> helperLinearGradient: args [
 
 { #category : #helpers }
 PenBlocDresser >> helperRgb: args [
-	^ CssColorValue value: (Color 
+	^ StyleColorValue value: (Color 
 		r: args first 
 		g: args second 
 		b: args third 
@@ -79,7 +79,7 @@ PenBlocDresser >> helperRgb: args [
 
 { #category : #helpers }
 PenBlocDresser >> helperRgba: args [
-	^ CssColorValue value: ((Color 
+	^ StyleColorValue value: ((Color 
 		r: args first 
 		g: args second 
 		b: args third range: 255) 

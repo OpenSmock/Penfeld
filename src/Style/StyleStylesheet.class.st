@@ -60,7 +60,7 @@ StyleStylesheet >> initialize [
 	super initialize.
 	rules := OrderedCollection new.
 	medias := OrderedCollection new.
-	origin := CssOrigin USER
+	origin := StyleOrigin USER
 ]
 
 { #category : #'as yet unclassified' }
@@ -87,7 +87,7 @@ StyleStylesheet >> matchingRulesFor: aStyleable [
 	self rules do: [ :r |  r selectors
 				select: [ :s | s matchesStyleable: aStyleable ]
 				thenDo: [ :s |  matchedRules add:
-							(CssMatchedRule new
+							(StyleMatchedRule new
 								selector: s;
 								declarations: r declarations;
 								transitions: r transitions;

@@ -124,3 +124,28 @@ PenBlocDresserHelpers >> testLinearGradientWithAngle [
 	self assert: gradient equals: expectedGradient 
 	
 ]
+
+{ #category : #tests }
+PenBlocDresserHelpers >> testLinearGradientWithPercentage [
+	| function gradient expectedGradient |
+	dresser := PenBlocDresser new.
+	function := (StyleFunction value: #linearGradient) args: {
+		StyleColorValue value: Color red. 
+		{ { StyleColorValue value: Color orange. StyleValue percent: 50 } asArray } asArray.
+		{ { StyleColorValue value: Color yellow. StyleValue percent: 52 } asArray } asArray.
+		StyleColorValue value: Color green.
+	} asArray.
+	
+	gradient := dresser helperLinearGradient: function args.
+	
+	expectedGradient := (BlLinearGradientPaint direction: 1@0)
+		stops: { 
+			0.0 -> Color red.
+			0.5 -> Color orange.
+			0.52 -> Color yellow.
+			1.0 -> Color green.
+		}.
+	
+	self assert: gradient equals: expectedGradient 
+	
+]

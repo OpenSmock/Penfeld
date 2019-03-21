@@ -21,7 +21,7 @@ StyleValue class >> ms: aValue [
 
 { #category : #'as yet unclassified' }
 StyleValue class >> percent: aValue [
-	^ CssPercentValue value: aValue percent
+	^ StylePercentValue value: aValue percent
 ]
 
 { #category : #'as yet unclassified' }
@@ -31,7 +31,7 @@ StyleValue class >> pt: aValue [
 
 { #category : #'as yet unclassified' }
 StyleValue class >> px: aValue [
-	^ CssPixelValue value: aValue
+	^ StylePixelValue value: aValue
 ]
 
 { #category : #'as yet unclassified' }

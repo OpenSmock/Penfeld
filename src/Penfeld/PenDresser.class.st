@@ -17,13 +17,17 @@ PenDresser >> applyStyle: aRule [
 			value := self performFunction: value.
 		].
 		(self respondsTo: mutator)
-			ifTrue: [ self perform: mutator with: declaration value ]
+			ifTrue: [ self perform: mutator with: value ]
 			ifFalse: [ self notYetImplemented ]
 	]
 ]
 
 { #category : #styling }
 PenDresser >> backgroundColor: aValue [
+]
+
+{ #category : #styling }
+PenDresser >> backgroundImage: aValue [
 ]
 
 { #category : #styling }
@@ -65,6 +69,10 @@ PenDresser >> fontFamily: aValue [
 
 { #category : #styling }
 PenDresser >> fontSize: aValue [
+]
+
+{ #category : #styling }
+PenDresser >> fontWeight: aValue [
 ]
 
 { #category : #styling }

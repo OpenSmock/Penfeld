@@ -14,6 +14,11 @@ PenBlocButtonDresser >> backgroundColor: aValue [
 ]
 
 { #category : #styling }
+PenBlocButtonDresser >> backgroundImage: aValue [
+	self model engineElement background: aValue
+]
+
+{ #category : #styling }
 PenBlocButtonDresser >> border: aValue [
 	| borderBuilder |	
 	borderBuilder := BlBorderBuilder new.	
@@ -41,11 +46,7 @@ PenBlocButtonDresser >> border: aValue [
 
 { #category : #styling }
 PenBlocButtonDresser >> color: aValue [
-	| textElement |
-	textElement := self model engineElement childNamed: #text
-		ifFound: [ :anElement | anElement ]
-		ifNone: [ ^ self ].
-	textElement text foreground: aValue
+	ropedText foreground: aValue
 ]
 
 { #category : #rendering }
@@ -67,7 +68,7 @@ PenBlocButtonDresser >> doAfterApplyStyle [
 	"Apply roped text"
 	self model engineElement childNamed: #text
 		ifFound: [ :anElement | anElement text: ropedText ]
-		ifNone: [].
+		ifNone: []
 ]
 
 { #category : #rendering }
@@ -83,6 +84,15 @@ PenBlocButtonDresser >> fontFamily: aValue [
 { #category : #styling }
 PenBlocButtonDresser >> fontSize: aValue [
 	ropedText fontSize: aValue value.
+]
+
+{ #category : #styling }
+PenBlocButtonDresser >> fontWeight: aValue [
+	| symbol |
+	symbol := aValue value.
+	(ropedText respondsTo: symbol)
+		ifTrue: [ ropedText perform: symbol ]
+		ifFalse: [ self halt: 'todo' ]
 ]
 
 { #category : #styling }
