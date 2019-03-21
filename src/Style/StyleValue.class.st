@@ -11,37 +11,37 @@ Class {
 
 { #category : #'as yet unclassified' }
 StyleValue class >> em: aValue [
-	^ CssEmValue value: aValue 
+	^ StyleEmValue value: aValue 
 ]
 
 { #category : #'as yet unclassified' }
 StyleValue class >> ms: aValue [
-	^ CssDurationValue value: aValue
+	^ StyleDurationValue value: aValue
 ]
 
 { #category : #'as yet unclassified' }
 StyleValue class >> percent: aValue [
-	^ CssPercentValue value: aValue percent
+	^ StylePercentValue value: aValue percent
 ]
 
 { #category : #'as yet unclassified' }
 StyleValue class >> pt: aValue [
-	^ CssPtValue value: aValue 
+	^ StylePtValue value: aValue 
 ]
 
 { #category : #'as yet unclassified' }
 StyleValue class >> px: aValue [
-	^ CssPixelValue value: aValue
+	^ StylePixelValue value: aValue
 ]
 
 { #category : #'as yet unclassified' }
 StyleValue class >> rem: aValue [
-	^ CssRemValue value: aValue rem
+	^ StyleRemValue value: aValue rem
 ]
 
 { #category : #'as yet unclassified' }
 StyleValue class >> s: aValue [
-	^ CssDurationValue value: aValue s
+	^ StyleDurationValue value: aValue s
 ]
 
 { #category : #'as yet unclassified' }
