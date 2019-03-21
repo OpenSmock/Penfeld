@@ -130,15 +130,15 @@ PenBlocDresserHelpers >> testLinearGradientWithPercentage [
 	| function gradient expectedGradient |
 	dresser := PenBlocDresser new.
 	function := (StyleFunction value: #linearGradient) args: {
-		StyleColorValue value: Color red. 
+		{ { StyleColorValue value: Color red. StyleValue percent: 0 } asArray } asArray.
 		{ { StyleColorValue value: Color orange. StyleValue percent: 50 } asArray } asArray.
 		{ { StyleColorValue value: Color yellow. StyleValue percent: 52 } asArray } asArray.
-		StyleColorValue value: Color green.
+		{ { StyleColorValue value: Color green. StyleValue percent: 100 } asArray } asArray.
 	} asArray.
 	
 	gradient := dresser helperLinearGradient: function args.
 	
-	expectedGradient := (BlLinearGradientPaint direction: 1@0)
+	expectedGradient := (BlLinearGradientPaint direction: 0@1)
 		stops: { 
 			0.0 -> Color red.
 			0.5 -> Color orange.

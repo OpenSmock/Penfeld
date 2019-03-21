@@ -43,8 +43,19 @@ PenBlocDresser >> helperLinearGradient: args [
 							e = #right ifTrue: [ direction := direction + (1 @ 0) ].
 						] 
 					].
-					arg first isNumber ifTrue: [ 
-						self halt.
+					arg first isNumber ifTrue: [ | angle |
+						"Angle direction"
+						arg second = #deg ifTrue: [ 
+							"Angle in degree"
+							angle := arg first degreesToRadians.
+							direction := angle sin @ angle cos.
+						]
+					].
+					arg first isArray ifTrue: [ | colorStop |
+						"Color with stop"
+						colorStop := arg first.
+						colors add: colorStop first value.
+						frac add: colorStop second value asFloat.
 					]
 				]
 				ifFalse: [ arg isFunction ifTrue: [ colors add: (self performFunction: arg) ] ] 
