@@ -8,7 +8,7 @@ Class {
 StyleParser >> arrayToken [
 	^ super arrayToken
 		==>
-			[ :nodes | StyleArrayValue value: (nodes parsedValue first collect: [ :item | item value ]) ]
+			[ :nodes | StyleArrayValue value: nodes ]
 ]
 
 { #category : #'grammar relation' }
@@ -75,36 +75,43 @@ StyleParser >> descendantRelationToken [
 	^ super descendantRelationToken ==> [ :nodes| StyleRelation DESCENDANT ]
 ]
 
-{ #category : #'grammar value' }
-StyleParser >> floatNumber [
-	^ super floatNumber  ==> [ :nodes | Number readFrom: nodes ]
+{ #category : #primitives }
+StyleParser >> float [
+	^ super float  ==> [ :nodes | Number readFrom: nodes ]
 ]
 
 { #category : #'grammar value' }
 StyleParser >> function [
 	^ super function
-		==> [ :nodes | 
-			{nodes first.
-			(nodes third reject: [ :item | item = $, ])} ]
+		==> 
+			[ :nodes | | funct args |
+			funct := nodes first.
+			args := nodes third reject: [ :node | node = $, ].
+			(StyleFunctionValue value: funct) args: args ]
 ]
 
-{ #category : #'grammar value' }
-StyleParser >> functionToken [
-	^ super functionToken
-		==>
-			[ :nodes | 
-			| val funct args |
-			val := nodes parsedValue.
-			funct := val first.
-			args := val second.
-			(StyleFunction value: funct) args: args ]
+{ #category : #primitives }
+StyleParser >> hexColor3 [
+	^ super hexColor3 
+		==> 
+			[ :nodes | | string | 
+			string := String new.
+			nodes second do: [ :hex | string := string, hex asString, hex asString ].
+			string ]
 ]
 
-{ #category : #'grammar value' }
-StyleParser >> hexcolorToken [
-	^ super hexcolorToken
-		==>
-			[ :nodes | StyleColorValue value: (Color fromHexString: nodes inputValue allButFirst) ]
+{ #category : #primitives }
+StyleParser >> hexColor6 [
+	^ super hexColor6
+		==> 
+			[ :nodes | nodes second ]
+]
+
+{ #category : #'as yet unclassified' }
+StyleParser >> hexColorToken [
+	^ super hexColorToken
+		==> 
+			[ :nodes | StyleColorValue value: (Color fromHexString: nodes parsedValue) ]
 ]
 
 { #category : #'grammar selector' }
@@ -112,33 +119,42 @@ StyleParser >> idSelectorToken [
 	^ super idSelectorToken ==> [ :nodes | nodes inputValue allButFirst asSymbol  ]
 ]
 
-{ #category : #'grammar value' }
+{ #category : #primitives }
 StyleParser >> ident [
-	^ super ident ==> [ :nodes | (self convertPropertyName: nodes) asSymbol ]
+	^ super ident
+		==>
+			[ :nodes | | strParts val |
+			"Convert as camel case"
+			strParts := nodes substrings: '-'.
+			val := strParts first.
+			strParts allButFirstDo: [ :str | val := val, str asCamelCase ].
+			val asSymbol]
 ]
 
 { #category : #'grammar value' }
 StyleParser >> identToken [
 	^ super identToken
 		==>
-			[ :nodes | 
-			| val |
+			[ :nodes | | val |
 			val := nodes parsedValue.
 			(Color respondsTo: val)
 				ifTrue: [ StyleColorValue value: (Color perform: val) ]
 				ifFalse: [ StyleSymbolValue value: val ] ]
 ]
 
-{ #category : #'grammar value' }
-StyleParser >> intNumber [
-	^ super intNumber  ==> [ :nodes | Number readFrom: nodes ]
+{ #category : #primitives }
+StyleParser >> integer [
+	^ super integer  ==> [ :nodes | Number readFrom: nodes ]
 ]
 
 { #category : #'grammar value' }
 StyleParser >> listToken [
 	^ super listToken
 		==>
-			[ :nodes | StyleArrayValue value: (nodes withIndexSelect: [ :e :i | i odd]) ]
+			[ :nodes | | collection | 
+			collection := OrderedCollection with: nodes first.
+			collection addAll: (nodes second collect: [ :array | array second]).
+			StyleArrayValue value: collection asArray ]
 ]
 
 { #category : #'grammar media' }
@@ -202,7 +218,7 @@ StyleParser >> numberToken [
 	^ super numberToken ==> [ :nodes | StyleNumberValue value value: nodes parsedValue ]
 ]
 
-{ #category : #'grammar value' }
+{ #category : #primitives }
 StyleParser >> percentSymbol [
 	^ super percentSymbol ==> [ :nodes | 'percent' ]
 ]
@@ -260,13 +276,8 @@ StyleParser >> selectors [
 ]
 
 { #category : #'grammar value' }
-StyleParser >> string [
-	^ super string ==> [ :nodes | nodes second ]
-]
-
-{ #category : #'grammar value' }
 StyleParser >> stringToken [
-	^ super stringToken ==> [ :nodes | StyleStringValue value value: nodes parsedValue ]
+	^ super stringToken ==> [ :nodes | StyleStringValue value: nodes parsedValue second ]
 ]
 
 { #category : #grammar }

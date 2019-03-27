@@ -1,6 +1,3 @@
-"
-A CSSStylesheetParserTest is a test class for testing the behavior of CSSStylesheetParser
-"
 Class {
 	#name : #StyleParserTest,
 	#superclass : #PPCompositeParserTest,
@@ -9,7 +6,7 @@ Class {
 
 { #category : #accessing }
 StyleParserTest >> parserClass [
-	^ StyleParser 
+	^ StyleParser
 ]
 
 { #category : #'tests-background' }
@@ -44,7 +41,7 @@ StyleParserTest >> testBorder [
 	self assert: declaration property equals: #border.
 	value := declaration value.
 	self assert: value class equals: StyleArrayValue.
-	self assert: (value includes: 1).
+	self assert: (value includes: (StyleValue px: 1)).
 	self assert: (value includes: #solid).
 	self assert: (value includes: (Color fromHexString: '123456')).
 	
@@ -123,7 +120,7 @@ StyleParserTest >> testFontFamily [
 	
 	declaration := rule declarations first.
 	self assert: declaration property equals: #fontFamily.
-	self assert: declaration value first equals: 'sans-serif'.
+	self assert: declaration value equals: 'sans-serif'.
 ]
 
 { #category : #'tests-font' }
@@ -190,7 +187,7 @@ StyleParserTest >> testLinearGradient [
 	declaration := rule declarations first.
 	self assert: declaration property equals: #color.
 	
-	function := (StyleFunction value: #linearGradient) args: { Color red. Color yellow } asArray.
+	function := (StyleFunctionValue value: #linearGradient) args: { Color red. Color yellow } asArray.
 	self assert: declaration value equals: function. 
 ]
 
@@ -207,10 +204,15 @@ StyleParserTest >> testLinearGradientDiagonal [
 	declaration := rule declarations first.
 	self assert: declaration property equals: #color.
 	
-	function := (StyleFunction value: #linearGradient) args: 
-		{ #( #to #bottom #right ).
-		Color red. 
-		Color yellow } asArray.
+	function := (StyleFunctionValue value: #linearGradient) 
+		args: { 
+			StyleArrayValue value: { 
+				StyleSymbolValue value: #to. 
+				StyleSymbolValue value: #bottom.
+				StyleSymbolValue value: #right. } asArray.
+			StyleColorValue value: Color red. 
+			StyleColorValue value: Color yellow 
+		}.
 	self assert: declaration value equals: function. 
 ]
 
@@ -227,7 +229,7 @@ StyleParserTest >> testLinearGradientMultipleColorStops [
 	declaration := rule declarations first.
 	self assert: declaration property equals: #color.
 	
-	function := (StyleFunction value: #linearGradient) args: 
+	function := (StyleFunctionValue value: #linearGradient) args: 
 	{ 
 		Color red. 
 		Color yellow.
@@ -249,7 +251,7 @@ StyleParserTest >> testLinearGradientMultipleColorStopsToRight [
 	declaration := rule declarations first.
 	self assert: declaration property equals: #color.
 	
-	function := (StyleFunction value: #linearGradient) args: {
+	function := (StyleFunctionValue value: #linearGradient) args: {
 		#(#to #right). 
 		Color red. 
 		Color orange.
@@ -274,10 +276,10 @@ StyleParserTest >> testLinearGradientRgba [
 	declaration := rule declarations first.
 	self assert: declaration property equals: #color.
 	
-	function := (StyleFunction value: #linearGradient) args: {
+	function := (StyleFunctionValue value: #linearGradient) args: {
 		#(#to #right).
-		(StyleFunction value: #rgba) args: { 255. 0. 0. 0 } asArray.
-		(StyleFunction value: #rgba) args: { 255. 0. 0. 1 } asArray
+		(StyleFunctionValue value: #rgba) args: { 255. 0. 0. 0 } asArray.
+		(StyleFunctionValue value: #rgba) args: { 255. 0. 0. 1 } asArray
 	} asArray.
 	self assert: declaration value equals: function. 
 ]
@@ -295,7 +297,7 @@ StyleParserTest >> testLinearGradientToRight [
 	declaration := rule declarations first.
 	self assert: declaration property equals: #color.
 	
-	function := (StyleFunction value: #linearGradient) args: {
+	function := (StyleFunctionValue value: #linearGradient) args: {
 		#(#to #right).
 		Color red.
 		Color yellow
@@ -316,11 +318,14 @@ StyleParserTest >> testLinearGradientWithAngle [
 	declaration := rule declarations first.
 	self assert: declaration property equals: #color.
 	
-	function := (StyleFunction value: #linearGradient) args: {
-		{ -90. #deg } asArray.
-		Color red.
-		Color yellow
-	} asArray.
+	function := (StyleFunctionValue value: #linearGradient) args: {
+		StyleArrayValue value: { 
+			StyleNumberValue value: -90. 
+			StyleSymbolValue value: #deg 
+		}.
+		StyleColorValue value: Color red.
+		StyleColorValue value: Color yellow
+	}.
 	self assert: declaration value equals: function. 
 ]
 
@@ -337,14 +342,17 @@ StyleParserTest >> testLinearGradientWithPercentage [
 	declaration := rule declarations first.
 	self assert: declaration property equals: #color.
 	
-	function := (StyleFunction value: #linearGradient) args: {
-		#(#to #right). 
-		Color red. 
-		Color orange.
-		Color yellow.
-		Color green.
-		Color blue.
-		Color purple
+	function := (StyleFunctionValue value: #linearGradient) args: {
+		StyleColorValue value: Color red.
+		StyleArrayValue value: { 
+			StyleColorValue value: Color orange.
+			StylePercentValue value: 50 percent.
+		} asArray.
+		StyleArrayValue value: { 
+			StyleColorValue value: Color yellow.
+			StylePercentValue value: 52 percent.
+		} asArray.
+		StyleColorValue value: Color green.
 	} asArray.
 	self assert: declaration value equals: function. 
 ]
@@ -414,7 +422,7 @@ StyleParserTest >> testRadialGradient [
 	declaration := rule declarations first.
 	self assert: declaration property equals: #color.
 	
-	function := (StyleFunction value: #radialGradient) args: { 
+	function := (StyleFunctionValue value: #radialGradient) args: { 
 		Color red. 
 		Color yellow.
 		Color green
@@ -424,7 +432,7 @@ StyleParserTest >> testRadialGradient [
 
 { #category : #'tests-gradients' }
 StyleParserTest >> testRadialGradientDifferentlySpaced [
-	| rule declaration |
+	| rule declaration function |
 	result := self parse: 'a { color:  radial-gradient(red 5%, yellow 15%, green 60%); }'.
 	
 	self assert: result rules size equals: 1.
@@ -434,12 +442,27 @@ StyleParserTest >> testRadialGradientDifferentlySpaced [
 	
 	declaration := rule declarations first.
 	self assert: declaration property equals: #color.
-	self assert: declaration value equals: (Color fromHexString: '123456'). 
+	
+	function := (StyleFunctionValue value: #radialGradient) args: { 
+		StyleArrayValue value: {
+			StyleColorValue value: Color red.
+			StylePercentValue value: 5 percent.
+		} asArray.
+		StyleArrayValue value: {
+			StyleColorValue value: Color yellow.
+			StylePercentValue value: 15 percent.
+		} asArray.
+		StyleArrayValue value: {
+			StyleColorValue value: Color green.
+			StylePercentValue value: 60 percent.
+		} asArray.
+	} asArray.
+	self assert: declaration value equals: function. 
 ]
 
 { #category : #'tests-gradients' }
 StyleParserTest >> testRadialGradientShape [
-	| rule declaration |
+	| rule declaration function |
 	result := self parse: 'a { color:  radial-gradient(circle, red, yellow, green); }'.
 	
 	self assert: result rules size equals: 1.
@@ -449,7 +472,14 @@ StyleParserTest >> testRadialGradientShape [
 	
 	declaration := rule declarations first.
 	self assert: declaration property equals: #color.
-	self assert: declaration value equals: (Color fromHexString: '123456'). 
+	
+	function := (StyleFunctionValue value: #radialGradient) args: { 
+		StyleSymbolValue value: #circle.
+		StyleColorValue value: Color red.
+		StyleColorValue value: Color yellow.
+		StyleColorValue value: Color green.
+	} asArray.
+	self assert: declaration value equals: function. 
 ]
 
 { #category : #'tests-gradients' }
@@ -465,17 +495,23 @@ StyleParserTest >> testRepeatingLinearGradient [
 	declaration := rule declarations first.
 	self assert: declaration property equals: #color.
 	
-	function := (StyleFunction value: #repeatingLinearGradient) args: {
-		Color red. 
-		{ Color yellow. 0.1} asArray.
-		{ Color green. 0.2} asArray
-	} asArray.
+	function := (StyleFunctionValue value: #repeatingLinearGradient) args: {
+		StyleColorValue value: Color red.
+		StyleArrayValue value: { 
+			StyleColorValue value: Color yellow.
+			StylePercentValue value: 10 percent
+		} asArray.
+		StyleArrayValue value: { 
+			StyleColorValue value: Color green.
+			StylePercentValue value: 20 percent
+		} asArray.
+	}.
 	self assert: declaration value equals: function. 
 ]
 
 { #category : #'tests-gradients' }
 StyleParserTest >> testRepeatingRadialGradient [
-	| rule declaration |
+	| rule declaration function |
 	result := self parse: 'a { color: repeating-radial-gradient(red, yellow 10%, green 15%); }'.
 	
 	self assert: result rules size equals: 1.
@@ -485,12 +521,24 @@ StyleParserTest >> testRepeatingRadialGradient [
 	
 	declaration := rule declarations first.
 	self assert: declaration property equals: #color.
-	self assert: declaration value equals: (Color fromHexString: '123456'). 
+	
+	function := (StyleFunctionValue value: #repeatingRadialGradient) args: {
+		StyleColorValue value: Color red.
+		StyleArrayValue value: { 
+			StyleColorValue value: Color yellow.
+			StylePercentValue value: 10 percent
+		} asArray.
+		StyleArrayValue value: { 
+			StyleColorValue value: Color green.
+			StylePercentValue value: 15 percent
+		} asArray.
+	}.
+	self assert: declaration value equals: function. 
 ]
 
 { #category : #'tests-color' }
 StyleParserTest >> testRgbColor [
-	| rule declaration |
+	| rule declaration function |
 	result := self parse: 'a { color: rgb(250, 99, 71); }'.
 	
 	self assert: result rules size equals: 1.
@@ -500,12 +548,14 @@ StyleParserTest >> testRgbColor [
 	
 	declaration := rule declarations first.
 	self assert: declaration property equals: #color.
-	self assert: declaration value equals: (Color r: 250 g: 99 b: 71 range: 255). 
+	
+	function := (StyleFunctionValue value: #rgb) args: { 250. 99. 71 } asArray.
+	self assert: declaration value equals: function. 
 ]
 
 { #category : #'tests-color' }
 StyleParserTest >> testRgbaColor [
-	| rule declaration |
+	| rule declaration function |
 	result := self parse: 'a { color: rgba(250, 99, 71, 0.5); }'.
 	
 	self assert: result rules size equals: 1.
@@ -515,7 +565,9 @@ StyleParserTest >> testRgbaColor [
 	
 	declaration := rule declarations first.
 	self assert: declaration property equals: #color.
-	self assert: declaration value equals: ((Color r: 250 g: 99 b: 71 range: 255) alpha: 0.5). 
+	
+	function := (StyleFunctionValue value: #rgba) args: { 250. 99. 71. 0.5 } asArray.
+	self assert: declaration value equals: function. 
 ]
 
 { #category : #'tests-text' }

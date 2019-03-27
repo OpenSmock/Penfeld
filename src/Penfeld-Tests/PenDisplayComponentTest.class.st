@@ -46,3 +46,16 @@ PenDisplayComponentTest >> testAddCallbackFor [
 	binding := node eventBindings third.
 	self assert: binding symbol equals: PenEventSymbol mouseDown.
 ]
+
+{ #category : #'tests-private' }
+PenDisplayComponentTest >> testChooseStylesheet [
+	| container button stylesheet |
+	stylesheet := StyleStylesheet new.
+	button := PenButton new.
+	container := PenContainer new.
+	container stylesheet: stylesheet.
+	container addElement: button.
+	container build.
+	
+	self assert: button stylesheet == stylesheet 
+]

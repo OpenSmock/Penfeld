@@ -1,6 +1,3 @@
-"
-Divide slider and progress bar, or keep it in one model ?
-"
 Class {
 	#name : #PenSlider,
 	#superclass : #PenInteractionElement,
@@ -87,6 +84,7 @@ PenSlider >> styleName [
 PenSlider >> updateFraction: aNumber [
 	| newIndex |
 	newIndex := ((aNumber * (interval size - 1)) + 1) rounded.
+	newIndex := newIndex min: self interval size.
 	newIndex = index ifTrue: [ ^ self ].
 	index := newIndex.
 	self refresh.

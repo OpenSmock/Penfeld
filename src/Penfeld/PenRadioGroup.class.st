@@ -13,6 +13,7 @@ Class {
 { #category : #adding }
 PenRadioGroup >> add: aRadioButton [
 	self radioButtons add: aRadioButton.
+	aRadioButton parent: self.
 	aRadioButton uncheck.
 	aRadioButton onCheckedDo: [ self buttonStateChange: aRadioButton ].
 	

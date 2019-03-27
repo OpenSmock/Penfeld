@@ -9,7 +9,7 @@ Class {
 
 { #category : #styles }
 PenStylesheet class >> current [
-	^ Current ifNil: [ Current := self dark ].
+	^ Current ifNil: [ Current := self light ].
 	
 ]
 
@@ -65,6 +65,10 @@ label {
 
 *:checked { 
 	background-color: ', (colors at: #checkedColor), ';
+ }
+
+*:disabled { 
+	background-color: ', (colors at: #disabledColor), ';
  }
 
 button { 

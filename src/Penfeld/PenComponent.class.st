@@ -15,11 +15,6 @@ PenComponent class >> key: aSymbol [
 	^ self basicNew initialize; key: aSymbol
 ]
 
-{ #category : #'instance creation' }
-PenComponent class >> new [
-	^ self key: #dock
-]
-
 { #category : #accessing }
 PenComponent >> description [
 	^ description

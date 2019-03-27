@@ -15,7 +15,8 @@ PenContainer >> addAllElements: aCollection [
 
 { #category : #accessing }
 PenContainer >> addElement: anElement [
-	self elements add: anElement
+	self elements add: anElement.
+	anElement parent: self.
 ]
 
 { #category : #building }
@@ -38,6 +39,7 @@ PenContainer >> elements: anObject [
 PenContainer >> initialize [
 	super initialize.
 	elements := OrderedCollection new.
+	layout := PenPositionLayout new.
 ]
 
 { #category : #testing }

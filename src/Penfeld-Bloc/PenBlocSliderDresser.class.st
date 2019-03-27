@@ -34,17 +34,17 @@ PenBlocSliderDresser >> border: aValue [
 		
 	aValue do: 
 	[ :property | 
-		property isNumber 
+		property value isNumber 
 		ifTrue: [ borderBuilder width: property ] 
 		ifFalse: 
 		[
-			property isSymbol
+			property value isSymbol
 			ifTrue: [ 
 				(borderBuilder respondsTo: property) 
 				ifTrue: [ borderBuilder perform: property ] 
 			]
 			ifFalse: [ 
-				(property isKindOf: Color)
+				(property value isKindOf: Color)
 				ifTrue: [ borderBuilder paint: property ]
 				ifFalse: [ self notYetImplemented ]
 			]

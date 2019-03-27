@@ -17,31 +17,44 @@ PenBlocCheckBoxDresser >> backgroundColor: aValue [
 
 { #category : #styling }
 PenBlocCheckBoxDresser >> border: aValue [
-	| borderBuilder border |	
-	borderBuilder := BlBorderBuilder new.	
-		
+	| borderBuilder box |
+	box := self model engineElement childNamed: #box.	
+	borderBuilder := BlBorderBuilder new.
+	
 	aValue do: 
 	[ :property | 
-		property isNumber 
+		property value isNumber 
 		ifTrue: [ borderBuilder width: property ] 
 		ifFalse: 
 		[
-			property isSymbol
-			ifTrue: [ 
-				(borderBuilder respondsTo: property) 
-				ifTrue: [ borderBuilder perform: property ] 
+			property value isSymbol
+			ifTrue: 
+			[ 
+				(borderBuilder respondsTo: property value) 
+				ifTrue: [ borderBuilder perform: property value ]
+				ifFalse: 
+				[
+					(property isKindOf: StyleValue)
+					ifTrue: 
+					[ 
+						"Linear gradient" 
+						| paint |
+						paint := self performFunction: property.
+						paint end: paint end * box extent.
+						borderBuilder paint: paint
+					]
+				]
 			]
-			ifFalse: [ 
-				(property isKindOf: Color)
+			ifFalse: 
+			[ 
+				(property value isKindOf: Color)
 				ifTrue: [ borderBuilder paint: property ]
 				ifFalse: [ self notYetImplemented ]
 			]
 		]
 	].
-
-	border := borderBuilder build.
-	(self model engineElement childNamed: #box) border: border.
-	(self model engineElement childNamed: #check) border: border.
+	
+	box border: borderBuilder build.
 ]
 
 { #category : #styling }

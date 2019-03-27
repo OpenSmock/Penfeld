@@ -18,34 +18,29 @@ PenBlocRadioButtonDresser >> backgroundColor: aValue [
 
 { #category : #styling }
 PenBlocRadioButtonDresser >> border: aValue [
-	| borderBuilder border paint |	
-	borderBuilder := BlBorderBuilder new.	
-		
+	| borderBuilder |
+	borderBuilder := BlBorderBuilder new.
+	
 	aValue do: 
 	[ :property | 
-		property isNumber 
+		property value isNumber 
 		ifTrue: [ borderBuilder width: property ] 
-		ifFalse: 
-		[
-			property isSymbol
+		ifFalse: [
+			property value isSymbol
 			ifTrue: [ 
-				(borderBuilder respondsTo: property) 
-				ifTrue: [ borderBuilder perform: property ] 
+				(borderBuilder respondsTo: property value) 
+				ifTrue: [ borderBuilder perform: property value ]
 			]
 			ifFalse: [ 
-				(property isKindOf: Color)
-				ifTrue: [ 
-					paint := property. 
-					borderBuilder paint: property
-				]
+				(property value isKindOf: Color)
+				ifTrue: [ borderBuilder paint: property ]
 				ifFalse: [ self notYetImplemented ]
 			]
 		]
 	].
 
-	border := borderBuilder build.
-	(self model engineElement childNamed: #box) border: border.
-	(self model engineElement childNamed: #check) background: paint.
+	(self model engineElement childNamed: #box) border: borderBuilder build.
+	(self model engineElement childNamed: #check) background: borderBuilder paint.
 ]
 
 { #category : #styling }

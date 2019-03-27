@@ -18,7 +18,7 @@ PenEventBinding class >> for: aSymbol do: aBlock [
 
 { #category : #'instance creation' }
 PenEventBinding class >> forAll: aList do: aBlock [
-	^ PFCompositeEventBinding new
+	^ PenCompositeEventBinding new
 		symbols: aList;
 		callback: aBlock;
 		yourself

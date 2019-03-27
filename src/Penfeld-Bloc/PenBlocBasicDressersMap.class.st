@@ -11,6 +11,7 @@ PenBlocBasicDressersMap >> initMap [
 		at: PenWindow put: PenBlocMorphicWindowDresser ;
 		at: PenLabel put: PenBlocLabelDresser ;
 		at: PenButton put: PenBlocButtonDresser ;
+		at: PenToggleButton put: PenBlocButtonDresser ;
 		at: PenCheckBox put: PenBlocCheckBoxDresser ;
 		at: PenList put: PenBlocListDresser ;
 		at: PenTree put: PenBlocTreeDresser ;
@@ -20,6 +21,7 @@ PenBlocBasicDressersMap >> initMap [
 		at: PenComboBox put: PenBlocComboBoxDresser ;
 		at: PenRadioButton put: PenBlocRadioButtonDresser ;
 		at: PenRadioGroup put: PenBlocRadioGroupDresser ;
+		at: PenProgressBar put: PenBlocProgressBarDresser ;
 		at: PenSlider put: PenBlocSliderDresser
 	
 ]

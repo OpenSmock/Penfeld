@@ -16,7 +16,7 @@ StyleValue class >> em: aValue [
 
 { #category : #'as yet unclassified' }
 StyleValue class >> ms: aValue [
-	^ StyleDurationValue value: aValue
+	^ CssDurationValue value: aValue
 ]
 
 { #category : #'as yet unclassified' }
@@ -41,7 +41,7 @@ StyleValue class >> rem: aValue [
 
 { #category : #'as yet unclassified' }
 StyleValue class >> s: aValue [
-	^ StyleDurationValue value: aValue s
+	^ StyleDurationValue value: aValue seconds
 ]
 
 { #category : #'as yet unclassified' }

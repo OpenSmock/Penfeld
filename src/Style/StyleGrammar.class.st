@@ -2,6 +2,25 @@ Class {
 	#name : #StyleGrammar,
 	#superclass : #PPCompositeParser,
 	#instVars : [
+		'stylesheet',
+		'declarations',
+		'declaration',
+		'rule',
+		'ident',
+		'integer',
+		'float',
+		'number',
+		'quotesString',
+		'doubleQuotesString',
+		'hexColor3',
+		'hexColor6',
+		'comment',
+		'function',
+		'identToken',
+		'numberToken',
+		'stringToken',
+		'hexColorToken',
+		'atKeywordToken',
 		'parentRelation',
 		'orRelationToken',
 		'childRelationToken',
@@ -14,36 +33,19 @@ Class {
 		'pseudoClassSelectorToken',
 		'propertyToken',
 		'propertyValue',
-		'declarations',
-		'declaration',
-		'numberToken',
+		'functionArgs',
+		'arrayToken',
+		'listToken',
+		'baseValue',
 		'percentToken',
 		'lengthToken',
-		'stringToken',
-		'identToken',
-		'hexcolorToken',
-		'number',
-		'string',
-		'ident',
-		'hexcolor',
-		'rule',
-		'fontSize',
 		'fontSizeToken',
-		'intNumber',
-		'floatNumber',
-		'array',
-		'arrayToken',
-		'baseValue',
 		'typedValue',
-		'percentSymbol',
 		'baseClassSelector',
 		'baseIdSelector',
 		'baseNameSelector',
 		'importantIdent',
 		'durationToken',
-		'stylesheet',
-		'function',
-		'functionToken',
 		'media',
 		'mediaCondition',
 		'mediaTypeToken',
@@ -53,8 +55,7 @@ Class {
 		'mediaSeparatorToken',
 		'mediaConditions',
 		'mediaTypeWithConditions',
-		'listToken',
-		'functionArgs'
+		'percentSymbol'
 	],
 	#category : #'Style-Utils'
 }
@@ -64,14 +65,14 @@ StyleGrammar class >> parseSelectors: anObject [
 	^ self parse: anObject startingAt: #startSelectors
 ]
 
-{ #category : #'grammar value' }
-StyleGrammar >> array [
-	^ (baseValue min: 2) separatedBy: #space asParser
+{ #category : #tokens }
+StyleGrammar >> arrayToken [
+	^ baseValue min: 2
 ]
 
-{ #category : #'grammar value' }
-StyleGrammar >> arrayToken [
-	^ array token
+{ #category : #tokens }
+StyleGrammar >> atKeywordToken [
+	^ ($@ asParser , ident) token trim
 ]
 
 { #category : #'grammar selector' }
@@ -91,7 +92,7 @@ StyleGrammar >> baseNameSelector [
 
 { #category : #'grammar value' }
 StyleGrammar >> baseValue [
-	^ (typedValue / numberToken / functionToken / stringToken / identToken / hexcolorToken ) trim
+	^ (typedValue / numberToken / function / stringToken / identToken / hexColorToken ) trim
 ]
 
 { #category : #'grammar relation' }
@@ -104,9 +105,14 @@ StyleGrammar >> classSelectorToken [
 	^ ($. asParser , ident) token
 ]
 
+{ #category : #primitives }
+StyleGrammar >> comment [
+	^ '/*' asParser , PPPredicateObjectParser any , '*/' asParser
+]
+
 { #category : #'grammar declaration' }
 StyleGrammar >> declaration [
-  ^ (propertyToken , $: asParser trim , propertyValue, importantIdent optional) trim
+  ^ identToken, $: asParser trim, propertyValue, importantIdent optional
 ]
 
 { #category : #'grammar declaration' }
@@ -119,50 +125,50 @@ StyleGrammar >> descendantRelationToken [
 	^ #space asParser token
 ]
 
-{ #category : #'grammar value' }
+{ #category : #primitives }
+StyleGrammar >> doubleQuotesString [
+	^ $" asParser , (PPPredicateObjectParser anyExceptAnyOf: '"') star flatten , $" asParser
+]
+
+{ #category : #tokens }
 StyleGrammar >> durationToken [
 	^ (number , ('s' asParser / 'ms' asParser)) token
 ]
 
-{ #category : #'grammar value' }
-StyleGrammar >> floatNumber [
+{ #category : #primitives }
+StyleGrammar >> float [
 	^ ($- asParser optional , ($0 asParser / #digit asParser plus)
 		, ($. asParser , ($0 asParser / #digit asParser plus))) flatten
 ]
 
-{ #category : #'grammar value' }
-StyleGrammar >> fontSize [
-	^ (intNumber , 'pt' asParser) / (number , 'em' asParser) / (number , 'rem' asParser)
-]
-
-{ #category : #'grammar value' }
+{ #category : #tokens }
 StyleGrammar >> fontSizeToken [
-	^ fontSize token
+	^ ((integer , 'pt' asParser) / (number , 'em' asParser) / (number , 'rem' asParser)) token
 ]
 
 { #category : #'grammar value' }
 StyleGrammar >> function [
-	^ ident , $( asParser , (functionArgs separatedBy: $, asParser) , $) asParser
+	^ ident, $( asParser , (functionArgs separatedBy: $, asParser) , $) asParser
 ]
 
 { #category : #'grammar value' }
 StyleGrammar >> functionArgs [
-	^ array / baseValue
+	^ arrayToken / baseValue
 ]
 
-{ #category : #'grammar value' }
-StyleGrammar >> functionToken [
-	^ function token
+{ #category : #primitives }
+StyleGrammar >> hexColor3 [
+	^ $# asParser , (PPPredicateObjectParser hex times: 3)
 ]
 
-{ #category : #'grammar value' }
-StyleGrammar >> hexcolor [
-	^ $# asParser , (#word asParser times: 6) flatten
+{ #category : #primitives }
+StyleGrammar >> hexColor6 [
+	^ $# asParser , (PPPredicateObjectParser hex times: 6) flatten.
 ]
 
-{ #category : #'grammar value' }
-StyleGrammar >> hexcolorToken [
-	^ hexcolor token
+{ #category : #tokens }
+StyleGrammar >> hexColorToken [
+	^ (hexColor6 / hexColor3) token
 ]
 
 { #category : #'grammar selector' }
@@ -170,12 +176,12 @@ StyleGrammar >> idSelectorToken [
 	^ ($# asParser , #word asParser plus) token
 ]
 
-{ #category : #'grammar value' }
+{ #category : #primitives }
 StyleGrammar >> ident [
-	^ (#word asParser / $- asParser) plus flatten
+	^ ($- asParser optional, #letter asParser, ($- asParser / #word asParser) star) flatten
 ]
 
-{ #category : #'grammar value' }
+{ #category : #tokens }
 StyleGrammar >> identToken [
 	^ ident token
 ]
@@ -185,19 +191,19 @@ StyleGrammar >> importantIdent [
 	^ ($! asParser trim , 'important' asParser) flatten
 ]
 
-{ #category : #'grammar value' }
-StyleGrammar >> intNumber [
+{ #category : #primitives }
+StyleGrammar >> integer [
 	^ ($- asParser optional , ($0 asParser / #digit asParser plus)) flatten
 ]
 
-{ #category : #'grammar value' }
+{ #category : #tokens }
 StyleGrammar >> lengthToken [
-	^ (intNumber , 'px' asParser) token
+	^ (number , 'px' asParser) token
 ]
 
-{ #category : #'grammar value' }
+{ #category : #tokens }
 StyleGrammar >> listToken [
-	^ stringToken separatedBy: $, asParser token trim 
+	^ baseValue trim, ($, asParser trim, baseValue trim) plus
 ]
 
 { #category : #'grammar media' }
@@ -251,12 +257,12 @@ StyleGrammar >> nameSelectorToken [
 	
 ]
 
-{ #category : #'grammar value' }
+{ #category : #primitives }
 StyleGrammar >> number [
-	^ (floatNumber / intNumber ) trim
+	^ float / integer
 ]
 
-{ #category : #'grammar value' }
+{ #category : #tokens }
 StyleGrammar >> numberToken [
 	^ number token
 ]
@@ -271,14 +277,14 @@ StyleGrammar >> parentRelation [
 	^ childRelationToken / descendantRelationToken
 ]
 
-{ #category : #'grammar value' }
+{ #category : #primitives }
 StyleGrammar >> percentSymbol [
-	^   '%' asParser
+	^ '%' asParser
 ]
 
-{ #category : #'grammar value' }
+{ #category : #tokens }
 StyleGrammar >> percentToken [
-	^ (intNumber , percentSymbol) token
+	^ (integer , percentSymbol) token
 ]
 
 { #category : #'grammar declaration' }
@@ -288,12 +294,17 @@ StyleGrammar >> propertyToken [
 
 { #category : #'grammar value' }
 StyleGrammar >> propertyValue [
-	^ (listToken / arrayToken / baseValue) trim
+	^ listToken / arrayToken / baseValue
 ]
 
 { #category : #'grammar selector' }
 StyleGrammar >> pseudoClassSelectorToken [
 	^ ($: asParser , #word asParser plus) token
+]
+
+{ #category : #primitives }
+StyleGrammar >> quotesString [
+	^ $' asParser , PPPredicateObjectParser any star , $' asParser
 ]
 
 { #category : #grammar }
@@ -326,16 +337,9 @@ StyleGrammar >> startSelectors [
 	^ selectors end
 ]
 
-{ #category : #'grammar value' }
-StyleGrammar >> string [
-	^ $" asParser,
-		(#letter asParser plus , ((#space asParser / $- asParser) , #letter asParser plus) star) flatten, 
-		$" asParser
-]
-
-{ #category : #'grammar value' }
+{ #category : #tokens }
 StyleGrammar >> stringToken [
-	^ string token
+	^ (quotesString / doubleQuotesString) token
 ]
 
 { #category : #grammar }

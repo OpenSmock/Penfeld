@@ -75,6 +75,12 @@ PenDresser >> fontSize: aValue [
 PenDresser >> fontWeight: aValue [
 ]
 
+{ #category : #private }
+PenDresser >> getColor: arg [
+	arg isFunction ifTrue: [ ^ self performFunction: arg ].
+	^ arg
+]
+
 { #category : #styling }
 PenDresser >> height: aValue [
 ]

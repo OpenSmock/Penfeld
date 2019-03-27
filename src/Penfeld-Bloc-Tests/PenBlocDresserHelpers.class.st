@@ -16,7 +16,10 @@ PenBlocDresserHelpers >> setUp [
 PenBlocDresserHelpers >> testLinearGradient [ 
 	| function gradient expectedGradient |
 	dresser := PenBlocDresser new.
-	function := (StyleFunction value: #linearGradient) args: { Color red. Color yellow } asArray.
+	function := (StyleFunctionValue value: #linearGradient) args: { 
+		StyleColorValue value: Color red. 
+		StyleColorValue value: Color yellow 
+	} asArray.
 	
 	gradient := dresser helperLinearGradient: function args.
 	
@@ -34,10 +37,15 @@ PenBlocDresserHelpers >> testLinearGradient [
 PenBlocDresserHelpers >> testLinearGradientDiagonal [ 
 	| function gradient expectedGradient |
 	dresser := PenBlocDresser new.
-	function := (StyleFunction value: #linearGradient) args: 
-		{ #( #to #bottom #right ).
-		Color red. 
-		Color yellow } asArray.
+	function := (StyleFunctionValue value: #linearGradient) args: { 
+		StyleArrayValue value: {
+			StyleSymbolValue value: #to.
+			StyleSymbolValue value: #bottom.
+			StyleSymbolValue value: #right. 
+		} asArray.
+		StyleColorValue value: Color red. 
+		StyleColorValue value: Color yellow 
+	} asArray.
 	
 	gradient := dresser helperLinearGradient: function args.
 	
@@ -55,14 +63,17 @@ PenBlocDresserHelpers >> testLinearGradientDiagonal [
 PenBlocDresserHelpers >> testLinearGradientMultipleColorStops [
 	| function gradient expectedGradient |
 	dresser := PenBlocDresser new.	
-	function := (StyleFunction value: #linearGradient) args: { 
-		#(#to #right). 
-		Color red. 
-		Color orange.
-		Color yellow.
-		Color green.
-		Color blue.
-		Color purple
+	function := (StyleFunctionValue value: #linearGradient) args: { 
+		StyleArrayValue value: {
+			StyleSymbolValue value: #to.
+			StyleSymbolValue value: #right. 
+		} asArray.
+		StyleColorValue value: Color red. 
+		StyleColorValue value: Color orange.
+		StyleColorValue value: Color yellow. 
+		StyleColorValue value: Color green.
+		StyleColorValue value: Color blue. 
+		StyleColorValue value: Color purple.
 	} asArray.
 	
 	gradient := dresser helperLinearGradient: function args.
@@ -85,11 +96,24 @@ PenBlocDresserHelpers >> testLinearGradientMultipleColorStops [
 PenBlocDresserHelpers >> testLinearGradientRgba [
 	| function gradient expectedGradient |
 	dresser := PenBlocDresser new.	
-	function := (StyleFunction value: #linearGradient) args: {
-		#(#to #right).
-		(StyleFunction value: #rgba) args: { 0. 0. 0. 0 } asArray.
-		(StyleFunction value: #rgba) args: { 255. 0. 0. 1 } asArray
-	} asArray.
+	function := (StyleFunctionValue value: #linearGradient) args: {
+		StyleArrayValue value: {
+			StyleSymbolValue value: #to.
+			StyleSymbolValue value: #right. 
+		}.
+		(StyleFunctionValue value: #rgba) args: {
+			StyleNumberValue value: 0.
+			StyleNumberValue value: 0.
+			StyleNumberValue value: 0.
+			StyleNumberValue value: 0.
+		}. 
+		(StyleFunctionValue value: #rgba) args: {
+			StyleNumberValue value: 255.
+			StyleNumberValue value: 0.
+			StyleNumberValue value: 0.
+			StyleNumberValue value: 1.
+		}.
+	}.
 	
 	gradient := dresser helperLinearGradient: function args.
 	
@@ -107,11 +131,14 @@ PenBlocDresserHelpers >> testLinearGradientRgba [
 PenBlocDresserHelpers >> testLinearGradientWithAngle [
 	| function gradient expectedGradient |
 	dresser := PenBlocDresser new.	
-	function := (StyleFunction value: #linearGradient) args: {
-		{ -90. #deg } asArray.
-		Color red.
-		Color yellow
-	} asArray.
+	function := (StyleFunctionValue value: #linearGradient) args: {
+		StyleArrayValue value: { 
+			StyleNumberValue value: -90. 
+			StyleSymbolValue value: #deg 
+		}.
+		StyleColorValue value: Color red.
+		StyleColorValue value: Color yellow
+	}.
 	
 	gradient := dresser helperLinearGradient: function args.
 	
@@ -129,12 +156,20 @@ PenBlocDresserHelpers >> testLinearGradientWithAngle [
 PenBlocDresserHelpers >> testLinearGradientWithPercentage [
 	| function gradient expectedGradient |
 	dresser := PenBlocDresser new.
-	function := (StyleFunction value: #linearGradient) args: {
-		{ { StyleColorValue value: Color red. StyleValue percent: 0 } asArray } asArray.
-		{ { StyleColorValue value: Color orange. StyleValue percent: 50 } asArray } asArray.
-		{ { StyleColorValue value: Color yellow. StyleValue percent: 52 } asArray } asArray.
-		{ { StyleColorValue value: Color green. StyleValue percent: 100 } asArray } asArray.
-	} asArray.
+	function := (StyleFunctionValue value: #linearGradient) args: {
+		StyleArrayValue value: { 
+			StyleColorValue value: Color red. 
+			StyleValue percent: 0 
+		}.
+		StyleArrayValue value: { 
+			StyleColorValue value: Color orange. 
+			StyleValue percent: 50
+		}.
+		StyleArrayValue value: { 
+			StyleColorValue value: Color yellow. 
+			StyleValue percent: 52
+		}
+	}.
 	
 	gradient := dresser helperLinearGradient: function args.
 	

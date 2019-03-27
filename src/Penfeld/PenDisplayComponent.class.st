@@ -9,6 +9,7 @@ Class {
 		'dressersMap',
 		'stylesheet',
 		'styleClasses',
+		'enabled',
 		'visible',
 		'built',
 		'parent',
@@ -57,7 +58,7 @@ PenDisplayComponent >> build [
 	| eventStrategy |
 	self isBuilt ifTrue: [ ^ self ].
 	
-	self stylesheet ifNil: [ self stylesheet: PenStylesheet current ].
+	self stylesheet ifNil: [ self stylesheet: self chooseStylesheet ].
 	
 	self dresser ifNil: [ self dresser: (self chooseDresserFor: self) new ].
 	self dresser initEngineElement.
@@ -95,6 +96,20 @@ TBD"
 	
 ]
 
+{ #category : #building }
+PenDisplayComponent >> chooseStylesheet [
+	self parent
+		ifNotNil:
+		[ 
+			self parent stylesheet 
+				ifNil: [ ^ self parent chooseStylesheet ] 
+				ifNotNil: [ ^ self parent stylesheet ]
+		]
+		ifNil: [ 	^ PenStylesheet current ]
+	
+	
+]
+
 { #category : #accessing }
 PenDisplayComponent >> clearAllPseudoClass [
 	self pseudoClasses removeAll.
@@ -105,6 +120,11 @@ PenDisplayComponent >> clearAllPseudoClass [
 PenDisplayComponent >> deactivatePseudoClass: aSymbol [
 	self pseudoClasses remove: aSymbol ifAbsent: [^ self].
 	self refresh
+]
+
+{ #category : #accessing }
+PenDisplayComponent >> disable [
+	self enabled: false
 ]
 
 { #category : #accessing }
@@ -126,6 +146,25 @@ PenDisplayComponent >> dressersMap [
 { #category : #accessing }
 PenDisplayComponent >> dressersMap: anObject [
 	dressersMap := anObject
+]
+
+{ #category : #accessing }
+PenDisplayComponent >> enable [
+	self enabled: true
+]
+
+{ #category : #accessing }
+PenDisplayComponent >> enabled: aBoolean [
+	enabled = aBoolean ifTrue: [ ^ self ].
+	
+	enabled := aBoolean.
+	enabled 
+		ifTrue: [ 
+			self deactivatePseudoClass: #disabled.
+			self activatePseudoClass: #enabled. ]
+		ifFalse: [ 
+			self deactivatePseudoClass: #enabled.
+			self activatePseudoClass: #disabled ]
 ]
 
 { #category : #accessing }
@@ -166,6 +205,8 @@ PenDisplayComponent >> height: aLength [
 { #category : #initialization }
 PenDisplayComponent >> initialize [
 	super initialize.
+	enabled := true.
+	visible := true.
 	built := false.
 	styleClasses := OrderedCollection new.
 	pseudoClasses := Set new.
@@ -180,6 +221,16 @@ PenDisplayComponent >> isBuilt [
 { #category : #testing }
 PenDisplayComponent >> isContainer [
 	^ false
+]
+
+{ #category : #testing }
+PenDisplayComponent >> isDisabled [
+	^ enabled not
+]
+
+{ #category : #testing }
+PenDisplayComponent >> isEnabled [
+	^ enabled
 ]
 
 { #category : #testing }
@@ -228,6 +279,16 @@ PenDisplayComponent >> position [
 { #category : #accessing }
 PenDisplayComponent >> position: aPoint [
 	position := aPoint
+]
+
+{ #category : #printing }
+PenDisplayComponent >> printOn: aStream [
+	aStream nextPutAll: self className.
+	self key ifNotNil: [ 
+		aStream
+			nextPutAll: ': ';
+			nextPutAll: 	self key printString
+	 ]
 ]
 
 { #category : #accessing }

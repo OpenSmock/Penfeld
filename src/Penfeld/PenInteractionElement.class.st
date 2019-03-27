@@ -2,35 +2,31 @@ Class {
 	#name : #PenInteractionElement,
 	#superclass : #PenElement,
 	#instVars : [
-		'enabled',
-		'tooltip'
+		'tooltip',
+		'loading'
 	],
 	#category : #'Penfeld-Core'
 }
 
-{ #category : #accessing }
-PenInteractionElement >> disable [
-	self enabled: false
-]
-
-{ #category : #accessing }
-PenInteractionElement >> enable [
-	self enabled: true
-]
-
-{ #category : #accessing }
-PenInteractionElement >> enabled: aBoolean [
-	enabled := aBoolean
+{ #category : #initialization }
+PenInteractionElement >> initialize [ 
+	super initialize.
+	loading := false.
 ]
 
 { #category : #testing }
-PenInteractionElement >> isDisabled [
-	^ enabled not
+PenInteractionElement >> isLoading [
+	^ loading
 ]
 
-{ #category : #testing }
-PenInteractionElement >> isEnabled [
-	^ enabled
+{ #category : #accessing }
+PenInteractionElement >> loading: anObject [
+	loading = anObject ifTrue: [ ^ self ].
+	
+	loading := anObject.
+	loading 
+		ifTrue: [ self disable ]
+		ifFalse: [ self enable ]
 ]
 
 { #category : #'api - events' }

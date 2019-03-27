@@ -4,6 +4,11 @@ Class {
 	#category : #'Penfeld-Bloc-Dressers'
 }
 
+{ #category : #styling }
+PenBlocContainerDresser >> backgroundColor: aValue [
+	self model engineElement background: aValue
+]
+
 { #category : #dressing }
 PenBlocContainerDresser >> doAfterApplyStyle [
 	| var |
@@ -29,13 +34,16 @@ PenBlocContainerDresser >> doBeforeApplyStyle [
 
 { #category : #initialization }
 PenBlocContainerDresser >> initEngineElement [
+	| element |
 	self model engineElement: BlElement new.
-	(self model layout isKindOf: PenLinearLayout)
+	element := self model engineElement.
+	
+	element layout: (self model layout isLinearLayout
 		ifTrue: [ self model layout isHorizontal 
 			ifTrue: [ BlLinearLayout horizontal ]
 			ifFalse: [ BlLinearLayout vertical ]]
-		ifFalse: [  ].
+		ifFalse: [ BlBasicLayout new ]).
 		
 	self model elements do: [ :each |
-		self model engineElement addChild: each engineElement ]
+		element addChild: each engineElement ]
 ]

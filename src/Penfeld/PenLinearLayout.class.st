@@ -1,6 +1,6 @@
 Class {
 	#name : #PenLinearLayout,
-	#superclass : #Object,
+	#superclass : #PenLayout,
 	#instVars : [
 		'orientation'
 	],
@@ -25,4 +25,9 @@ PenLinearLayout >> initialize: anOrientation [
 { #category : #testing }
 PenLinearLayout >> isHorizontal [
 	^ orientation = #horizontal
+]
+
+{ #category : #testing }
+PenLinearLayout >> isLinearLayout [
+	^ true
 ]

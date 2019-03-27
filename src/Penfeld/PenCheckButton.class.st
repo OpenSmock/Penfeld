@@ -19,7 +19,7 @@ PenCheckButton >> check [
 PenCheckButton >> initialize [
 	| eventBinding |
 	super initialize.
-	value := false.
+	self value: false.
 	eventBinding := self addCallback: [ self toggle ] for: PenEventSymbol action.
 	eventBinding autoBind
 ]
@@ -73,6 +73,15 @@ PenCheckButton >> value: aBoolean [
 	value = aBoolean 
 		ifTrue: [ ^ self ].
 	value := aBoolean.
+	value 
+	ifTrue: [ 
+		self activatePseudoClass: #checked.
+		self deactivatePseudoClass: #unchecked
+	]
+	ifFalse: [ 
+		self activatePseudoClass: #unchecked.
+		self deactivatePseudoClass: #checked 
+	].
 	self valueChangedEvent.
 	self refresh
 ]

@@ -6,6 +6,7 @@ Class {
 
 { #category : #events }
 PenElement >> actionEvent [
+	self isDisabled ifTrue: [ ^ self ].
 	eventBindings do: [ :eventBinding |
 		(eventBinding symbol = PenEventSymbol action)
 			ifTrue: [ eventBinding callback value ]] 

@@ -1,15 +1,8 @@
 Class {
 	#name : #PenBlocDresser,
 	#superclass : #PenDresser,
-	#traits : 'TBlExample',
-	#classTraits : 'TBlExample classTrait',
 	#category : #'Penfeld-Bloc-Dressers'
 }
-
-{ #category : #opening }
-PenBlocDresser class >> spaceBackground [
-	^ Color r: 128 g: 128 b: 128 range: 255
-]
 
 { #category : #accessing }
 PenBlocDresser >> dressersMap [ 
@@ -23,54 +16,68 @@ PenBlocDresser >> eventStrategy [
 
 { #category : #helpers }
 PenBlocDresser >> helperLinearGradient: args [
-	| colors frac stops direction |
-	colors := OrderedCollection new.
-	frac := OrderedCollection new.
+	| stops direction minIndexColor maxIndexColor factor stop |
+	stops := OrderedCollection new.
 	
-	args do: [ :arg |
-		arg isColor 
-			ifTrue: [ colors add: arg ]
-			ifFalse: [ 
-				arg isArray
+	minIndexColor := 1.
+	maxIndexColor := args size.
+	
+	factor := (1 / (maxIndexColor - minIndexColor)) asFloat.
+	
+	args withIndexDo: 
+	[ :arg :index |
+		stop := ((index - minIndexColor) * factor) round: 2.
+		
+		arg value isColor 
+		ifTrue: [ 
+			"Color without stop"
+			stops add: stop -> arg value.
+		]
+		ifFalse: [ 
+			arg value isArray
+			ifTrue: [ 
+				arg first value isColor 
 				ifTrue: [ 
-					arg first isSymbol ifTrue: 
-					[ 
-						direction := 0@0.
-						arg do: [ :e |
-							e = #bottom ifTrue: [ direction := direction + (0@1) ].
-							e = #top ifTrue: [ direction := direction + (0@ -1) ].
-							e = #left ifTrue: [ direction := direction + (-1 @ 0) ].
-							e = #right ifTrue: [ direction := direction + (1 @ 0) ].
-						] 
-					].
-					arg first isNumber ifTrue: [ | angle |
-						"Angle direction"
-						arg second = #deg ifTrue: [ 
-							"Angle in degree"
-							angle := arg first degreesToRadians.
-							direction := angle sin @ angle cos.
+					"Color with stop"
+					stops add: ((arg second value asFloat round: 2) -> arg first value)
+				]
+				ifFalse: [ 
+					(arg first value = #rgb or: [ arg first value = #rgba ])
+					ifTrue: [ 
+						stops add: ((arg second value asFloat round: 2) -> (self getColor: arg first))
+					]
+					ifFalse: [ 
+						"Update factor"
+						minIndexColor := minIndexColor + 1.
+						factor := (1 / (maxIndexColor - minIndexColor)) asFloat.
+					
+						arg first = #to 
+						ifTrue: [ 
+							"Direction"
+							direction := 0@0.
+							arg allButFirstDo: [ :e |
+								e = #bottom ifTrue: [ direction := direction + (0@1) ].
+								e = #top ifTrue: [ direction := direction + (0@ -1) ].
+								e = #left ifTrue: [ direction := direction + (-1 @ 0) ].
+								e = #right ifTrue: [ direction := direction + (1 @ 0) ].
+							] 
 						]
-					].
-					arg first isArray ifTrue: [ | colorStop |
-						"Color with stop"
-						colorStop := arg first.
-						colors add: colorStop first value.
-						frac add: colorStop second value asFloat.
+						ifFalse: [ | angle |
+							"Direction with angle"
+							arg second = #deg ifTrue: [ 
+								"Angle in degree"
+								angle := arg first degreesToRadians.
+								direction := angle sin @ angle cos.
+							]
+						]
 					]
 				]
-				ifFalse: [ arg isFunction ifTrue: [ colors add: (self performFunction: arg) ] ] 
 			]
-	].
-
-	frac isEmpty ifTrue: [ | div |
-		div := 1 / (colors size - 1).
-		frac := 0 to: 1 by: div asFloat.
-		frac := frac collect: [ :e | e round: 2 ]
-	].
-
-	stops := colors withIndexCollect: [ 
-		:color :i |
-		(frac at: i) -> color
+			ifFalse: [ 
+				"Gradient without stop"
+				stops add: (stop -> (self getColor: arg))
+			]
+		]
 	].
 
 	"Default direction is top to bottom"
@@ -95,4 +102,36 @@ PenBlocDresser >> helperRgba: args [
 		g: args second 
 		b: args third range: 255) 
 		alpha: args fourth value)
+]
+
+{ #category : #rendering }
+PenBlocDresser >> loader [
+"Temporary method: it has to become more flexible"
+	| element animation loopDoneListener |
+	element := self loaderIcon.
+	animation := BlTransformAnimation new.
+	animation transform
+		rotateBy: 90;
+		apply.
+	animation absolute.
+	animation beInfinite.
+	animation duration: 1 second.
+	element addAnimation: animation.
+	loopDoneListener := BlEventHandler 
+		on: BlAnimationLoopDoneEvent 
+		do: [ :anEvent | 
+			element transform
+				rotateBy: 0;
+				apply
+		].
+	animation addEventHandler: loopDoneListener.
+	^ element
+]
+
+{ #category : #rendering }
+PenBlocDresser >> loaderIcon [
+	^ BlElement new
+		size: 20 @ 20;
+		geometry: (BlRectangle cornerRadius: 5);
+		border: (BlBorder paint: Color white width: 5).
 ]
