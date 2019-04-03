@@ -12,6 +12,7 @@ Class {
 
 { #category : #building }
 PenTree >> build [
+	self stylesheet ifNil: [ self chooseStylesheet ].
 	self root build.
 	self isShownRoot ifFalse: [ self root doExpand ].
 	super build
@@ -60,6 +61,11 @@ PenTree >> isShownRoot [
 { #category : #accessing }
 PenTree >> nodes [
 	^ self root sortedNodes
+]
+
+{ #category : #'api - events' }
+PenTree >> onSelectionChangedDo: aBlock [
+	self addCallback: aBlock for: PenEventSymbol selectionChanged
 ]
 
 { #category : #accessing }

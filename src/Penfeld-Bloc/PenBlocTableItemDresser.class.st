@@ -1,21 +1,18 @@
 Class {
 	#name : #PenBlocTableItemDresser,
 	#superclass : #PenBlocDresser,
+	#traits : 'TPenBlocSizeStyle + TPenBlocBackgroundStyle',
+	#classTraits : 'TPenBlocSizeStyle classTrait + TPenBlocBackgroundStyle classTrait',
 	#category : #'Penfeld-Bloc-Dressers'
 }
 
-{ #category : #styling }
-PenBlocTableItemDresser >> backgroundColor: aValue [
-	self model engineElement background: aValue
-]
-
 { #category : #dressing }
 PenBlocTableItemDresser >> doBeforeApplyStyle [ 
-	self model parent sections do: [ :section | 
+	self component parent sections do: [ :section | 
 		| selector content fixedSize |
 		selector := section selector.
 		fixedSize := section size.
-		content := self model contentAtSection: selector.
+		content := self component atSection: selector.
 		fixedSize ifNotNil: [ 
 			content engineElement constraintsDo: [ :c | 
 				c horizontal exact: fixedSize ]
@@ -25,20 +22,21 @@ PenBlocTableItemDresser >> doBeforeApplyStyle [
 
 { #category : #dressing }
 PenBlocTableItemDresser >> initEngineElement [
-	self model engineElement: BlElement new.
-	self model engineElement layout: BlLinearLayout horizontal.
-	self model engineElement constraintsDo: [ :c |
+	self component engineElement: BlElement new.
+	self component engineElement layout: BlLinearLayout horizontal.
+	self component engineElement constraintsDo: [ :c |
 		c horizontal matchParent.
-		c vertical fitContent.
+		self flag: 'ideally: c vertical fitContent'.
+		c vertical exact: 20.
 	].
 	
-	self model parent sections do: [ :section | 
+	self component parent sections do: [ :section | 
 		| selector content fixedSize |
 		selector := section selector.
 		fixedSize := section size.
-		content := self model contentAtSection: selector.
+		content := self component atSection: selector.
 		fixedSize ifNotNil: [ content engineElement constraintsDo: [ :c | c horizontal exact: fixedSize ]].
-		self model engineElement addChild: content engineElement as: selector].
+		self component engineElement addChild: content engineElement as: selector].
 ]
 
 { #category : #styling }

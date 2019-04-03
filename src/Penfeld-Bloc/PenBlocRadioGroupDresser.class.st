@@ -17,16 +17,16 @@ PenBlocRadioGroupDresser >> doAfterApplyStyle [
 	| var |
 
 	"Position"
-	var := self model position.
-	var ifNotNil: [ self model engineElement relocate: var ].
+	var := self component position.
+	var ifNotNil: [ self component engineElement relocate: var ].
 
 	"Width"
-	var := self model width.
-	var ifNotNil: [ self model engineElement width: var pref ].
+	var := self component width.
+	var ifNotNil: [ self component engineElement width: var pref ].
 	
 	"Height"
-	var := self model height.
-	var ifNotNil: [ self model engineElement height: var pref ].
+	var := self component height.
+	var ifNotNil: [ self component engineElement height: var pref ].
 ]
 
 { #category : #dressing }
@@ -36,16 +36,16 @@ PenBlocRadioGroupDresser >> horizontal [
 
 { #category : #dressing }
 PenBlocRadioGroupDresser >> initEngineElement [
-	self model engineElement: BlElement new.
-	self model engineElement layout: 
+	self component engineElement: BlElement new.
+	self component engineElement layout: 
 		(horizontal 
 			ifTrue: [ BlLinearLayout horizontal ]
 			ifFalse: [ BlLinearLayout vertical ]).
-	self model engineElement constraintsDo: [ :c |
+	self component engineElement constraintsDo: [ :c |
 		c horizontal fitContent.
 		c vertical fitContent ].
-	self model radioButtons do: [ :each |
-		self model engineElement addChild: each engineElement ]
+	self component radioButtons do: [ :each |
+		self component engineElement addChild: each engineElement ]
 ]
 
 { #category : #dressing }

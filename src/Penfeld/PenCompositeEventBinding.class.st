@@ -12,6 +12,11 @@ PenCompositeEventBinding >> isCompositeEvent [
 	^ true
 ]
 
+{ #category : #testing }
+PenCompositeEventBinding >> symbolMatches: aSymbol [
+	^ false
+]
+
 { #category : #accessing }
 PenCompositeEventBinding >> symbols [
 	^ symbols

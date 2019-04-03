@@ -37,7 +37,7 @@ PenBlocContainerExamples class >> example2 [
 	container := PenContainer new 
 		addElement: label.
 	
-	container openInInternalWindow 
+	container openInWorld 
 ]
 
 { #category : #'see class side' }

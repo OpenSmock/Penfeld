@@ -1,6 +1,8 @@
 Class {
 	#name : #PenBlocLabelDresser,
 	#superclass : #PenBlocDresser,
+	#traits : 'TPenBlocFontStyle',
+	#classTraits : 'TPenBlocFontStyle classTrait',
 	#instVars : [
 		'ropedText'
 	],
@@ -9,12 +11,7 @@ Class {
 
 { #category : #styling }
 PenBlocLabelDresser >> backgroundColor: aValue [
-	self model engineElement background: aValue
-]
-
-{ #category : #styling }
-PenBlocLabelDresser >> color: aValue [
-	self model engineElement text foreground: aValue
+	self component engineElement background: aValue
 ]
 
 { #category : #rendering }
@@ -22,36 +19,31 @@ PenBlocLabelDresser >> doAfterApplyStyle [
 	| var |
 
 	"Position"
-	var := self model position.
-	var ifNotNil: [ self model engineElement relocate: var ].
+	var := self component position.
+	var ifNotNil: [ self component engineElement relocate: var ].
 
 	"Apply roped text"
-	self model engineElement text: ropedText 
+	self component engineElement text: ropedText 
 ]
 
 { #category : #dressing }
 PenBlocLabelDresser >> doBeforeApplyStyle [ 
-	ropedText := self model text asRopedText
-]
-
-{ #category : #styling }
-PenBlocLabelDresser >> fontFamily: aValue [
-	ropedText fontName: aValue first value.
-]
-
-{ #category : #styling }
-PenBlocLabelDresser >> fontSize: aValue [
-	ropedText fontSize: aValue value.
+	ropedText := self component text asRopedText
 ]
 
 { #category : #dressing }
 PenBlocLabelDresser >> initEngineElement [
-	self model engineElement: BlTextElement new.
+	self component engineElement: BlTextElement new.
+]
+
+{ #category : #accessing }
+PenBlocLabelDresser >> ropedText [
+	^ ropedText
 ]
 
 { #category : #styling }
 PenBlocLabelDresser >> textAlign: aValue [
-	self model engineElement constraintsDo: [:c | 
+	self component engineElement constraintsDo: [:c | 
 		aValue = #center 
 		ifTrue: [ 
 			c frame horizontal alignCenter.

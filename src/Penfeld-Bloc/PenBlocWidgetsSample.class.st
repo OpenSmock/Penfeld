@@ -61,7 +61,7 @@ PenBlocWidgetsSample >> open [
 		self slider2 position: 10@240.
 		self progressBar position: 10@300.
 	}.
-	container openInInternalWindow
+	container openInWorld
 ]
 
 { #category : #accessing }

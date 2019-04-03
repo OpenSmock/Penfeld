@@ -1,40 +1,48 @@
 Class {
 	#name : #PenElement,
 	#superclass : #PenDisplayComponent,
+	#instVars : [
+		'icon'
+	],
 	#category : #'Penfeld-Core'
 }
 
-{ #category : #events }
-PenElement >> actionEvent [
-	self isDisabled ifTrue: [ ^ self ].
-	eventBindings do: [ :eventBinding |
-		(eventBinding symbol = PenEventSymbol action)
-			ifTrue: [ eventBinding callback value ]] 
+{ #category : #accessing }
+PenElement >> icon [
+	^ icon
 ]
 
-{ #category : #events }
-PenElement >> clickEvent: anEvent [
-	| list |
-	list := eventBindings 
-		at: PenEventSymbol click
-		ifAbsent: [ ^nil ].
-	list do: [ :callback |
-		callback value: anEvent ].
+{ #category : #accessing }
+PenElement >> icon: anObject [
+	icon := anObject
 ]
 
 { #category : #'api - events' }
 PenElement >> onActionDo: aBlock [
-	| eventBinding |
-	eventBinding := self addCallback: aBlock for: PenEventSymbol action.
-	eventBinding autoBind
+	self onEvent: PenEventSymbol action do: aBlock
+]
+
+{ #category : #'api - events' }
+PenElement >> onActionPerform: aFunction on: aPerformer [
+	self onEvent: PenEventSymbol action perform: aFunction on: aPerformer
 ]
 
 { #category : #'api - events' }
 PenElement >> onClickDo: aBlock [
-	self addCallback: aBlock for: PenEventSymbol click
+	self onEvent: PenEventSymbol click do: aBlock
+]
+
+{ #category : #'api - events' }
+PenElement >> onClickPerform: aFunction on: aPerformer [
+	self onEvent: PenEventSymbol click perform: aFunction on: aPerformer
 ]
 
 { #category : #'api - events' }
 PenElement >> onMouseDownDo: aBlock [
-	self addCallback: aBlock for: PenEventSymbol mouseDown
+	self onEvent: PenEventSymbol mouseDown do: aBlock
+]
+
+{ #category : #'api - events' }
+PenElement >> onMouseDownPerform: aFunction on: aPerformer [
+	self onEvent: PenEventSymbol mouseDown perform: aFunction on: aPerformer
 ]

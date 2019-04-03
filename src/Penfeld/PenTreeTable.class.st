@@ -1,8 +1,8 @@
 Class {
 	#name : #PenTreeTable,
 	#superclass : #PenTree,
-	#traits : 'TPenSections + TPenSelectionChangedEvent',
-	#classTraits : 'TPenSections classTrait + TPenSelectionChangedEvent classTrait',
+	#traits : 'TPenSections',
+	#classTraits : 'TPenSections classTrait',
 	#instVars : [
 		'treeSectionSelector',
 		'sections',
@@ -72,13 +72,6 @@ PenTreeTable >> sections [
 { #category : #accessing }
 PenTreeTable >> sections: aCollection [
 	sections := aCollection
-]
-
-{ #category : #events }
-PenTreeTable >> selectionChangedEvent [
-	self eventBindings do: [ :eventBinding |
-		(eventBinding symbol = PenEventSymbol selectionChanged)
-			ifTrue: [ eventBinding callback value ]].
 ]
 
 { #category : #accessing }

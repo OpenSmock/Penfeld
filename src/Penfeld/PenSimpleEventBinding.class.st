@@ -21,3 +21,8 @@ PenSimpleEventBinding >> symbol [
 PenSimpleEventBinding >> symbol: aSymbol [
 	symbol := aSymbol
 ]
+
+{ #category : #testing }
+PenSimpleEventBinding >> symbolMatches: aSymbol [
+	^ self symbol = aSymbol
+]

@@ -5,10 +5,10 @@ Trait {
 
 { #category : #styling }
 TPenBlocBackgroundStyle >> backgroundColor: aValue [
-	self model engineElement background: aValue
+	self component engineElement background: aValue
 ]
 
 { #category : #styling }
 TPenBlocBackgroundStyle >> backgroundImage: aValue [
-	self model engineElement background: aValue
+	self component engineElement background: aValue
 ]

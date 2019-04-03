@@ -6,7 +6,7 @@ Class {
 
 { #category : #accessing }
 PenBlocDresser >> dressersMap [ 
-	^ PenBlocBasicDressersMap new
+	^ PenBlocDressersMap new
 ]
 
 { #category : #accessing }
@@ -100,7 +100,8 @@ PenBlocDresser >> helperRgba: args [
 	^ StyleColorValue value: ((Color 
 		r: args first 
 		g: args second 
-		b: args third range: 255) 
+		b: args third 
+		range: 255) 
 		alpha: args fourth value)
 ]
 

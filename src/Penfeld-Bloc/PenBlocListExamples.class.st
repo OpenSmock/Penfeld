@@ -15,7 +15,7 @@ PenBlocListExamples class >> exampleWithMultiselection [
 	model allowToSelect: true.
 	model multiSelection: true.
 	model dresser: PenBlocListDresser new.
-	model openInInternalWindow
+	model openInWorld
 ]
 
 { #category : #examples }
@@ -29,7 +29,7 @@ PenBlocListExamples class >> exampleWithNoDeselection [
 	model allowToSelect: true.
 	model allowToDeselect: false.
 	model dresser: PenBlocListDresser new.
-	model openInInternalWindow
+	model openInWorld
 	
 ]
 
@@ -44,7 +44,7 @@ PenBlocListExamples class >> exampleWithSelection [
 	model sortingBlock: [ :a :b | a text < b text ].
 	model allowToSelect: true.
 	model dresser: PenBlocListDresser new.
-	model openInInternalWindow
+	model openInWorld
 ]
 
 { #category : #examples }
@@ -56,7 +56,7 @@ PenBlocListExamples class >> exampleWithoutSelection [
 			yourself]) .
 	model sortingBlock: [ :a :b | a text < b text ].
 	model dresser: PenBlocListDresser new.
-	model openInInternalWindow
+	model openInWorld
 ]
 
 { #category : #opening }

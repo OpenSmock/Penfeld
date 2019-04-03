@@ -11,14 +11,14 @@ Class {
 { #category : #styling }
 PenBlocCheckBoxDresser >> backgroundColor: aValue [
 	| box |
-	box := self model engineElement childNamed: #box.
+	box := self component engineElement childNamed: #box.
 	box background: aValue
 ]
 
 { #category : #styling }
 PenBlocCheckBoxDresser >> border: aValue [
 	| borderBuilder box |
-	box := self model engineElement childNamed: #box.	
+	box := self component engineElement childNamed: #box.	
 	borderBuilder := BlBorderBuilder new.
 	
 	aValue do: 
@@ -60,7 +60,7 @@ PenBlocCheckBoxDresser >> border: aValue [
 { #category : #styling }
 PenBlocCheckBoxDresser >> color: aValue [
 	| textElement |
-	textElement := self model engineElement childNamed: #text
+	textElement := self component engineElement childNamed: #text
 		ifFound: [ :anElement | anElement ]
 		ifNone: [ ^ self ].
 	textElement text foreground: aValue
@@ -71,30 +71,30 @@ PenBlocCheckBoxDresser >> doAfterApplyStyle [
 	| var |
 
 	"Position"
-	var := self model position.
-	var ifNotNil: [ self model engineElement relocate: var ].
+	var := self component position.
+	var ifNotNil: [ self component engineElement relocate: var ].
 
 	"Width"
-	var := self model width.
-	var ifNotNil: [ self model engineElement width: var pref ].
+	var := self component width.
+	var ifNotNil: [ self component engineElement width: var pref ].
 	
 	"Height"
-	var := self model height.
-	var ifNotNil: [ self model engineElement height: var pref ].
+	var := self component height.
+	var ifNotNil: [ self component engineElement height: var pref ].
 	
 	"Apply roped text"
-	self model engineElement childNamed: #text
+	self component engineElement childNamed: #text
 		ifFound: [ :anElement | anElement text: ropedText ]
 		ifNone: [].
 ]
 
 { #category : #dressing }
 PenBlocCheckBoxDresser >> doBeforeApplyStyle [ 
-	(self model engineElement childNamed: #check) visibility: (self model value
+	(self component engineElement childNamed: #check) visibility: (self component value
 		ifTrue: [ BlVisibility visible ]
 		ifFalse: [ BlVisibility gone ]).
 		
-	ropedText := self model text asRopedText
+	ropedText := self component text asRopedText
 
 ]
 
@@ -112,7 +112,7 @@ PenBlocCheckBoxDresser >> fontSize: aValue [
 	
 	size := size - 3.
 	
-	box := self model engineElement childNamed: #box.
+	box := self component engineElement childNamed: #box.
 	box size: size asPoint.
 	
 	check := box childNamed: #check.
@@ -128,11 +128,11 @@ PenBlocCheckBoxDresser >> fontSize: aValue [
 PenBlocCheckBoxDresser >> initEngineElement [
 	| box check |
 	
-	self model engineElement: BlElement new.
-	self model isLabelAfter
-		ifTrue: [ self model engineElement layout: BlLinearLayout horizontal leftToRight ]
-		ifFalse: [ self model engineElement layout: BlLinearLayout horizontal rightToLeft ].
-	self model engineElement constraintsDo: [ :c |
+	self component engineElement: BlElement new.
+	self component isLabelAfter
+		ifTrue: [ self component engineElement layout: BlLinearLayout horizontal leftToRight ]
+		ifFalse: [ self component engineElement layout: BlLinearLayout horizontal rightToLeft ].
+	self component engineElement constraintsDo: [ :c |
 		c horizontal fitContent.
 		c vertical fitContent ].
 	
@@ -143,30 +143,30 @@ PenBlocCheckBoxDresser >> initEngineElement [
 	box addChild: check as: #check.
 	box size: 14 @ 14. self flag: #moveInStyle.
 	
-	self model engineElement addChild: box as: #box.
-	self model engineElement addChild: BlTextElement new as: #text.
+	self component engineElement addChild: box as: #box.
+	self component engineElement addChild: BlTextElement new as: #text.
 	
 	pushed := false.
-	self model engineElement when: BlMouseDownEvent do: [ :e | self whenMouseDownEvent ].
-	self model engineElement when: BlMouseUpEvent do: [ :e | self whenMouseUpEvent ].
-	self model engineElement when: BlMouseLeaveEvent do: [ :e | self whenMouseLeaveEvent ].
+	self component engineElement when: BlMouseDownEvent do: [ :e | self whenMouseDownEvent ].
+	self component engineElement when: BlMouseUpEvent do: [ :e | self whenMouseUpEvent ].
+	self component engineElement when: BlMouseLeaveEvent do: [ :e | self whenMouseLeaveEvent ].
 ]
 
 { #category : #events }
 PenBlocCheckBoxDresser >> whenMouseDownEvent [
-	self model activatePseudoClass: #active.
+	self component activatePseudoClass: #active.
 	pushed := true.
 ]
 
 { #category : #events }
 PenBlocCheckBoxDresser >> whenMouseLeaveEvent [
 	pushed := false.
-	self model deactivatePseudoClass: #active.
+	self component deactivatePseudoClass: #active.
 ]
 
 { #category : #events }
 PenBlocCheckBoxDresser >> whenMouseUpEvent [
 	pushed ifFalse: [^ self].
-	self model deactivatePseudoClass: #active.
+	self component deactivatePseudoClass: #active.
 	pushed := false.
 ]

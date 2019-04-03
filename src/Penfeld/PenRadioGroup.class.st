@@ -1,8 +1,6 @@
 Class {
 	#name : #PenRadioGroup,
 	#superclass : #PenInteractionElement,
-	#traits : 'TPenSelectionChangedEvent',
-	#classTraits : 'TPenSelectionChangedEvent classTrait',
 	#instVars : [
 		'checkedButton',
 		'radioButtons'
@@ -42,6 +40,11 @@ PenRadioGroup >> buttonStateChange: aRadioButton [
 PenRadioGroup >> initialize [ 
 	super initialize.
 	radioButtons := OrderedCollection new
+]
+
+{ #category : #'api - events' }
+PenRadioGroup >> onSelectionChangedDo: aBlock [
+	self addCallback: aBlock for: PenEventSymbol selectionChanged
 ]
 
 { #category : #accessing }

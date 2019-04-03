@@ -12,9 +12,9 @@ PenBlocTableExamples class >> allSubclasses: aClass [
 		row := PenTableItem new.
 		row key: class name asSymbol.
 		row dresser: PenBlocTableItemDresser new.
-		row forSection: #name put: (PenLabel text: class name).
-		row forSection: #numberOfSubclasses put: (PenLabel text: class subclasses size printString).
-		row forSection: #numberOfVariables put: (PenLabel text: class instanceVariables size printString).
+		row atSection: #name put: (PenLabel text: class name).
+		row atSection: #numberOfSubclasses put: (PenLabel text: class subclasses size printString).
+		row atSection: #numberOfVariables put: (PenLabel text: class instanceVariables size printString).
 		list add: row].
 	^ list
 ]
@@ -33,7 +33,8 @@ PenBlocTableExamples class >> example [
 	component sortingBlock: [ :a :b | a key < b key ].
 	component dragSections: true.
 	component allowToSelect: true.
-	component openInInternalWindow.
+	component openInWorld
+
 ]
 
 { #category : #examples }
@@ -51,16 +52,35 @@ PenBlocTableExamples class >> exampleMultiSelection [
 	component dragSections: true.
 	component allowToSelect: true.
 	component multiSelection: true.
-	component openInInternalWindow
+	component openInWorld
+]
+
+{ #category : #examples }
+PenBlocTableExamples class >> exampleWithScrollBar [
+	| component |
+	component := PenTable new.
+	component sections: { 
+		PenSection new selector: #name.
+		PenSection new selector: #numberOfSubclasses; size: 40.
+		PenSection new selector: #numberOfVariables; size: 40 }.
+	component header: self header.
+	component addAllItems: (self allSubclasses: Model).
+	component dresser: PenBlocTableDresser new.
+	component sortingBlock: [ :a :b | a key < b key ].
+	component dragSections: true.
+	component allowToSelect: true.
+	component scrollBar: true.
+	component openInWorld
+
 ]
 
 { #category : #'examples - instance creation' }
 PenBlocTableExamples class >> header [
 	^ PenTableItem new
 		dresser: PenBlocTableItemHeaderDresser new;
-		forSection: #name put: (PenLabel new text: 'Nom');
-		forSection: #numberOfSubclasses put: (PenLabel new text: 'Sub.');
-		forSection: #numberOfVariables put: (PenLabel new text: 'Inst.');
+		atSection: #name put: (PenLabel new text: 'Nom');
+		atSection: #numberOfSubclasses put: (PenLabel new text: 'Sub.');
+		atSection: #numberOfVariables put: (PenLabel new text: 'Inst.');
 		yourself
 	
 ]

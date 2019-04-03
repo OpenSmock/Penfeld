@@ -11,7 +11,7 @@ PenBlocTreeExamples class >> example [
 	model root: (self nodeForClass: Model).
 	model dresser: PenBlocTreeDresser new.
 	model sortingBlock: [ :a :b | a key < b key ].
-	model openInInternalWindow
+	model openInWorld
 ]
 
 { #category : #examples }
@@ -22,7 +22,7 @@ PenBlocTreeExamples class >> exampleExpandAll [
 	component dresser: PenBlocTreeDresser new.
 	component sortingBlock: [ :a :b | a key < b key ].
 	component expandAll.
-	component openInInternalWindow 
+	component openInWorld 
 ]
 
 { #category : #examples }
@@ -35,7 +35,7 @@ PenBlocTreeExamples class >> examplePropagateClosure [
 	component expandAll.
 	component showRoot: true.
 	component propagateCollapse: true.
-	component openInInternalWindow 
+	component openInWorld 
 ]
 
 { #category : #examples }
@@ -46,7 +46,7 @@ PenBlocTreeExamples class >> exampleWithRoot [
 	component showRoot: true.
 	component dresser: PenBlocTreeDresser new.
 	component sortingBlock: [ :a :b | a key < b key ].
-	component openInInternalWindow 
+	component openInWorld 
 ]
 
 { #category : #'examples - instance creation' }

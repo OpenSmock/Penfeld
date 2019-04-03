@@ -71,7 +71,7 @@ label {
 	background-color: ', (colors at: #disabledColor), ';
  }
 
-button { 
+button, toggle { 
 	width: 150;
 	height: 30;
 	background-color: ', (colors at: #buttonBackgroundColor), ';

@@ -6,7 +6,7 @@ Class {
 
 { #category : #styling }
 PenBlocContainerDresser >> backgroundColor: aValue [
-	self model engineElement background: aValue
+	self component engineElement background: aValue
 ]
 
 { #category : #dressing }
@@ -14,19 +14,19 @@ PenBlocContainerDresser >> doAfterApplyStyle [
 	| var |
 
 	"Position"
-	var := self model position.
-	var ifNotNil: [ self model engineElement relocate: var ].
+	var := self component position.
+	var ifNotNil: [ self component engineElement relocate: var ].
 
 	"Width and Height"
-	self model engineElement constraintsDo: [ :c |
-		self model width ifNotNil: [ c horizontal exact: self model width pref ].
-		self model height ifNotNil: [ c vertical exact: self model height pref ] 
+	self component engineElement constraintsDo: [ :c |
+		self component width ifNotNil: [ c horizontal exact: self component width pref ].
+		self component height ifNotNil: [ c vertical exact: self component height pref ] 
 	]
 ]
 
 { #category : #dressing }
 PenBlocContainerDresser >> doBeforeApplyStyle [
-	self model engineElement constraintsDo: [ :c |
+	self component engineElement constraintsDo: [ :c |
 		c horizontal matchParent.
 		c vertical matchParent
 	]
@@ -35,15 +35,15 @@ PenBlocContainerDresser >> doBeforeApplyStyle [
 { #category : #initialization }
 PenBlocContainerDresser >> initEngineElement [
 	| element |
-	self model engineElement: BlElement new.
-	element := self model engineElement.
+	self component engineElement: BlElement new.
+	element := self component engineElement.
 	
-	element layout: (self model layout isLinearLayout
-		ifTrue: [ self model layout isHorizontal 
+	element layout: (self component layout isLinearLayout
+		ifTrue: [ self component layout isHorizontal 
 			ifTrue: [ BlLinearLayout horizontal ]
 			ifFalse: [ BlLinearLayout vertical ]]
 		ifFalse: [ BlBasicLayout new ]).
 		
-	self model elements do: [ :each |
+	self component elements do: [ :each |
 		element addChild: each engineElement ]
 ]

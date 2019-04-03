@@ -3,7 +3,7 @@ I represent a mouse point, used for mouse events (mouse move, mouse down, mouse 
 "
 Class {
 	#name : #PenMouseEvent,
-	#superclass : #Object,
+	#superclass : #PenEvent,
 	#instVars : [
 		'point'
 	],

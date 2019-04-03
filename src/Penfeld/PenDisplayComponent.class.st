@@ -25,15 +25,29 @@ Class {
 	#category : #'Penfeld-Core'
 }
 
+{ #category : #events }
+PenDisplayComponent >> actionEvent [
+	self eventBindings do: [ :eventBinding |
+		(eventBinding symbolMatches: PenEventSymbol action)
+			ifTrue: [ eventBinding executeCallback ]].
+]
+
 { #category : #accessing }
 PenDisplayComponent >> activatePseudoClass: aSymbol [
-	self pseudoClasses add: aSymbol.
+	self pseudoClasses add: aSymbol -> nil.
+	self refresh
+]
+
+{ #category : #accessing }
+PenDisplayComponent >> activatePseudoClass: aSymbol value: anArg [
+	self pseudoClasses add: aSymbol -> anArg.
 	self refresh
 ]
 
 { #category : #private }
 PenDisplayComponent >> addCallback: aBlock for: anEventSymbol [
 	| binding |
+	self deprecated: ''.
 	binding := PenEventBinding for: anEventSymbol do: aBlock.
 	eventBindings add: binding.
 	^ binding
@@ -42,6 +56,7 @@ PenDisplayComponent >> addCallback: aBlock for: anEventSymbol [
 { #category : #private }
 PenDisplayComponent >> addCallback: aBlock forAll: anEventSymbolList [
 	| binding |
+	self deprecated: ''.
 	binding := PenEventBinding forAll: anEventSymbolList do: aBlock.
 	eventBindings add: binding.
 	^ binding
@@ -65,14 +80,19 @@ PenDisplayComponent >> build [
 	self dresser dress.
 	
 	eventStrategy := self dresser eventStrategy.
-	eventBindings do: 
-	[ 
-		:eventBinding | 
-		(eventBinding isAutoBound and: [ eventBinding isSimpleEvent ])
-			ifTrue: [ eventStrategy install: eventBinding symbol on: self ]
-	].
+	eventBindings do: [ :eventBinding | (eventStrategy tryToBind: eventBinding)
+		ifFalse: [ self warn: 'Can not bind ', eventBinding symbol ] ].
 
 	built := true.
+]
+
+{ #category : #building }
+PenDisplayComponent >> build: anIndex [
+	self activatePseudoClass: #nthChild value: anIndex.
+	anIndex even 
+		ifTrue: [ self activatePseudoClass: #nthChild value: #even ]
+		ifFalse: [ self activatePseudoClass: #nthChild value: #odd ].
+	self build.
 ]
 
 { #category : #building }
@@ -89,7 +109,7 @@ TBD"
 		]
 		ifNil: 
 		[ 
-			self engine: PenEngine default.
+			self engine ifNil: [ self engine: PenEngine default ].
 			^ self engine dressersMap dresserFor: aModel class.
 		]
 	
@@ -116,9 +136,17 @@ PenDisplayComponent >> clearAllPseudoClass [
 	self refresh
 ]
 
+{ #category : #events }
+PenDisplayComponent >> clickEvent: anEvent [
+	self eventBindings do: [ :eventBinding |
+		(eventBinding symbolMatches: PenEventSymbol click)
+			ifTrue: [ eventBinding executeCallback: anEvent ]].
+]
+
 { #category : #accessing }
 PenDisplayComponent >> deactivatePseudoClass: aSymbol [
-	self pseudoClasses remove: aSymbol ifAbsent: [^ self].
+	pseudoClasses := pseudoClasses reject: [ :association |
+		association key = aSymbol ].
 	self refresh
 ]
 
@@ -135,7 +163,7 @@ PenDisplayComponent >> dresser [
 { #category : #accessing }
 PenDisplayComponent >> dresser: aDresser [
 	dresser := aDresser.
-	aDresser model: self.
+	aDresser component: self.
 ]
 
 { #category : #accessing }
@@ -209,7 +237,7 @@ PenDisplayComponent >> initialize [
 	visible := true.
 	built := false.
 	styleClasses := OrderedCollection new.
-	pseudoClasses := Set new.
+	pseudoClasses := OrderedCollection new.
 	eventBindings := OrderedCollection new.
 ]
 
@@ -243,22 +271,68 @@ PenDisplayComponent >> matchedRules [
 	^ self stylesheet matchingRulesFor: self.
 ]
 
+{ #category : #events }
+PenDisplayComponent >> mouseDownEvent: anEvent [
+	self eventBindings do: [ :eventBinding |
+		(eventBinding symbolMatches: PenEventSymbol mouseDown)
+			ifTrue: [ eventBinding executeCallback: anEvent ]].
+]
+
 { #category : #'api - events' }
 PenDisplayComponent >> on: aListOfSymbols do: aBlock [
+	self deprecated: ''.
 	self addCallback: aBlock forAll: aListOfSymbols 
+]
+
+{ #category : #'api - events' }
+PenDisplayComponent >> onEvent: aSymbol do: aBlock [
+	| binding |
+	binding := PenEventBinding for: aSymbol do: aBlock.
+	binding source: self.
+	eventBindings add: binding.
+]
+
+{ #category : #'api - events' }
+PenDisplayComponent >> onEvent: aSymbol perform: aFunction on: aPerformer [
+	| binding |
+	binding := PenEventBinding for: aSymbol perform: aFunction on: aPerformer.
+	binding source: self.
+	eventBindings add: binding.
+]
+
+{ #category : #'api - events' }
+PenDisplayComponent >> onEvents: aListOfSymbols do: aBlock [
+	| binding |
+	binding := PenEventBinding forAll: aListOfSymbols do: aBlock.
+	binding source: self.
+	eventBindings add: binding.
+]
+
+{ #category : #'api - events' }
+PenDisplayComponent >> onEvents: aListOfSymbols perform: aFunction on: aPerformer [
+	| binding |
+	binding := PenEventBinding forAll: aListOfSymbols perform: aFunction on: aPerformer.
+	binding source: self.
+	eventBindings add: binding.
 ]
 
 { #category : #opening }
 PenDisplayComponent >> openInInternalWindow [
-	| view |
-	self isBuilt ifFalse: [ self build ].
-	view := PenView with: self.
-	view openInInternalWindow
+	self deprecated: 'use openInWorld instead'. 
+	self openInWorld.
 ]
 
 { #category : #opening }
 PenDisplayComponent >> openInWindow [
 	^ self notYetImplemented 
+]
+
+{ #category : #opening }
+PenDisplayComponent >> openInWorld [
+	| view |
+	self isBuilt ifFalse: [ self build ].
+	view := PenView with: self.
+	view openInWorld
 ]
 
 { #category : #accessing }
@@ -308,6 +382,11 @@ PenDisplayComponent >> removeStyleClass: aSymbol [
 ]
 
 { #category : #accessing }
+PenDisplayComponent >> size [
+	^ self width pref @ self height pref
+]
+
+{ #category : #accessing }
 PenDisplayComponent >> size: aPoint [
 	self width: aPoint x.
 	self height: aPoint y.
@@ -342,6 +421,46 @@ PenDisplayComponent >> stylesheet: aStylesheet [
 { #category : #accessing }
 PenDisplayComponent >> visible: aBoolean [
 	visible := aBoolean
+]
+
+{ #category : #'api - events' }
+PenDisplayComponent >> whenEvent: aSymbol on: aComponent do: aBlock [
+	| binding |
+	self deprecated: ''.
+	binding := PenEventBinding for: aSymbol do: aBlock.
+	binding source: self.
+	binding target: (aComponent ifNil: [ self ]).
+	eventBindings add: binding.
+]
+
+{ #category : #'api - events' }
+PenDisplayComponent >> whenEvent: aSymbol on: aComponent perform: aFunction with: aPerformer [
+	| binding |
+	self deprecated: ''.
+	binding := PenEventBinding for: aSymbol perform: aFunction on: aPerformer.
+	binding source: self.
+	binding target: (aComponent ifNil: [ self ]).
+	eventBindings add: binding.
+]
+
+{ #category : #'api - events' }
+PenDisplayComponent >> whenEvents: aListOfSymbols on: aComponent do: aBlock [
+	| binding |
+	self deprecated: ''.
+	binding := PenEventBinding forAll: aListOfSymbols do: aBlock.
+	binding source: self.
+	binding target: (aComponent ifNil: [ self ]).
+	eventBindings add: binding.
+]
+
+{ #category : #'api - events' }
+PenDisplayComponent >> whenEvents: aListOfSymbols on: aComponent perform: aFunction with: aPerformer [
+	| binding |
+	self deprecated: ''.
+	binding := PenEventBinding forAll: aListOfSymbols perform: aFunction on: aPerformer.
+	binding source: self.
+	binding target: (aComponent ifNil: [ self ]).
+	eventBindings add: binding.
 ]
 
 { #category : #accessing }

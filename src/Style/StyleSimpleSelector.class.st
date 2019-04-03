@@ -41,7 +41,7 @@ StyleSimpleSelector >> idCount [
 { #category : #accessing }
 StyleSimpleSelector >> initialize [
 	super initialize.
-	pseudoClasses := OrderedCollection new.
+	pseudoClasses := Dictionary new.
 	styleClasses := OrderedCollection new
 ]
 
@@ -52,7 +52,24 @@ StyleSimpleSelector >> isSimpleSelector [
 
 { #category : #testing }
 StyleSimpleSelector >> matchesPseudoClasseState: aPseudoClassState [
-	^ aPseudoClassState includesAll: pseudoClasses
+	| found |
+	pseudoClasses keysAndValuesDo: [ :sKey :sValue |
+		found := false.
+		aPseudoClassState
+			select: [ :cAssociation | cAssociation key = sKey ]
+			thenDo: [ :cAssociation | | cValue | 
+				sValue 
+					ifNil: [ found := true ]
+					ifNotNil: [ 
+						cValue := cAssociation value.	
+						(sValue respondsTo: cValue)
+							ifTrue: [ (sValue perform: cValue) ifTrue: [ found := true ] ]
+							ifFalse: [ found := cValue = sValue ]
+					].
+			].
+		found ifFalse: [ ^ false ]
+	].
+	^ true
 ]
 
 { #category : #testing }
@@ -122,10 +139,15 @@ StyleSimpleSelector >> printOn: aStream [
 				nextPut: $.;
 				nextPutAll: (cls joinUsing: '.') ].
 	self pseudoClasses
-		ifNotEmpty: [ :pcls | 
+		keysAndValuesDo: [ :k :v | 
 			aStream
 				nextPut: $:;
-				nextPutAll: (pcls joinUsing: ':') ]
+				nextPutAll: k.
+			v ifNotNil: [ 
+				aStream 
+					nextPut: $(;
+					nextPutAll: v printString;
+					nextPut: $) ] ]
 ]
 
 { #category : #accessing }

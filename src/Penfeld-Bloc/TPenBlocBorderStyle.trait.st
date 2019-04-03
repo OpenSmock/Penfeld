@@ -27,7 +27,7 @@ TPenBlocBorderStyle >> border: aValue [
 						"Linear gradient" 
 						| paint |
 						paint := self performFunction: property.
-						paint end: paint end * (self model width pref @ self model height pref).
+						paint end: paint end * (self component width pref @ self component height pref).
 						borderBuilder paint: paint
 					]
 				]
@@ -41,5 +41,5 @@ TPenBlocBorderStyle >> border: aValue [
 		]
 	].
 	
-	self model engineElement border: borderBuilder build.
+	self component engineElement border: borderBuilder build.
 ]

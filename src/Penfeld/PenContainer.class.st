@@ -21,7 +21,7 @@ PenContainer >> addElement: anElement [
 
 { #category : #building }
 PenContainer >> build [
-	self elements do: [ :each | each build ].
+	self elements withIndexDo: [ :item :index | item build: index ].
 	super build.
 ]
 

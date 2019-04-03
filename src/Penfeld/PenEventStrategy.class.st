@@ -1,30 +1,39 @@
 Class {
 	#name : #PenEventStrategy,
 	#superclass : #Object,
+	#traits : 'TPenDebug',
+	#classTraits : 'TPenDebug classTrait',
 	#category : #'Penfeld-Events'
 }
 
-{ #category : #installing }
-PenEventStrategy >> install: aSymbol on: aModel [
-	aSymbol = PenEventSymbol click
-		ifTrue: [ self installClickOn: aModel ]
+{ #category : #binding }
+PenEventStrategy >> tryToBind: anEventBinding [
+	| symbol |
+	
+	anEventBinding isCompositeEvent ifTrue: [ 
+		self warn: 'Can not install composite binding.'.
+		^ false ].
+	
+	symbol := anEventBinding symbol.
+	symbol = PenEventSymbol click
+		ifTrue: [ ^ self tryToBindClickOn: anEventBinding source ]
 		ifFalse: 
-	[ aSymbol = PenEventSymbol action
-		ifTrue: [ self installActionOn: aModel ]
-		ifFalse: [self halt: 'todo']]
+	[ symbol = PenEventSymbol action
+		ifTrue: [ ^ self tryToBindActionOn: anEventBinding source  ]
+		ifFalse: [ self warn: self printString, ' can not bind ', symbol. ^ false]]
 ]
 
-{ #category : #installing }
-PenEventStrategy >> installActionOn: aModel [
-	self subclassResponsibility 
+{ #category : #binding }
+PenEventStrategy >> tryToBindActionOn: aComponent [
+	^ self subclassResponsibility 
 ]
 
-{ #category : #installing }
-PenEventStrategy >> installClickOn: aModel [
-	self subclassResponsibility 
+{ #category : #binding }
+PenEventStrategy >> tryToBindClickOn: aComponent [
+	^ self subclassResponsibility 
 ]
 
-{ #category : #installing }
-PenEventStrategy >> installMouseDownOn: aModel [
-	self subclassResponsibility 
+{ #category : #binding }
+PenEventStrategy >> tryToBindMouseDownOn: aComponent [
+	^ self subclassResponsibility 
 ]

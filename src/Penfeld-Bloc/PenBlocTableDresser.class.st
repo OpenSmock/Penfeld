@@ -1,6 +1,8 @@
 Class {
 	#name : #PenBlocTableDresser,
 	#superclass : #PenBlocDresser,
+	#traits : 'TPenBlocBackgroundStyle + TPenBlocBorderStyle',
+	#classTraits : 'TPenBlocBackgroundStyle classTrait + TPenBlocBorderStyle classTrait',
 	#instVars : [
 		'dataSource',
 		'pushedItem'
@@ -8,45 +10,34 @@ Class {
 	#category : #'Penfeld-Bloc-Dressers'
 }
 
-{ #category : #styling }
-PenBlocTableDresser >> backgroundColor: aValue [
-	self model engineElement background: aValue
-]
+{ #category : #dressing }
+PenBlocTableDresser >> doAfterApplyStyle [ 
+	| var element |
+	element := self component engineElement.
 
-{ #category : #styling }
-PenBlocTableDresser >> border: aValue [
-	| borderBuilder |	
-	borderBuilder := BlBorderBuilder new.	
-		
-	aValue do: 
-	[ :property | 
-		property isNumber 
-		ifTrue: [ borderBuilder width: property ] 
-		ifFalse: 
-		[
-			property isSymbol
-			ifTrue: [ 
-				(borderBuilder respondsTo: property) 
-				ifTrue: [ borderBuilder perform: property ] 
-			]
-			ifFalse: [ 
-				(property isKindOf: Color)
-				ifTrue: [ borderBuilder paint: property ]
-				ifFalse: [ self notYetImplemented ]
-			]
-		]
-	].
-	self model engineElement border: borderBuilder build.
+	"Position"
+	var := self component position.
+	var ifNotNil: [ element relocate: var ].
+
+	"Width"
+	var := self component width.
+	var ifNotNil: [ element width: var pref ].
+	
+	"Height"
+	var := self component height.
+	var ifNotNil: [ element height: var pref ].
 ]
 
 { #category : #dressing }
 PenBlocTableDresser >> doBeforeApplyStyle [
 	| listElements |
-	listElements := self model items collect: [ :item | 
+	listElements := self component items collect: [ :item | 
 		item engineElement ].
-	listElements addFirst: self model header engineElement.
+	self component header ifNotNil: [ 
+		listElements addFirst: self component header engineElement
+	].
 	dataSource elements: listElements.
-	self model engineElement dataSource: dataSource.
+	self component engineElement dataSource: dataSource.
 	dataSource notifyChanged
 ]
 
@@ -54,15 +45,15 @@ PenBlocTableDresser >> doBeforeApplyStyle [
 PenBlocTableDresser >> initEngineElement [
 	dataSource := PenInfiniteDataSource new.
 	
-	self model engineElement: PenInfiniteListElement new.
-	self model engineElement constraintsDo: [ :c |
+	self component engineElement: PenInfiniteListElement new.
+	self component engineElement constraintsDo: [ :c |
 		c horizontal matchParent.
 		c vertical matchParent ].
 	
-	self model allowToSelect ifFalse: [ ^ self ].
+	self component allowToSelect ifFalse: [ ^ self ].
 
 	pushedItem := false.
-	self model items do: [ :item |
+	self component items do: [ :item |
 		item engineElement when: BlMouseDownEvent do: [ :e | self whenMouseDownEventOn: item ].
 		item engineElement when: BlMouseUpEvent do: [ :e | self whenMouseUpEventOn: item ].
 		item engineElement when: BlMouseLeaveEvent do: [ :e | self whenMouseLeaveEventOn: item ].].

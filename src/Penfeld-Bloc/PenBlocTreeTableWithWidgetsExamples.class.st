@@ -6,9 +6,7 @@ Class {
 
 { #category : #'examples - instance creation' }
 PenBlocTreeTableWithWidgetsExamples class >> checkBox [
-	^  PenCheckBox new 
-		dresser: PenBlocCheckBoxDresser new
-		yourself.
+	^ PenCheckBox new 
 ]
 
 { #category : #examples }
@@ -28,24 +26,20 @@ PenBlocTreeTableWithWidgetsExamples class >> example [
 	model dragSections: true.
 	model treeSectionSelector: #name.
 	model expandAll.
-	model dresser: PFDBlocTreeTable new.
-	model sortingBlock: [ :a :b | a name < b name ].
-	model build.
-	self
-		openInWindow: model engineElement 
-		named: self name 
-		extent: 500@600 
+	model dresser: PenBlocTreeTableDresser new.
+	model sortingBlock: [ :a :b | a key < b key ].
+	model openInWorld 
 ]
 
 { #category : #'examples - instance creation' }
 PenBlocTreeTableWithWidgetsExamples class >> header [
 	^ PenTableItem new
-		dresser: PFDBlocTableItemHeader new;
-		forSection: #name put: (PenLabel new text: 'Nom');
-		forSection: #numberOfSubclasses put: (PenLabel new text: 'Sub.');
-		forSection: #numberOfVariables put: (PenLabel new text: 'Inst.');
-		forSection: #checkbox put: (PenLabel new text: 'Check');
-		forSection: #radioGroup put: (PenLabel new text: 'Radio Group');
+		dresser: PenBlocTableItemHeaderDresser new;
+		atSection: #name put: (PenLabel new text: 'Nom');
+		atSection: #numberOfSubclasses put: (PenLabel new text: 'Sub.');
+		atSection: #numberOfVariables put: (PenLabel new text: 'Inst.');
+		atSection: #checkbox put: (PenLabel new text: 'Check');
+		atSection: #radioGroup put: (PenLabel new text: 'Radio Group');
 		yourself
 	
 ]
@@ -54,16 +48,16 @@ PenBlocTreeTableWithWidgetsExamples class >> header [
 PenBlocTreeTableWithWidgetsExamples class >> nodeForClass:  aClass [
 	| node |
 	node := PenTreeTableNode new.
-	node name: aClass name.
+	node key: aClass name asSymbol.
 	node dresser: PenBlocTreeTableNodeDresser new.
-	node forSection: #name put: 
+	node atSection: #name put: 
 		(PenLabel new text: aClass name).
-	node forSection: #numberOfSubclasses put: 
+	node atSection: #numberOfSubclasses put: 
 		(PenLabel new text: aClass subclasses size printString).
-	node forSection: #numberOfVariables put: 
+	node atSection: #numberOfVariables put: 
 		(PenLabel new text: aClass instanceVariables size printString).
-	node forSection: #checkbox put: self checkBox.
-	node forSection: #radioGroup put: self radioGroup.
+	node atSection: #checkbox put: self checkBox.
+	node atSection: #radioGroup put: self radioGroup.
 	aClass subclasses do: [ :subclass |
 		node addNode: (self nodeForClass: subclass)].
 	^ node
@@ -74,7 +68,7 @@ PenBlocTreeTableWithWidgetsExamples class >> radioGroup [
 	^  PenRadioGroup new addAll: 
 		((1 to: 5) collect: [ :i |
 			PenRadioButton  new 
-				label: 'Radio Button ', i printString. ] ).
+				text: 'Radio Button ', i printString. ] ).
 ]
 
 { #category : #'see class side' }

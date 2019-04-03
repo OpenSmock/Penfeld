@@ -6,32 +6,30 @@ Class {
 
 { #category : #examples }
 PenBlocBasicExamples class >> example10ComboBox [
-	| model |
-	model := PenGroupOld new vertical.
+	| component |
+	component := PenContainer new.
+	component layout: PenLinearLayout vertical.
 	10 timesRepeat: [ 
-		model add: (
+		component addElement: (
 			PenComboBox new 
-				addAllItems: (PenComponent withAllSubclasses collect: [ :c | PenLabel new 
-					name: c name; 
-					dresser: PenBlocLabel new ]);
-				sortingBlock: [ :a :b | a text < b text ];
-				yourself)].
-	model build.
-	self 
-		openInWindow: model engineElement  
-		named: self name
-		extent: 300@300
+				addAllItems: (PenComponent withAllSubclasses 
+					collect: [ :c | PenLabel new text: c name ]);
+				sortingBlock: [ :a :b | a text < b text ]
+		)
+	].
+	component build.
+	component openInWorld.
 ]
 
 { #category : #examples }
 PenBlocBasicExamples class >> exampleButton [
-	| model |
-	model := (PenButton key: #myButton) 
+	| component |
+	component := (PenButton key: #myButton) 
 		text: 'Button';
 		position: 20@20;
 		onActionDo: [ self inform: 'Do Action!' ].
-	model dresser: PenBlocButtonDresser new.
-	model openInInternalWindow 
+	component dresser: PenBlocButtonDresser new.
+	component openInWorld 
 	
 ]
 
@@ -46,7 +44,7 @@ PenBlocBasicExamples class >> exampleCheckBoxLabelAfter [
 	model onUncheckedDo: [ self inform: 'Unchecked !' ].
 	model onValueChangedDo: [ self inform: 'ValueChanged !' ].
 	model dresser: PenBlocCheckBoxDresser new.
-	model openInInternalWindow
+	model openInWorld
 ]
 
 { #category : #examples }
@@ -60,7 +58,7 @@ PenBlocBasicExamples class >> exampleCheckBoxLabelBefore [
 	model onUncheckedDo: [ self inform: 'Unchecked !' ].
 	model onValueChangedDo: [ self inform: 'ValueChanged !' ].
 	model dresser: PenBlocCheckBoxDresser new.
-	model openInInternalWindow
+	model openInWorld
 ]
 
 { #category : #examples }
@@ -71,7 +69,22 @@ PenBlocBasicExamples class >> exampleComboBox [
 	model onSelectionChangedDo: [ self inform: model selection printString ].
 	model sortingBlock: [ :a :b | a text < b text ].
 	model dresser: PenBlocComboBoxDresser new.
-	model openInInternalWindow.
+	model openInWorld.
+]
+
+{ #category : #examples }
+PenBlocBasicExamples class >> exampleComboBoxOverflow [
+	| component window |
+	
+	component := PenComboBox new addAllItems: 
+		(Object withAllSubclasses collect: [ :c | PenLabel text: c name]) .
+	component onSelectionChangedDo: [ self inform: component selection printString ].
+	component sortingBlock: [ :a :b | a text < b text ].
+	component dresser: PenBlocComboBoxDresser new.
+	
+	window := PenWindow withDisplayComponent: component.
+	window size: 300@40.
+	window open
 ]
 
 { #category : #examples }
@@ -81,9 +94,9 @@ PenBlocBasicExamples class >> exampleDisabledButton [
 		text: 'Button';
 		disable;
 		position: 20@20;
-		onActionDo: [ self inform: 'Do Action!' ].
+		action: [ self inform: 'Do Action!' ].
 	component dresser: PenBlocButtonDresser new.
-	component openInInternalWindow 
+	component openInWorld 
 	
 ]
 
@@ -94,7 +107,7 @@ PenBlocBasicExamples class >> exampleLabel [
 	model dresser: PenBlocLabelDresser new.
 	
 	window := PenWindow withDisplayComponent: model.
-	window openInInternalWindow
+	window openInWorld
 ]
 
 { #category : #examples }
@@ -106,7 +119,7 @@ PenBlocBasicExamples class >> exampleLabel2 [
 		yourself.
 	model dresser: PenBlocLabelDresser new.
 	
-	model openInInternalWindow
+	model openInWorld
 ]
 
 { #category : #examples }
@@ -115,14 +128,14 @@ PenBlocBasicExamples class >> exampleLoadingButton [
 	component := PenButton new
 		text: 'Button';
 		position: 20@20.
-	component onActionDo: [
+	component action: [
 		[ component loading: true.
 		2 seconds wait.
 		component loading: false.
 		self inform: 'Do Action!' ] fork 
 	].
 	component dresser: PenBlocButtonDresser new.
-	component openInInternalWindow 
+	component openInWorld 
 	
 ]
 
@@ -132,7 +145,7 @@ PenBlocBasicExamples class >> exampleProgressBar [
 	progressBar := PenProgressBar new interval: (1 to: 10 by: 0.01).
 	progressBar position: 20@20.
 	progressBar dresser: PenBlocProgressBarDresser new.
-	progressBar openInInternalWindow.
+	progressBar openInWorld.
 		
 	[[progressBar isMax] whileFalse: [ progressBar increment. (Duration milliSeconds: 10) wait ]] fork.
 ]
@@ -153,7 +166,7 @@ PenBlocBasicExamples class >> exampleProgressBarWithPercentage [
 	
 	progressBar onValueChangedDo: [ label text: (self textInPercent: progressBar) ].
 	
-	container openInInternalWindow.
+	container openInWorld.
 		
 	[[progressBar isMax] whileFalse: [ progressBar increment. (Duration milliSeconds: 10) wait ]] fork.
 ]
@@ -165,7 +178,7 @@ PenBlocBasicExamples class >> exampleRadioButton [
 		text: 'Radio Button';
 		labelAfter.
 	button dresser: PenBlocRadioButtonDresser new. 
-	button openInInternalWindow
+	button openInWorld
 ]
 
 { #category : #examples }
@@ -177,7 +190,7 @@ PenBlocBasicExamples class >> exampleRadioGroupLabelAfter [
 				text: 'Radio Button ', i printString;
 				labelAfter. ] ).
 	group dresser: PenBlocRadioGroupDresser new.
-	group openInInternalWindow
+	group openInWorld
 ]
 
 { #category : #examples }
@@ -189,7 +202,7 @@ PenBlocBasicExamples class >> exampleRadioGroupLabelBefore [
 				text: 'Radio Button ', i printString;
 				labelBefore. ] ).
 	group dresser: PenBlocRadioGroupDresser new.
-	group openInInternalWindow
+	group openInWorld
 ]
 
 { #category : #examples }
@@ -209,7 +222,7 @@ PenBlocBasicExamples class >> exampleSlider [
 	
 	slider onValueChangedDo: [ label text: (slider value round: 1) printString ].
 	
-	container openInInternalWindow
+	container openInWorld
 	
 ]
 
@@ -230,7 +243,7 @@ PenBlocBasicExamples class >> exampleSlider2 [
 	
 	slider onValueChangedDo: [ label text: (slider value round: 1) printString ].
 	
-	container openInInternalWindow
+	container openInWorld
 	
 ]
 
@@ -243,7 +256,7 @@ PenBlocBasicExamples class >> exampleToggleButton [
 		onCheckedDo: [ self inform: 'Checked!' ];
 		onUncheckedDo: [ self inform: 'Unchecked!' ].
 	component dresser: PenBlocButtonDresser new.
-	component openInInternalWindow 
+	component openInWorld 
 	
 ]
 

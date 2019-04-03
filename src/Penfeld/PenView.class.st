@@ -36,7 +36,7 @@ PenView >> dock: anObject [
 ]
 
 { #category : #opening }
-PenView >> openInInternalWindow [
+PenView >> openInWorld [
 	dock ifNil: [ dock := PenViewDock with: self ].
-	dock openInInternalWindow.
+	dock openInWorld.
 ]

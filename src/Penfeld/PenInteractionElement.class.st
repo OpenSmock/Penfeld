@@ -29,11 +29,6 @@ PenInteractionElement >> loading: anObject [
 		ifFalse: [ self enable ]
 ]
 
-{ #category : #'api - events' }
-PenInteractionElement >> onClickDo: aBlock [
-	self addCallback: aBlock for: PenEventSymbol click
-]
-
 { #category : #accessing }
 PenInteractionElement >> tooltip [
 	^ tooltip

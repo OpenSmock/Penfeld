@@ -35,6 +35,10 @@ PenDresser >> border: aValue [
 ]
 
 { #category : #styling }
+PenDresser >> borderLeft: aStyle [
+]
+
+{ #category : #styling }
 PenDresser >> color: aValue [
 ]
 
@@ -49,7 +53,7 @@ PenDresser >> doBeforeApplyStyle [
 { #category : #dressing }
 PenDresser >> dress [
 	self doBeforeApplyStyle.
-	self model matchedRules do: [ :rule | self applyStyle: rule ].
+	self component matchedRules do: [ :rule | self applyStyle: rule ].
 	self doAfterApplyStyle.
 ]
 
@@ -69,6 +73,10 @@ PenDresser >> fontFamily: aValue [
 
 { #category : #styling }
 PenDresser >> fontSize: aValue [
+]
+
+{ #category : #styling }
+PenDresser >> fontStyle: aValue [
 ]
 
 { #category : #styling }
@@ -111,6 +119,10 @@ PenDresser >> performFunction: aFunction [
 
 { #category : #styling }
 PenDresser >> textAlign: aValue [
+]
+
+{ #category : #styling }
+PenDresser >> verticalAlign: aValue [
 ]
 
 { #category : #styling }

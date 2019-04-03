@@ -7,8 +7,24 @@ Class {
 	#category : #'Penfeld-Elements'
 }
 
+{ #category : #'as yet unclassified' }
+PenTableItem >> atSection: aSymbol [
+	^ content at: aSymbol
+]
+
+{ #category : #'as yet unclassified' }
+PenTableItem >> atSection: aSymbol put: aContainer [
+	| container |
+	container := aContainer isContainer
+		ifTrue: [ aContainer ]
+		ifFalse: [ PenContainer new addElement: aContainer ].
+	self content at: aSymbol put: container.
+	container parent: self
+]
+
 { #category : #building }
 PenTableItem >> build [
+	self stylesheet ifNil: [ self chooseStylesheet ].
 	self checkContent.
 	self content do: [ :each | each build ].
 	super build
@@ -27,21 +43,6 @@ PenTableItem >> content [
 	^ content
 ]
 
-{ #category : #'as yet unclassified' }
-PenTableItem >> contentAtSection: aSymbol [
-	^ content at: aSymbol
-]
-
-{ #category : #'as yet unclassified' }
-PenTableItem >> forSection: aSymbol put: aContainer [
-	| container |
-	container := aContainer isContainer
-		ifTrue: [ aContainer ]
-		ifFalse: [ PenContainer new addElement: aContainer ].
-	self content at: aSymbol put: container.
-	container parent: self
-]
-
 { #category : #initialization }
 PenTableItem >> initialize [
 	super initialize.
@@ -56,7 +57,7 @@ PenTableItem >> refresh [
 
 { #category : #accessing }
 PenTableItem >> styleName [
-	^ #tableItem
+	^ #tr
 ]
 
 { #category : #accessing }

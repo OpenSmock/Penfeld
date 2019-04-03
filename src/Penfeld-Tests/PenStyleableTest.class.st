@@ -12,7 +12,9 @@ button { color: #111111; }
 #myButton { color: #222222; }
 .class1 { color: #333333; }
 .class2 { color: #343434; }
-button:active { color: 444444; }
+button:active { color: #444444; }
+tr:nth-child(2) { color: #555555; }
+tr:nth-child(odd) { color: #515151; }
 	
 	'
 ]
@@ -69,5 +71,37 @@ PenStyleableTest >> testStyleable4 [
 	
 	rules := stylesheet matchingRulesFor: button.
 	self assert: rules size equals: 3.
-	self assert: (rules third selector pseudoClasses includes: #active).
+	self assert: (rules third selector pseudoClasses includesKey: #active).
+]
+
+{ #category : #tests }
+PenStyleableTest >> testStyleablePseudoClassWithArg [
+	| stylesheet table item1 item2 rules |
+	stylesheet := self stylesheet1.
+	
+	table := PenTable new.
+	item1 := PenTableItem new.
+	item2 := PenTableItem new.
+	table addAllItems: { item1. item2. }.
+	table build.
+	
+	rules := stylesheet matchingRulesFor: item2.
+	self assert: rules size equals: 2.
+	self assert: (rules second selector pseudoClasses includesKey: #nthChild).
+]
+
+{ #category : #tests }
+PenStyleableTest >> testStyleablePseudoClassWithArgSymbol [
+	| stylesheet table item1 item2 rules |
+	stylesheet := self stylesheet1.
+	
+	table := PenTable new.
+	item1 := PenTableItem new.
+	item2 := PenTableItem new.
+	table addAllItems: { item1. item2. }.
+	table build.
+	
+	rules := stylesheet matchingRulesFor: item1.
+	self assert: rules size equals: 2.
+	self assert: (rules second selector pseudoClasses includesKey: #nthChild).
 ]

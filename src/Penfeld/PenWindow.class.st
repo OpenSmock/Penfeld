@@ -121,14 +121,14 @@ PenWindow >> open [
 ]
 
 { #category : #opening }
-PenWindow >> openInInternalWindow [
-	self morphic.
-	self open
+PenWindow >> openInWindow [
+	^ self notYetImplemented 
 ]
 
 { #category : #opening }
-PenWindow >> openInWindow [
-	^ self notYetImplemented 
+PenWindow >> openInWorld [
+	self morphic.
+	self open
 ]
 
 { #category : #accessing }

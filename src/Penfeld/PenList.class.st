@@ -1,15 +1,17 @@
 Class {
 	#name : #PenList,
 	#superclass : #PenInteractionElement,
-	#traits : 'TPenSelectionChangedEvent',
-	#classTraits : 'TPenSelectionChangedEvent classTrait',
 	#instVars : [
 		'items',
 		'selectedIndexList',
 		'allowToSelect',
 		'multiSelection',
 		'sortingBlock',
-		'allowToDeselect'
+		'allowToDeselect',
+		'verticalScrollBar',
+		'horizontalScrollBar',
+		'showVerticalScrollBar',
+		'showHorizontalScrollBar'
 	],
 	#category : #'Penfeld-Elements'
 }
@@ -24,8 +26,7 @@ PenList >> addItem: anItem [
 	| eventBinding |
 	items add: anItem.
 	anItem parent: self.
-	eventBinding := anItem addCallback: [ self select: anItem ] for: PenEventSymbol action.
-	eventBinding autoBind
+	anItem onActionDo: [ self select: anItem ].
 ]
 
 { #category : #accessing }
@@ -50,8 +51,11 @@ PenList >> allowToSelect: anObject [
 
 { #category : #building }
 PenList >> build [
-	self stylesheet ifNil: [ self stylesheet: PenStylesheet current ].
-	self items do: [ :item | item build ].
+	self stylesheet ifNil: [ self chooseStylesheet ].
+	self flag: 'Experimental: table with nthChild support'.
+	(self isKindOf: PenTable) 
+		ifTrue: [ self items withIndexDo: [ :item :index | item build: index ] ]
+		ifFalse: [ self items do: [ :item | item build ]] .
 	super build
 ]
 
@@ -67,6 +71,16 @@ PenList >> defaultSortingBlock [
 	^ [:a :b | true]
 ]
 
+{ #category : #api }
+PenList >> hideHorizontalScrollBar [
+	showHorizontalScrollBar := false
+]
+
+{ #category : #api }
+PenList >> hideVerticalScrollBar [
+	showVerticalScrollBar := false
+]
+
 { #category : #initialization }
 PenList >> initialize [
 	super initialize.
@@ -76,6 +90,18 @@ PenList >> initialize [
 	allowToDeselect := true.
 	multiSelection := false.
 	sortingBlock := self defaultSortingBlock.
+	showHorizontalScrollBar := true.
+	showVerticalScrollBar := true.
+]
+
+{ #category : #testing }
+PenList >> isHorizontalScrollBarVisible [
+	^ showHorizontalScrollBar 
+]
+
+{ #category : #testing }
+PenList >> isVerticalScrollBarVisible [
+	^ showVerticalScrollBar
 ]
 
 { #category : #accessing }
@@ -91,6 +117,11 @@ PenList >> multiSelection [
 { #category : #accessing }
 PenList >> multiSelection: anObject [
 	multiSelection := anObject
+]
+
+{ #category : #'api - events' }
+PenList >> onSelectionChangedDo: aBlock [
+	self onEvent: PenEventSymbol selectionChanged do: aBlock
 ]
 
 { #category : #events }
@@ -155,6 +186,16 @@ PenList >> selectionChangedEvent [
 	self eventBindings do: [ :eventBinding |
 		(eventBinding symbol = PenEventSymbol selectionChanged)
 			ifTrue: [ eventBinding callback value ]].
+]
+
+{ #category : #api }
+PenList >> showHorizontalScrollBar [
+	showHorizontalScrollBar := true
+]
+
+{ #category : #api }
+PenList >> showVerticalScrollBar [
+	showVerticalScrollBar := true
 ]
 
 { #category : #accessing }

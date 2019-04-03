@@ -6,7 +6,7 @@ Class {
 
 { #category : #accessing }
 PenBlocEngine >> dressersMap [
-	^ PenBlocBasicDressersMap new
+	^ PenBlocDressersMap new
 ]
 
 { #category : #accessing }

@@ -299,7 +299,7 @@ StyleGrammar >> propertyValue [
 
 { #category : #'grammar selector' }
 StyleGrammar >> pseudoClassSelectorToken [
-	^ ($: asParser , #word asParser plus) token
+	^ $: asParser, ident, ($( asParser, (integer / ident), $) asParser) optional
 ]
 
 { #category : #primitives }

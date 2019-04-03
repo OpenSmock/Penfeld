@@ -2,8 +2,7 @@ Class {
 	#name : #PenButton,
 	#superclass : #PenInteractionElement,
 	#instVars : [
-		'text',
-		'icon'
+		'text'
 	],
 	#category : #'Penfeld-Elements'
 }

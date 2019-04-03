@@ -2,10 +2,21 @@ Class {
 	#name : #PenAbstractDresser,
 	#superclass : #Object,
 	#instVars : [
-		'model'
+		'model',
+		'component'
 	],
 	#category : #'Penfeld-Core'
 }
+
+{ #category : #accessing }
+PenAbstractDresser >> component [ 
+	^ component
+]
+
+{ #category : #accessing }
+PenAbstractDresser >> component: aComponent [
+	component := aComponent
+]
 
 { #category : #dressing }
 PenAbstractDresser >> dress [
@@ -19,10 +30,12 @@ PenAbstractDresser >> initEngineElement [
 
 { #category : #accessing }
 PenAbstractDresser >> model [ 
-	^ model
+	self deprecated: 'Use component instead'.
+	^ component
 ]
 
 { #category : #accessing }
-PenAbstractDresser >> model: aModel [
-	model := aModel
+PenAbstractDresser >> model: aComponent [
+	self deprecated: 'Use component: instead'.
+	component := aComponent
 ]

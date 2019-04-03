@@ -19,12 +19,19 @@ TPenBlocFontStyle >> fontSize: aValue [
 ]
 
 { #category : #styling }
+TPenBlocFontStyle >> fontStyle: aValue [
+	| symbol |
+	symbol := aValue value.
+	(self ropedText respondsTo: symbol)
+		ifTrue: [ self ropedText perform: symbol ]
+]
+
+{ #category : #styling }
 TPenBlocFontStyle >> fontWeight: aValue [
 	| symbol |
 	symbol := aValue value.
 	(self ropedText respondsTo: symbol)
 		ifTrue: [ self ropedText perform: symbol ]
-		ifFalse: [ self halt: 'todo' ]
 ]
 
 { #category : #accessing }

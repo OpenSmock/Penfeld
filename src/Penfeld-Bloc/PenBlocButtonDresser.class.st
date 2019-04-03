@@ -1,8 +1,8 @@
 Class {
 	#name : #PenBlocButtonDresser,
 	#superclass : #PenBlocDresser,
-	#traits : 'TPenBlocBackgroundStyle + TPenBlocFontStyle + TPenBlocBorderStyle',
-	#classTraits : 'TPenBlocBackgroundStyle classTrait + TPenBlocFontStyle classTrait + TPenBlocBorderStyle classTrait',
+	#traits : 'TPenBlocSizeStyle + TPenBlocBackgroundStyle + TPenBlocFontStyle + TPenBlocBorderStyle',
+	#classTraits : 'TPenBlocSizeStyle classTrait + TPenBlocBackgroundStyle classTrait + TPenBlocFontStyle classTrait + TPenBlocBorderStyle classTrait',
 	#instVars : [
 		'ropedText',
 		'pushed'
@@ -13,55 +13,79 @@ Class {
 { #category : #rendering }
 PenBlocButtonDresser >> doAfterApplyStyle [ 
 	| var element |
-	element := self model engineElement.
+	element := self component engineElement.
 
 	"Position"
-	var := self model position.
+	var := self component position.
 	var ifNotNil: [ element relocate: var ].
 
 	"Width"
-	var := self model width.
+	var := self component width.
 	var ifNotNil: [ element width: var pref ].
 	
 	"Height"
-	var := self model height.
+	var := self component height.
 	var ifNotNil: [ element height: var pref ].
 	
 	"Apply roped text"
 	element childNamed: #text
 		ifFound: [ :anElement | anElement text: ropedText ]
 		ifNone: [].
-		
-	self model isLoading 
+	
+	self component isLoading 
 		ifTrue: 
 		[ 
 			element childNamed: #loader
 				ifFound: [ :anElement |  ]
 				ifNone: [ element addChild: self loader as: #loader ]
 		]
-		ifFalse: [ element removeChildNamed: #loader ]
+		ifFalse: [ element removeChildNamed: #loader ].
 ]
 
 { #category : #rendering }
 PenBlocButtonDresser >> doBeforeApplyStyle [ 
-	ropedText := self model text asRopedText
-]
-
-{ #category : #styling }
-PenBlocButtonDresser >> height: aValue [
-	self model engineElement height: aValue
+	ropedText := self component text asRopedText
 ]
 
 { #category : #dressing }
 PenBlocButtonDresser >> initEngineElement [
-	self model engineElement: BlElement new.
-	self model engineElement layout: BlFrameLayout new.
-	self model engineElement addChild: BlTextElement new as: #text.
+	| textContainer |
 	
+	self component engineElement: BlElement new.
+	
+	"Text is aligned in a special frame layout container"
+	textContainer := BlElement new 
+		layout: BlFrameLayout new;
+		constraintsDo: [ :c | 
+			c horizontal matchParent.
+			c vertical matchParent.
+		].
+	textContainer addChild: BlTextElement new as: #text.
+	self component engineElement addChild: textContainer as: #textContainer.
+	
+	"Icon is by default centered on left side of the button"
+	self component icon ifNotNil: [ | iconContainer iconElement |
+		iconContainer := BlElement new 
+			layout: BlFrameLayout new;
+			relocate: 5@0;
+			constraintsDo: [ :c | 
+				c horizontal exact: self component icon extent x.
+				c vertical matchParent ].
+		iconElement := BlElement new
+			size: self component icon extent;
+			background: self component icon asBlBackground;
+			constraintsDo: [ :c | 
+				c frame horizontal alignCenter.
+				c frame vertical alignCenter ].
+		iconContainer addChild: iconElement as: #icon.
+		self component engineElement addChild: iconContainer as: #iconContainer 
+	].
+	
+	"Initialisation of events"
 	pushed := false.
-	self model engineElement when: BlMouseDownEvent do: [ :e | self whenMouseDownEvent ].
-	self model engineElement when: BlMouseUpEvent do: [ :e | self whenMouseUpEvent ].
-	self model engineElement when: BlMouseLeaveEvent do: [ :e | self whenMouseLeaveEvent ].
+	self component engineElement when: BlMouseDownEvent do: [ :e | self whenMouseDownEvent ].
+	self component engineElement when: BlMouseUpEvent do: [ :e | self whenMouseUpEvent ].
+	self component engineElement when: BlMouseLeaveEvent do: [ :e | self whenMouseLeaveEvent ].
 ]
 
 { #category : #accessing }
@@ -72,7 +96,7 @@ PenBlocButtonDresser >> ropedText [
 { #category : #styling }
 PenBlocButtonDresser >> textAlign: aValue [
 	| textElement |
-	textElement := self model engineElement childNamed: #text
+	textElement := self component engineElement childNamed: #text
 		ifFound: [ :anElement | anElement ]
 		ifNone: [ ^ self ].
 	textElement constraintsDo: [:c | 
@@ -86,27 +110,22 @@ PenBlocButtonDresser >> textAlign: aValue [
 
 { #category : #events }
 PenBlocButtonDresser >> whenMouseDownEvent [
-	self model isDisabled ifTrue: [ ^ self ].
-	self model activatePseudoClass: #active.
+	self component isDisabled ifTrue: [ ^ self ].
+	self component activatePseudoClass: #active.
 	pushed := true.
 ]
 
 { #category : #events }
 PenBlocButtonDresser >> whenMouseLeaveEvent [
-	self model isDisabled ifTrue: [ ^ self ].
+	self component isDisabled ifTrue: [ ^ self ].
 	pushed := false.
-	self model deactivatePseudoClass: #active.
+	self component deactivatePseudoClass: #active.
 ]
 
 { #category : #events }
 PenBlocButtonDresser >> whenMouseUpEvent [
-	self model isDisabled ifTrue: [ ^ self ].
+	self component isDisabled ifTrue: [ ^ self ].
 	pushed ifFalse: [^ self].
-	self model deactivatePseudoClass: #active.
+	self component deactivatePseudoClass: #active.
 	pushed := false.
-]
-
-{ #category : #styling }
-PenBlocButtonDresser >> width: aValue [
-	self model engineElement width: aValue
 ]

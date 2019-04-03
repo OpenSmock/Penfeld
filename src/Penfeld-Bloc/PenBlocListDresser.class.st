@@ -1,17 +1,14 @@
 Class {
 	#name : #PenBlocListDresser,
 	#superclass : #PenBlocDresser,
+	#traits : 'TPenBlocBackgroundStyle',
+	#classTraits : 'TPenBlocBackgroundStyle classTrait',
 	#instVars : [
 		'dataSource',
 		'pushedItem'
 	],
 	#category : #'Penfeld-Bloc-Dressers'
 }
-
-{ #category : #styling }
-PenBlocListDresser >> backgroundColor: aValue [
-	self model engineElement background: aValue
-]
 
 { #category : #rendering }
 PenBlocListDresser >> doAfterApplyStyle [ 

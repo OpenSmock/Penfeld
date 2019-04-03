@@ -1,8 +1,6 @@
 Class {
 	#name : #PenSlider,
 	#superclass : #PenInteractionElement,
-	#traits : 'TPenValueChangedEvent',
-	#classTraits : 'TPenValueChangedEvent classTrait',
 	#instVars : [
 		'interval',
 		'index'
@@ -75,6 +73,11 @@ PenSlider >> min [
 	self valueChangedEvent  
 ]
 
+{ #category : #'api - events' }
+PenSlider >> onValueChangedDo: aBlock [
+	self whenEvent: PenEventSymbol valueChanged on: self do: aBlock
+]
+
 { #category : #accessing }
 PenSlider >> styleName [
 	^ #slider
@@ -99,9 +102,9 @@ PenSlider >> value [
 	^ interval at: index
 ]
 
-{ #category : #events }
+{ #category : #'as yet unclassified' }
 PenSlider >> valueChangedEvent [
 	self eventBindings do: [ :eventBinding |
 		(eventBinding symbol = PenEventSymbol valueChanged)
-			ifTrue: [ eventBinding callback value ]].
+			ifTrue: [ eventBinding executeCallback ]].
 ]

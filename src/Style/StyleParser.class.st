@@ -38,7 +38,7 @@ StyleParser >> createSimpleSelector: anItem [
 		id: anItem first second;
 		yourself.
 	theSelector styleClasses addAll: anItem first third.
-	theSelector pseudoClasses addAll: anItem second.
+	theSelector pseudoClasses: anItem second asDictionary.
 	^ theSelector
 		update;
 		yourself
@@ -231,7 +231,11 @@ StyleParser >> propertyToken [
 { #category : #'grammar selector' }
 StyleParser >> pseudoClassSelectorToken [
 	^ super pseudoClassSelectorToken
-		==> [ :nodes | nodes inputValue allButFirst asSymbol ]
+		==> [ :nodes | | key value |
+				key := nodes second.
+				value := nodes third ifNotNil: [ :o | o second ].
+				(key -> value)
+			 ]
 ]
 
 { #category : #grammar }

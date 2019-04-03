@@ -1,8 +1,6 @@
 Class {
 	#name : #PenProgressBar,
 	#superclass : #PenInteractionElement,
-	#traits : 'TPenValueChangedEvent',
-	#classTraits : 'TPenValueChangedEvent classTrait',
 	#instVars : [
 		'interval',
 		'index'
@@ -52,6 +50,16 @@ PenProgressBar >> isMax [
 	^ index = interval size
 ]
 
+{ #category : #'api - events' }
+PenProgressBar >> onValueChangedDo: aBlock [
+	self whenEvent: PenEventSymbol valueChanged on: self do: aBlock
+]
+
+{ #category : #accessing }
+PenProgressBar >> progress [
+	^ interval at: index
+]
+
 { #category : #accessing }
 PenProgressBar >> styleName [ 
 	^ #progressBar
@@ -59,5 +67,13 @@ PenProgressBar >> styleName [
 
 { #category : #accessing }
 PenProgressBar >> value [
-	^ interval at: index
+	self deprecated: 'use progress insted'.
+	^ self value
+]
+
+{ #category : #events }
+PenProgressBar >> valueChangedEvent [
+	self eventBindings do: [ :eventBinding |
+		(eventBinding symbolMatches: PenEventSymbol valueChanged)
+			ifTrue: [ eventBinding executeCallback ]].
 ]

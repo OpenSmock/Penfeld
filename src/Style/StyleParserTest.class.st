@@ -609,6 +609,60 @@ StyleParserTest >> testUniversalSelector [
 ]
 
 { #category : #'tests-selectors' }
+StyleParserTest >> testWithFunctionPseudoClassSelector [
+	| rule selector pseudoClasses |
+	result := self parse: 'tr:nth-child(odd) { }'.
+	
+	self assert: result rules size equals: 1.
+	
+	rule := result rules first.
+	self assert: rule declarations isEmpty.
+	self assert: rule selectors size equals: 1.
+	
+	selector := rule selectors first.
+	
+	"Selector general tests"
+	self assert: selector isSimpleSelector.
+	self deny: selector matchesOnStyleClass.
+	self deny: selector matchesOnId.
+	self assert: selector matchesOnName.
+	self assert: selector pseudoClassCount equals: 1.
+	
+	"Selecor class tests"
+	self assert: selector name equals: #tr.
+	pseudoClasses := selector pseudoClasses.
+	self assert: (pseudoClasses includesKey: #nthChild).
+	self assert: (pseudoClasses at: #nthChild) equals: #odd
+]
+
+{ #category : #'tests-selectors' }
+StyleParserTest >> testWithIntFunctionPseudoClassSelector [
+	| rule selector pseudoClasses |
+	result := self parse: 'tr:nth-child(2) { }'.
+	
+	self assert: result rules size equals: 1.
+	
+	rule := result rules first.
+	self assert: rule declarations isEmpty.
+	self assert: rule selectors size equals: 1.
+	
+	selector := rule selectors first.
+	
+	"Selector general tests"
+	self assert: selector isSimpleSelector.
+	self deny: selector matchesOnStyleClass.
+	self deny: selector matchesOnId.
+	self assert: selector matchesOnName.
+	self assert: selector pseudoClassCount equals: 1.
+	
+	"Selecor class tests"
+	self assert: selector name equals: #tr.
+	pseudoClasses := selector pseudoClasses.
+	self assert: (pseudoClasses includesKey: #nthChild).
+	self assert: (pseudoClasses at: #nthChild) equals: 2
+]
+
+{ #category : #'tests-selectors' }
 StyleParserTest >> testWithPseudoClassSelector [
 	| rule selector |
 	result := self parse: '*:visited { }'.
@@ -630,7 +684,7 @@ StyleParserTest >> testWithPseudoClassSelector [
 	
 	"Selecor class tests"
 	self assert: selector name equals: #*.
-	self assert: (selector pseudoClasses includes: #visited).
+	self assert: (selector pseudoClasses includesKey: #visited).
 ]
 
 { #category : #'tests-selectors' }
@@ -654,6 +708,6 @@ StyleParserTest >> testWithPseudoClassesSelector [
 	
 	"Selecor class tests"
 	self assert: selector name equals: #a.
-	self assert: (selector pseudoClasses includes: #visited).
-	self assert: (selector pseudoClasses includes: #hover).
+	self assert: (selector pseudoClasses includesKey: #visited).
+	self assert: (selector pseudoClasses includesKey: #hover).
 ]

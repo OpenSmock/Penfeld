@@ -6,21 +6,21 @@ Class {
 
 { #category : #styling }
 PenBlocMorphicWindowDresser >> backgroundColor: aValue [
-	self model engineElement root background: aValue.
+	self component engineElement root background: aValue.
 ]
 
 { #category : #dressing }
 PenBlocMorphicWindowDresser >> initEngineElement [
 	| element |
-	element := self model docks first view displayComponent.
+	element := self component docks first view displayComponent.
 
-	self model engineElement: (BlSpace new
-		extent: self model width pref @ self model height pref;
-		title: self model title;
+	self component engineElement: (BlSpace new
+		extent: self component width pref @ self component height pref;
+		title: self component title;
 		yourself).
 		
-	self model engineElement root addChild: element engineElement.
-	self model engineElement show
+	self component engineElement root addChild: element engineElement.
+	self component engineElement show
 		
 	
 ]

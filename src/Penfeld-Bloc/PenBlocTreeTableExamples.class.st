@@ -16,13 +16,9 @@ PenBlocTreeTableExamples class >> example [
 	model showRoot: true.
 	model treeSectionSelector: #name.
 	model expandAll.
-	model dresser: PFDBlocTreeTable new.
-	model sortingBlock: [ :a :b | a name < b name ].
-	model build.
-	self
-		openInWindow: model engineElement 
-		named: self name 
-		extent: 400@500 
+	model dresser: PenBlocTreeTableDresser new.
+	model sortingBlock: [ :a :b | a key < b key ].
+	model openInWorld  
 ]
 
 { #category : #examples }
@@ -40,22 +36,19 @@ PenBlocTreeTableExamples class >> exampleWithHeader [
 	model dragSections: true.
 	model treeSectionSelector: #name.
 	model expandAll.
-	model dresser: PFDBlocTreeTable new.
-	model sortingBlock: [ :a :b | a name < b name ].
+	model dresser: PenBlocTreeTableDresser new.
+	model sortingBlock: [ :a :b | a key < b key ].
 	model build.
-	self
-		openInWindow: model engineElement 
-		named: self name 
-		extent: 400@500 
+	model openInWorld 
 ]
 
 { #category : #'examples - instance creation' }
 PenBlocTreeTableExamples class >> header [
 	^ PenTableItem new
-		dresser: PFDBlocTableItemHeader new;
-		forSection: #name put: (PenLabel new text: 'Nom');
-		forSection: #numberOfSubclasses put: (PenLabel new text: 'Sub.');
-		forSection: #numberOfVariables put: (PenLabel new text: 'Inst.');
+		dresser: PenBlocTableItemHeaderDresser new;
+		atSection: #name put: (PenLabel new text: 'Nom');
+		atSection: #numberOfSubclasses put: (PenLabel new text: 'Sub.');
+		atSection: #numberOfVariables put: (PenLabel new text: 'Inst.');
 		yourself
 	
 ]
@@ -64,13 +57,13 @@ PenBlocTreeTableExamples class >> header [
 PenBlocTreeTableExamples class >> nodeForClass:  aClass [
 	| node |
 	node := PenTreeTableNode new.
-	node name: aClass name.
-	node dresser: PFDBlocTreeTableNode new.
-	node forSection: #name put: 
+	node key: aClass name asSymbol.
+	node dresser: PenBlocTreeTableNodeDresser new.
+	node atSection: #name put: 
 		(PenLabel new text: aClass name).
-	node forSection: #numberOfSubclasses put: 
+	node atSection: #numberOfSubclasses put: 
 		(PenLabel new text: aClass subclasses size printString).
-	node forSection: #numberOfVariables put: 
+	node atSection: #numberOfVariables put: 
 		(PenLabel new text: aClass instanceVariables size printString).
 	aClass subclasses do: [ :subclass |
 		node addNode: (self nodeForClass: subclass)].

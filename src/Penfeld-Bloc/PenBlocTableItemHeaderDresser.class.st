@@ -54,9 +54,9 @@ PenBlocTableItemHeaderDresser >> dragStart: anEvent [
 PenBlocTableItemHeaderDresser >> initEngineElement [
 	super initEngineElement.
 	
-	self model parent dragSections ifFalse: [ ^self ].
+	self component parent dragSections ifFalse: [ ^self ].
 	
-	self model engineElement children do: [ :each |
+	self component engineElement children do: [ :each |
 		each when: BlDragStartEvent do: [ :e | self dragStart: e ].
 		each when: BlDragEndEvent do: [ :e | self dragEnd: e ] ]
 ]

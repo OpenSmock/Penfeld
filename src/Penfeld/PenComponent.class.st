@@ -1,8 +1,8 @@
 Class {
 	#name : #PenComponent,
 	#superclass : #Object,
-	#traits : 'TPenIdentifiable',
-	#classTraits : 'TPenIdentifiable classTrait',
+	#traits : 'TPenDebug + TPenIdentifiable',
+	#classTraits : 'TPenDebug classTrait + TPenIdentifiable classTrait',
 	#instVars : [
 		'key',
 		'description'

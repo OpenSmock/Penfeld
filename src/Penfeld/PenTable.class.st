@@ -14,6 +14,7 @@ Class {
 
 { #category : #building }
 PenTable >> build [
+	self stylesheet ifNil: [ self chooseStylesheet ].
 	(self header isNotNil and: [self showHeader])
 		ifTrue: [ self header build ].
 	super build

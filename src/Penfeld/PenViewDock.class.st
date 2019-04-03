@@ -20,7 +20,7 @@ PenViewDock >> isViewDock [
 ]
 
 { #category : #opening }
-PenViewDock >> openInInternalWindow [
+PenViewDock >> openInWorld [
 	| window |
 	window := PenWindow withDock: self.
 	window morphic.
