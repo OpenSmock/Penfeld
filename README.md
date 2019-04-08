@@ -6,3 +6,6 @@ Metacello new
    repository: 'github://plantec/penfeld/src';
    load
 ```
+# Examples
+
+See `Penfeld-Bloc-Examples` or execute `PenBlocWidgetsSample>>#open`.
