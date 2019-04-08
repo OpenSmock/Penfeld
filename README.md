@@ -1,6 +1,4 @@
-# Penfeld
-
-Installing Penfeld:
+#Installing Penfeld
 
 ```Smalltalk
 Metacello new
