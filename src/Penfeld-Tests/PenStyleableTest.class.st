@@ -6,7 +6,7 @@ Class {
 
 { #category : #stylesheet }
 PenStyleableTest >> stylesheet1 [
-	^ StyleParser parse: '
+	^ PssParser parse: '
 * { color: #000000; }
 button { color: #111111; }
 #myButton { color: #222222; }

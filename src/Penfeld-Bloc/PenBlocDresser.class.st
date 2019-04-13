@@ -88,7 +88,7 @@ PenBlocDresser >> helperLinearGradient: args [
 
 { #category : #helpers }
 PenBlocDresser >> helperRgb: args [
-	^ StyleColorValue value: (Color 
+	^ PssColorValue value: (Color 
 		r: args first 
 		g: args second 
 		b: args third 
@@ -97,7 +97,7 @@ PenBlocDresser >> helperRgb: args [
 
 { #category : #helpers }
 PenBlocDresser >> helperRgba: args [
-	^ StyleColorValue value: ((Color 
+	^ PssColorValue value: ((Color 
 		r: args first 
 		g: args second 
 		b: args third 

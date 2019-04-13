@@ -74,7 +74,7 @@ PenDisplayComponentTest >> testBuildWithIndex [
 { #category : #'tests-private' }
 PenDisplayComponentTest >> testChooseStylesheet [
 	| container button stylesheet |
-	stylesheet := StyleStylesheet new.
+	stylesheet := PssStylesheet new.
 	button := PenButton new.
 	container := PenContainer new.
 	container stylesheet: stylesheet.
