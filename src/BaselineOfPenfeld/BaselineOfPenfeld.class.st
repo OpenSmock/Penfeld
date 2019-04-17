@@ -13,12 +13,11 @@ BaselineOfPenfeld >> baseline: spec [
 			"Bloc"
 			spec baseline: 'Bloc'	with:	[ spec repository: 'github://pharo-graphics/Bloc/src' ].
 
-			"PetitParser"
-			spec baseline: 'PetitParser' with: [ spec repository: 'github://moosetechnology/PetitParser/src' ].
+			"PharoStylesheet"
+			spec baseline: 'PharoStylesheet' with: [ spec repository: 'github://GlennCavarle/PharoStylesheet/src' ].
 							
 			"Penfeld"
-			spec package: 'Penfeld-Style' with: [ spec requires: 'PetitParser' ].
-			spec package: 'Penfeld' with: [ spec requires: #('Penfeld-Style' 'Bloc') ].
+			spec package: 'Penfeld' with: [ spec requires: #('PharoStylesheet' 'Bloc') ].
 			spec package: 'Penfeld-Tests' with: [ spec requires: 'Penfeld' ].
 			spec package: 'Penfeld-Bloc' with: [ spec requires: 'Penfeld' ].
 			spec package: 'Penfeld-Bloc-Tests' with: [ spec requires: 'Penfeld-Bloc' ].

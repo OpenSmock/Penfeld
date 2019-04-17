@@ -26,9 +26,9 @@ PenBlocDresserHelpersTest >> gradient: aGradient1 equals: aGradient2 [
 PenBlocDresserHelpersTest >> testLinearGradient [ 
 	| function gradient expectedGradient |
 	dresser := PenBlocDresser new.
-	function := (StyleFunctionValue value: #linearGradient) args: { 
-		StyleColorValue value: Color red. 
-		StyleColorValue value: Color yellow 
+	function := (PssFunctionValue value: #linearGradient) args: { 
+		PssColorValue value: Color red. 
+		PssColorValue value: Color yellow 
 	} asArray.
 	
 	gradient := dresser helperLinearGradient: function args.
@@ -47,14 +47,14 @@ PenBlocDresserHelpersTest >> testLinearGradient [
 PenBlocDresserHelpersTest >> testLinearGradientDiagonal [ 
 	| function gradient expectedGradient |
 	dresser := PenBlocDresser new.
-	function := (StyleFunctionValue value: #linearGradient) args: { 
-		StyleArrayValue value: {
-			StyleSymbolValue value: #to.
-			StyleSymbolValue value: #bottom.
-			StyleSymbolValue value: #right. 
+	function := (PssFunctionValue value: #linearGradient) args: { 
+		PssArrayValue value: {
+			PssSymbolValue value: #to.
+			PssSymbolValue value: #bottom.
+			PssSymbolValue value: #right. 
 		} asArray.
-		StyleColorValue value: Color red. 
-		StyleColorValue value: Color yellow 
+		PssColorValue value: Color red. 
+		PssColorValue value: Color yellow 
 	} asArray.
 	
 	gradient := dresser helperLinearGradient: function args.
@@ -73,17 +73,17 @@ PenBlocDresserHelpersTest >> testLinearGradientDiagonal [
 PenBlocDresserHelpersTest >> testLinearGradientMultipleColorStops [
 	| function gradient expectedGradient |
 	dresser := PenBlocDresser new.	
-	function := (StyleFunctionValue value: #linearGradient) args: { 
-		StyleArrayValue value: {
-			StyleSymbolValue value: #to.
-			StyleSymbolValue value: #right. 
+	function := (PssFunctionValue value: #linearGradient) args: { 
+		PssArrayValue value: {
+			PssSymbolValue value: #to.
+			PssSymbolValue value: #right. 
 		} asArray.
-		StyleColorValue value: Color red. 
-		StyleColorValue value: Color orange.
-		StyleColorValue value: Color yellow. 
-		StyleColorValue value: Color green.
-		StyleColorValue value: Color blue. 
-		StyleColorValue value: Color purple.
+		PssColorValue value: Color red. 
+		PssColorValue value: Color orange.
+		PssColorValue value: Color yellow. 
+		PssColorValue value: Color green.
+		PssColorValue value: Color blue. 
+		PssColorValue value: Color purple.
 	} asArray.
 	
 	gradient := dresser helperLinearGradient: function args.
@@ -106,22 +106,22 @@ PenBlocDresserHelpersTest >> testLinearGradientMultipleColorStops [
 PenBlocDresserHelpersTest >> testLinearGradientRgba [
 	| function gradient expectedGradient |
 	dresser := PenBlocDresser new.	
-	function := (StyleFunctionValue value: #linearGradient) args: {
-		StyleArrayValue value: {
-			StyleSymbolValue value: #to.
-			StyleSymbolValue value: #right. 
+	function := (PssFunctionValue value: #linearGradient) args: {
+		PssArrayValue value: {
+			PssSymbolValue value: #to.
+			PssSymbolValue value: #right. 
 		}.
-		(StyleFunctionValue value: #rgba) args: {
-			StyleNumberValue value: 0.
-			StyleNumberValue value: 0.
-			StyleNumberValue value: 0.
-			StyleNumberValue value: 0.
+		(PssFunctionValue value: #rgba) args: {
+			PssNumberValue value: 0.
+			PssNumberValue value: 0.
+			PssNumberValue value: 0.
+			PssNumberValue value: 0.
 		}. 
-		(StyleFunctionValue value: #rgba) args: {
-			StyleNumberValue value: 255.
-			StyleNumberValue value: 0.
-			StyleNumberValue value: 0.
-			StyleNumberValue value: 1.
+		(PssFunctionValue value: #rgba) args: {
+			PssNumberValue value: 255.
+			PssNumberValue value: 0.
+			PssNumberValue value: 0.
+			PssNumberValue value: 1.
 		}.
 	}.
 	
@@ -141,13 +141,13 @@ PenBlocDresserHelpersTest >> testLinearGradientRgba [
 PenBlocDresserHelpersTest >> testLinearGradientWithAngle [
 	| function gradient expectedGradient |
 	dresser := PenBlocDresser new.	
-	function := (StyleFunctionValue value: #linearGradient) args: {
-		StyleArrayValue value: { 
-			StyleNumberValue value: -90. 
-			StyleSymbolValue value: #deg 
+	function := (PssFunctionValue value: #linearGradient) args: {
+		PssArrayValue value: { 
+			PssNumberValue value: -90. 
+			PssSymbolValue value: #deg 
 		}.
-		StyleColorValue value: Color red.
-		StyleColorValue value: Color yellow
+		PssColorValue value: Color red.
+		PssColorValue value: Color yellow
 	}.
 	
 	gradient := dresser helperLinearGradient: function args.
@@ -166,18 +166,18 @@ PenBlocDresserHelpersTest >> testLinearGradientWithAngle [
 PenBlocDresserHelpersTest >> testLinearGradientWithPercentage [
 	| function gradient expectedGradient |
 	dresser := PenBlocDresser new.
-	function := (StyleFunctionValue value: #linearGradient) args: {
-		StyleArrayValue value: { 
-			StyleColorValue value: Color red. 
-			StyleValue percent: 0 
+	function := (PssFunctionValue value: #linearGradient) args: {
+		PssArrayValue value: { 
+			PssColorValue value: Color red. 
+			PssValue percent: 0 
 		}.
-		StyleArrayValue value: { 
-			StyleColorValue value: Color orange. 
-			StyleValue percent: 50
+		PssArrayValue value: { 
+			PssColorValue value: Color orange. 
+			PssValue percent: 50
 		}.
-		StyleArrayValue value: { 
-			StyleColorValue value: Color yellow. 
-			StyleValue percent: 52
+		PssArrayValue value: { 
+			PssColorValue value: Color yellow. 
+			PssValue percent: 52
 		}
 	}.
 	
@@ -199,10 +199,10 @@ PenBlocDresserHelpersTest >> testLinearGradientWithPercentage [
 PenBlocDresserHelpersTest >> testRgb [
 	| function color expectedColor |
 	dresser := PenBlocDresser new.	
-	function := (StyleFunctionValue value: #rgb) args: {
-		StyleNumberValue value: 255.
-		StyleNumberValue value: 0.
-		StyleNumberValue value: 0.
+	function := (PssFunctionValue value: #rgb) args: {
+		PssNumberValue value: 255.
+		PssNumberValue value: 0.
+		PssNumberValue value: 0.
 	}.
 	
 	color := dresser helperRgb: function args.
@@ -216,11 +216,11 @@ PenBlocDresserHelpersTest >> testRgb [
 PenBlocDresserHelpersTest >> testRgba [
 	| function color expectedColor |
 	dresser := PenBlocDresser new.	
-	function := (StyleFunctionValue value: #rgba) args: {
-		StyleNumberValue value: 50.
-		StyleNumberValue value: 0.
-		StyleNumberValue value: 50.
-		StyleNumberValue value: 0.2.
+	function := (PssFunctionValue value: #rgba) args: {
+		PssNumberValue value: 50.
+		PssNumberValue value: 0.
+		PssNumberValue value: 50.
+		PssNumberValue value: 0.2.
 	}.
 	
 	color := dresser helperRgba: function args.
@@ -234,11 +234,11 @@ PenBlocDresserHelpersTest >> testRgba [
 PenBlocDresserHelpersTest >> testRgba2 [
 	| function color expectedColor |
 	dresser := PenBlocDresser new.	
-	function := (StyleFunctionValue value: #rgba) args: {
-		StyleNumberValue value: 255.
-		StyleNumberValue value: 0.
-		StyleNumberValue value: 0.
-		StyleNumberValue value: 1.
+	function := (PssFunctionValue value: #rgba) args: {
+		PssNumberValue value: 255.
+		PssNumberValue value: 0.
+		PssNumberValue value: 0.
+		PssNumberValue value: 1.
 	}.
 	
 	color := dresser helperRgba: function args.
@@ -252,11 +252,11 @@ PenBlocDresserHelpersTest >> testRgba2 [
 PenBlocDresserHelpersTest >> testRgbaTransparent [
 	| function color expectedColor |
 	dresser := PenBlocDresser new.	
-	function := (StyleFunctionValue value: #rgba) args: {
-		StyleNumberValue value: 0.
-		StyleNumberValue value: 0.
-		StyleNumberValue value: 0.
-		StyleNumberValue value: 0.
+	function := (PssFunctionValue value: #rgba) args: {
+		PssNumberValue value: 0.
+		PssNumberValue value: 0.
+		PssNumberValue value: 0.
+		PssNumberValue value: 0.
 	}.
 	
 	color := dresser helperRgba: function args.
