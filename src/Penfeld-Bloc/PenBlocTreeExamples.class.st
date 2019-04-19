@@ -39,17 +39,6 @@ PenBlocTreeExamples class >> examplePropagateClosure [
 ]
 
 { #category : #examples }
-PenBlocTreeExamples class >> exampleTextEditor [
-	| component model |
-	component := PenTextEditor new.
-	component position: 0 @ 0.
-	component width: 500.
-	component height: 500.
-	component dresser: PenBlocTextEditorDresser new.
-	component openInWorld
-]
-
-{ #category : #examples }
 PenBlocTreeExamples class >> exampleWithRoot [
 	| component |
 	component := PenTree new.
