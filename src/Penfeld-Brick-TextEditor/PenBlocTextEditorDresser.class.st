@@ -12,7 +12,7 @@ Class {
 
 { #category : #styling }
 PenBlocTextEditorDresser >> backgroundColor: aValue [
-	self model engineElement background: aValue
+	self component engineElement background: aValue
 ]
 
 { #category : #styling }
@@ -32,7 +32,7 @@ PenBlocTextEditorDresser >> initEngineElement [
 	
 	dataSource := BrTextEditor new.
 
-	self model engineElement: element.
+	self component engineElement: element.
 	
 	styler := BrRBTextStyler new.
 	styler classOrMetaClass: Object.
@@ -45,7 +45,7 @@ PenBlocTextEditorDresser >> initEngineElement [
 	col add: (Random new next).
 	^col shuffled').
 	
-	self model engineElement editor: dataSource.
+	self component engineElement editor: dataSource.
 	self component engineElement
 		constraintsDo: [ :c | 
 			c horizontal matchParent.
