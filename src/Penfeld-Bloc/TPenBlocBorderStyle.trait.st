@@ -21,7 +21,7 @@ TPenBlocBorderStyle >> border: aValue [
 				ifTrue: [ borderBuilder perform: property value ]
 				ifFalse: 
 				[
-					(property isKindOf: StyleValue)
+					(property isKindOf: PssValue)
 					ifTrue: 
 					[ 
 						"Linear gradient" 
