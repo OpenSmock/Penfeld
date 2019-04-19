@@ -33,7 +33,7 @@ PenStylesheet class >> light [
 	<script: 'self light'>
 	Current := StyleParser parse: (self stylesheet: {
 		#textColor -> '#1E1E1E'.
-		#backgroundColor -> '#F0F0F0'.
+		#backgroundColor -> '#FFFFFF'.
 		#borderColor -> '#505050'.
 		#activeColor -> '#8BBABB'.
 		#checkedColor -> '#52AF7E'.
