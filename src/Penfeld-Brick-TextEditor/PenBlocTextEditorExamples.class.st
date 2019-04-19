@@ -1,7 +1,7 @@
 Class {
 	#name : #PenBlocTextEditorExamples,
 	#superclass : #Object,
-	#category : #'Penfeld-Bloc-Examples'
+	#category : #'Penfeld-Brick-TextEditor'
 }
 
 { #category : #examples }

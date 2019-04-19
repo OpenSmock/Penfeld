@@ -7,7 +7,7 @@ Class {
 		'dataSource',
 		'pushedItem'
 	],
-	#category : #'Penfeld-Bloc-Dressers'
+	#category : #'Penfeld-Brick-TextEditor'
 }
 
 { #category : #styling }

@@ -17,7 +17,7 @@ BaselineOfPenfeld >> baseline: spec [
 			"Brick text editor"
 			spec
 				baseline: 'Brick'
-				with: [ spec repository: 'github://StevenCostiou/Brick/src' ].
+				with: [ spec repository: 'github://StevenCostiou/Brick/src'. ].
 
 			"PharoStylesheet"
 			spec
@@ -30,6 +30,7 @@ BaselineOfPenfeld >> baseline: spec [
 				with: [ spec requires: #('PharoStylesheet' 'Bloc') ].
 			spec package: 'Penfeld-Tests' with: [ spec requires: 'Penfeld' ].
 			spec package: 'Penfeld-Bloc' with: [ spec requires: 'Penfeld' ].
+			spec package: 'Penfeld-Brick-TextEditor' with: [ spec requires: 'Brick' ].
 			spec
 				package: 'Penfeld-Bloc-Tests'
 				with: [ spec requires: 'Penfeld-Bloc' ].
