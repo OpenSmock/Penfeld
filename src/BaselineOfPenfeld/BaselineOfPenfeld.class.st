@@ -30,7 +30,7 @@ BaselineOfPenfeld >> baseline: spec [
 				with: [ spec requires: #('PharoStylesheet' 'Bloc') ].
 			spec package: 'Penfeld-Tests' with: [ spec requires: 'Penfeld' ].
 			spec package: 'Penfeld-Bloc' with: [ spec requires: 'Penfeld' ].
-			spec package: 'Penfeld-Brick-TextEditor' with: [ spec requires: 'Brick' ].
+			spec package: 'Penfeld-Brick-TextEditor' with: [ spec requires: 'Penfeld-Bloc' ].
 			spec
 				package: 'Penfeld-Bloc-Tests'
 				with: [ spec requires: 'Penfeld-Bloc' ].
