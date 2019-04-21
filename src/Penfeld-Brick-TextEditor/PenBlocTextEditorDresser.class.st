@@ -7,7 +7,7 @@ Class {
 		'dataSource',
 		'pushedItem'
 	],
-	#category : #'Penfeld-Brick-TextEditor'
+	#category : #'Penfeld-Brick-TextEditor-Dressers'
 }
 
 { #category : #styling }
@@ -20,30 +20,16 @@ PenBlocTextEditorDresser >> backgroundImage: aValue [
 
 ]
 
+{ #category : #accessing }
+PenBlocTextEditorDresser >> dataSource [
+	^dataSource
+]
+
 { #category : #dressing }
 PenBlocTextEditorDresser >> initEngineElement [
-	|styler element|
-	element := BrEditorElement new
-		constraintsDo: [ :c | 
-			c horizontal matchParent.
-			c vertical matchParent ];
-		yourself.
-	"element  background: Color white."
 	
+	self component engineElement: BrEditorElement new.	
 	dataSource := BrTextEditor new.
-
-	self component engineElement: element.
-	
-	styler := BrRBTextStyler new.
-	styler classOrMetaClass: Object.
-	dataSource styler: styler.
-	dataSource text: (BlRopedText string: 'myExample
-	|col|
-	col := OrderedCollection new.
-	col add: (Random new next).
-	col add: (Random new next).
-	col add: (Random new next).
-	^col shuffled').
 	
 	self component engineElement editor: dataSource.
 	self component engineElement

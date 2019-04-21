@@ -254,7 +254,8 @@ PenBlocBasicExamples class >> exampleToggleButton [
 		text: 'Toggle';
 		position: 20@20;
 		onCheckedDo: [ self inform: 'Checked!' ];
-		onUncheckedDo: [ self inform: 'Unchecked!' ].
+		onUncheckedDo: [ self inform: 'Unchecked!' ];
+		onActionDo:[self inform: 'Clicked!'].
 	component dresser: PenBlocButtonDresser new.
 	component openInWorld 
 	
