@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'windows'
 	],
-	#category : #'Penfeld-Core'
+	#category : #'Penfeld-Components'
 }
 
 { #category : #accessing }

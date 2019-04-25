@@ -4,7 +4,7 @@ Class {
 	#classVars : [
 		'Default'
 	],
-	#category : #'Penfeld-Core'
+	#category : #'Penfeld-Abstracts'
 }
 
 { #category : #accessing }

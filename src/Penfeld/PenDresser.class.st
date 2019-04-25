@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'styleSelector'
 	],
-	#category : #'Penfeld-Core'
+	#category : #'Penfeld-Abstracts'
 }
 
 { #category : #dressing }
@@ -94,6 +94,10 @@ PenDresser >> height: aValue [
 ]
 
 { #category : #helpers }
+PenDresser >> helperIcon: args [
+]
+
+{ #category : #helpers }
 PenDresser >> helperLinearGradient: args [
 ]
 
@@ -108,6 +112,18 @@ PenDresser >> helperRgba: args [
 { #category : #dressing }
 PenDresser >> initEngineElement [
 	^ self subclassResponsibility
+]
+
+{ #category : #styling }
+PenDresser >> margin: aValue [
+]
+
+{ #category : #styling }
+PenDresser >> padding: aValue [
+]
+
+{ #category : #styling }
+PenDresser >> penLoader: aValue [
 ]
 
 { #category : #dressing }

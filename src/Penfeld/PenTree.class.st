@@ -65,7 +65,7 @@ PenTree >> nodes [
 
 { #category : #'api - events' }
 PenTree >> onSelectionChangedDo: aBlock [
-	self addCallback: aBlock for: PenEventSymbol selectionChanged
+	self onEvent: PenEventSymbol selectionChanged do: aBlock
 ]
 
 { #category : #accessing }

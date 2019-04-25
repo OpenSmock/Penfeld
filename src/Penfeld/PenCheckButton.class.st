@@ -42,7 +42,9 @@ PenCheckButton >> text [
 
 { #category : #accessing }
 PenCheckButton >> text: aString [
-	text := aString
+	text = aString ifTrue: [ ^ self ].
+	text := aString.
+	self refresh.
 ]
 
 { #category : #api }

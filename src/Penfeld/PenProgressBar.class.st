@@ -52,7 +52,7 @@ PenProgressBar >> isMax [
 
 { #category : #'api - events' }
 PenProgressBar >> onValueChangedDo: aBlock [
-	self whenEvent: PenEventSymbol valueChanged on: self do: aBlock
+	self onEvent: PenEventSymbol valueChanged do: aBlock
 ]
 
 { #category : #accessing }

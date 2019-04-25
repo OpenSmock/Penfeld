@@ -5,7 +5,7 @@ Class {
 	#instVars : [
 		'docks'
 	],
-	#category : #'Penfeld-Core'
+	#category : #'Penfeld-Components'
 }
 
 { #category : #accessing }

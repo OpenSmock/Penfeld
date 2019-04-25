@@ -5,7 +5,7 @@ Class {
 		'value',
 		'map'
 	],
-	#category : #'Penfeld-Core'
+	#category : #'Penfeld-Abstracts'
 }
 
 { #category : #accessing }

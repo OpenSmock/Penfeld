@@ -19,5 +19,7 @@ PenButton >> text [
 
 { #category : #accessing }
 PenButton >> text: anObject [
-	text := anObject
+	text = anObject ifTrue: [ ^ self ].
+	text := anObject.
+	self refresh.
 ]

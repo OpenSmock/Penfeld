@@ -1,23 +1,32 @@
 Class {
 	#name : #PenBlocTableItemDresser,
 	#superclass : #PenBlocDresser,
-	#traits : 'TPenBlocSizeStyle + TPenBlocBackgroundStyle',
-	#classTraits : 'TPenBlocSizeStyle classTrait + TPenBlocBackgroundStyle classTrait',
+	#traits : 'TPenBlocSizeStyle + TPenBlocBackgroundStyle + TPenBlocBorderStyle + TPenBlocMarginStyle',
+	#classTraits : 'TPenBlocSizeStyle classTrait + TPenBlocBackgroundStyle classTrait + TPenBlocBorderStyle classTrait + TPenBlocMarginStyle classTrait',
 	#category : #'Penfeld-Bloc-Dressers'
 }
 
 { #category : #dressing }
-PenBlocTableItemDresser >> doBeforeApplyStyle [ 
+PenBlocTableItemDresser >> doAfterApplyStyle [ 
 	self component parent sections do: [ :section | 
 		| selector content fixedSize |
 		selector := section selector.
 		fixedSize := section size.
 		content := self component atSection: selector.
-		fixedSize ifNotNil: [ 
-			content engineElement constraintsDo: [ :c | 
-				c horizontal exact: fixedSize ]
-			].
+		content engineElement constraintsDo: [ :c | 
+			fixedSize isNumber ifTrue: [ c horizontal exact: fixedSize ].
+			fixedSize = #maximized ifTrue: [ c horizontal matchParent ]
 		].
+	].
+]
+
+{ #category : #'accessing structure variables' }
+PenBlocTableItemDresser >> height: aValue [
+	self component engineElement constraintsDo: [ :c |
+		c vertical exact: aValue ].
+	self component content do: [ :element |
+		element height: aValue.
+		element refresh ]
 ]
 
 { #category : #dressing }
@@ -26,27 +35,25 @@ PenBlocTableItemDresser >> initEngineElement [
 	self component engineElement layout: BlLinearLayout horizontal.
 	self component engineElement constraintsDo: [ :c |
 		c horizontal matchParent.
-		self flag: 'ideally: c vertical fitContent'.
-		c vertical exact: 20.
+		c vertical fitContent.
 	].
 	
 	self component parent sections do: [ :section | 
-		| selector content fixedSize |
+		| selector content |
 		selector := section selector.
-		fixedSize := section size.
 		content := self component atSection: selector.
-		fixedSize ifNotNil: [ content engineElement constraintsDo: [ :c | c horizontal exact: fixedSize ]].
-		self component engineElement addChild: content engineElement as: selector].
+		self component engineElement addChild: content engineElement as: selector
+	].
 ]
 
 { #category : #styling }
-PenBlocTableItemDresser >> sectionsOrderChanged: aModel [
+PenBlocTableItemDresser >> sectionsOrderChanged: aComponent [
 	| temp |
 	temp := Dictionary new.
-	aModel parent sections do: [ :section | | selector |
+	aComponent parent sections do: [ :section | | selector |
 		selector := section selector.
-		temp at: selector put: (aModel engineElement childNamed: selector).
-		aModel engineElement removeChildNamed: selector ].
-	aModel parent sections do: [ :section |
-		aModel engineElement addChild: (temp at: section selector) ]
+		temp at: selector put: (aComponent engineElement childNamed: selector).
+		aComponent engineElement removeChildNamed: selector ].
+	aComponent parent sections do: [ :section |
+		aComponent engineElement addChild: (temp at: section selector) ]
 ]

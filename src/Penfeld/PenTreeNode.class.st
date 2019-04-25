@@ -58,8 +58,6 @@ PenTreeNode >> initialize [
 	super initialize.
 	expanded := false.
 	nodes := OrderedCollection new.
-	self flag: 'Change onActionDo to respond on click on clickable area'.
-	self onActionDo: [ self switchExpand ]
 ]
 
 { #category : #accessing }

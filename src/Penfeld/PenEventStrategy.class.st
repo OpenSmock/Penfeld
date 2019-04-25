@@ -7,33 +7,33 @@ Class {
 }
 
 { #category : #binding }
+PenEventStrategy >> bindAction: anEventBinding [
+	^ self subclassResponsibility 
+]
+
+{ #category : #binding }
+PenEventStrategy >> bindClick: anEventBinding [
+	^ self subclassResponsibility 
+]
+
+{ #category : #binding }
+PenEventStrategy >> bindMouseDown: anEventBinding [
+	^ self subclassResponsibility 
+]
+
+{ #category : #binding }
 PenEventStrategy >> tryToBind: anEventBinding [
 	| symbol |
 	
 	anEventBinding isCompositeEvent ifTrue: [ 
-		self warn: 'Can not install composite binding.'.
+		self warn: 'Can not bind composite binding.'.
 		^ false ].
 	
 	symbol := anEventBinding symbol.
 	symbol = PenEventSymbol click
-		ifTrue: [ ^ self tryToBindClickOn: anEventBinding source ]
+		ifTrue: [ ^ self bindClick: anEventBinding ]
 		ifFalse: 
 	[ symbol = PenEventSymbol action
-		ifTrue: [ ^ self tryToBindActionOn: anEventBinding source  ]
+		ifTrue: [ ^ self bindAction: anEventBinding ]
 		ifFalse: [ self warn: self printString, ' can not bind ', symbol. ^ false]]
-]
-
-{ #category : #binding }
-PenEventStrategy >> tryToBindActionOn: aComponent [
-	^ self subclassResponsibility 
-]
-
-{ #category : #binding }
-PenEventStrategy >> tryToBindClickOn: aComponent [
-	^ self subclassResponsibility 
-]
-
-{ #category : #binding }
-PenEventStrategy >> tryToBindMouseDownOn: aComponent [
-	^ self subclassResponsibility 
 ]

@@ -1,5 +1,5 @@
 Class {
 	#name : #PenVisualisationElement,
 	#superclass : #PenElement,
-	#category : #'Penfeld-Core'
+	#category : #'Penfeld-Elements'
 }

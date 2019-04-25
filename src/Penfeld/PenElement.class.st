@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'icon'
 	],
-	#category : #'Penfeld-Core'
+	#category : #'Penfeld-Components'
 }
 
 { #category : #accessing }

@@ -27,8 +27,8 @@ PenBlocDresserHelpersTest >> testLinearGradient [
 	| function gradient expectedGradient |
 	dresser := PenBlocDresser new.
 	function := (PssFunctionValue value: #linearGradient) args: { 
-		PssColorValue value: Color red. 
-		PssColorValue value: Color yellow 
+		PssFunctionValue value: Color red. 
+		PssFunctionValue value: Color yellow 
 	} asArray.
 	
 	gradient := dresser helperLinearGradient: function args.

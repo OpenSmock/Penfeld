@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'view'
 	],
-	#category : #'Penfeld-Core'
+	#category : #'Penfeld-Components'
 }
 
 { #category : #'instance creation' }

@@ -1,6 +1,6 @@
 Trait {
 	#name : #TPenIdentifiable,
-	#category : #'Penfeld-Core'
+	#category : #'Penfeld-Elements support'
 }
 
 { #category : #identifier }

@@ -13,13 +13,9 @@ PenTableItem >> atSection: aSymbol [
 ]
 
 { #category : #'as yet unclassified' }
-PenTableItem >> atSection: aSymbol put: aContainer [
-	| container |
-	container := aContainer isContainer
-		ifTrue: [ aContainer ]
-		ifFalse: [ PenContainer new addElement: aContainer ].
-	self content at: aSymbol put: container.
-	container parent: self
+PenTableItem >> atSection: aSymbol put: anElement [
+	self content at: aSymbol put: anElement.
+	anElement parent: self
 ]
 
 { #category : #building }

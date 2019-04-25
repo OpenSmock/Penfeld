@@ -1,5 +1,5 @@
 Class {
 	#name : #PenScreenConfiguration,
 	#superclass : #Object,
-	#category : #'Penfeld-Core'
+	#category : #'Penfeld-Elements support'
 }

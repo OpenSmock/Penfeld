@@ -13,7 +13,7 @@ PenBlocTableItemHeaderDresser >> dragEnd: anEvent [
 	| dragEndPosition sections delta i |
 	anEvent consumed: true.
 	dragEndPosition := anEvent position.
-	sections := self model parent sections.
+	sections := self component parent sections.
 	i := sections indexOf: draggedSection.
 	
 	delta := dragEndPosition - dragStartPosition.
@@ -23,19 +23,19 @@ PenBlocTableItemHeaderDresser >> dragEnd: anEvent [
 			[i < sections size] whileTrue: [ 
 				| boundsInSpace middle |
 				i := i + 1.
-				boundsInSpace := (self model content at: (sections at: i) selector) engineElement boundsInSpace.
+				boundsInSpace := (self component content at: (sections at: i) selector) engineElement boundsInSpace.
 				middle := (boundsInSpace corner x - boundsInSpace origin x) / 2  + boundsInSpace origin x.
 				dragEndPosition x > middle ifTrue: 
-					[ self model parent moveSection: draggedSection after: (sections at: i) ]]]
+					[ self component parent moveSection: draggedSection after: (sections at: i) ]]]
 		ifFalse: [ 
 			"left drag"
 			[i > 1] whileTrue: [ 
 				| boundsInSpace middle |
 				i := i - 1.
-				boundsInSpace := (self model content at: (sections at: i) selector) engineElement boundsInSpace.
+				boundsInSpace := (self component content at: (sections at: i) selector) engineElement boundsInSpace.
 				middle := (boundsInSpace corner x - boundsInSpace origin x) / 2 + boundsInSpace origin x.
 				dragEndPosition x < middle ifTrue: 
-					[ self model parent moveSection: draggedSection before: (sections at: i) ]]]
+					[ self component parent moveSection: draggedSection before: (sections at: i) ]]]
 ]
 
 { #category : #events }
@@ -43,10 +43,10 @@ PenBlocTableItemHeaderDresser >> dragStart: anEvent [
 	| draggedSelector |
 	anEvent consumed: true.
 	dragStartPosition := anEvent position.
-	self model content keysAndValuesDo: [ :key :value |
+	self component content keysAndValuesDo: [ :key :value |
 		(value engineElement containsGlobalPoint: dragStartPosition)
 			ifTrue: [ draggedSelector := key ]].
-	draggedSection := self model parent sections detect: [ :section |
+	draggedSection := self component parent sections detect: [ :section |
 		section selector = draggedSelector ].
 ]
 

@@ -5,49 +5,25 @@ Class {
 }
 
 { #category : #installing }
-PenBlocEventStrategy >> tryToBind: anEventBinding whenActionOn: aComponent [
-	aComponent engineElement 
+PenBlocEventStrategy >> bindAction: anEventBinding [
+	anEventBinding source engineElement 
 		when: BlClickEvent 
-		do: [ :e | anEventBinding source actionEvent ].
+		do: [ :e | anEventBinding executeCallback ].
 	^ true
 ]
 
 { #category : #installing }
-PenBlocEventStrategy >> tryToBind: anEventBinding whenClickOn: aComponent [
-	aComponent engineElement 
+PenBlocEventStrategy >> bindClick: anEventBinding [
+	anEventBinding source engineElement 
 		when: BlClickEvent 
-		do: [ :e | anEventBinding source clickEvent: (PenEvent fromBloc: e) ].
+		do: [ :e | anEventBinding executeCallback: (PenMouseEvent fromBloc: e) ].
 	^ true
 ]
 
 { #category : #installing }
-PenBlocEventStrategy >> tryToBind: anEventBinding whenMouseDownOn: aComponent [
-	aComponent engineElement 
+PenBlocEventStrategy >> bindMouseDown: anEventBinding [
+	anEventBinding source engineElement 
 		when: BlMouseDownEvent 
-		do: [ :e | anEventBinding source mouseDownEvent: (PenEvent fromBloc: e) ].
-	^ true
-]
-
-{ #category : #installing }
-PenBlocEventStrategy >> tryToBindActionOn: aComponent [
-	aComponent engineElement 
-		when: BlClickEvent 
-		do: [ :e | aComponent actionEvent ].
-	^ true
-]
-
-{ #category : #installing }
-PenBlocEventStrategy >> tryToBindClickOn: aComponent [
-	aComponent engineElement 
-		when: BlClickEvent 
-		do: [ :e | aComponent clickEvent: (PenMouseEvent fromBloc: e) ].
-	^ true
-]
-
-{ #category : #installing }
-PenBlocEventStrategy >> tryToBindMouseDownOn: aComponent [
-	aComponent engineElement 
-		when: BlMouseDownEvent 
-		do: [ :e | aComponent mouseDownEvent: (PenMouseEvent fromBloc: e) ].
+		do: [ :e | anEventBinding executeCallback: (PenMouseEvent fromBloc: e) ].
 	^ true
 ]

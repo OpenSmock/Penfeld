@@ -1,55 +1,15 @@
 Class {
 	#name : #PenBlocButtonDresser,
 	#superclass : #PenBlocDresser,
-	#traits : 'TPenBlocSizeStyle + TPenBlocBackgroundStyle + TPenBlocFontStyle + TPenBlocBorderStyle',
-	#classTraits : 'TPenBlocSizeStyle classTrait + TPenBlocBackgroundStyle classTrait + TPenBlocFontStyle classTrait + TPenBlocBorderStyle classTrait',
+	#traits : 'TPenBlocSizeStyle + TPenBlocBackgroundStyle + TPenBlocFontStyle + TPenBlocBorderStyle + TPenBlocMarginStyle',
+	#classTraits : 'TPenBlocSizeStyle classTrait + TPenBlocBackgroundStyle classTrait + TPenBlocFontStyle classTrait + TPenBlocBorderStyle classTrait + TPenBlocMarginStyle classTrait',
 	#instVars : [
 		'ropedText',
-		'pushed'
+		'pushed',
+		'animation'
 	],
 	#category : #'Penfeld-Bloc-Dressers'
 }
-
-{ #category : #styling }
-PenBlocButtonDresser >> border: aValue [
-	| borderBuilder |	
-	borderBuilder := BlBorderBuilder new.
-	
-	aValue do: 
-	[ :property | 
-		property value isNumber 
-		ifTrue: [ borderBuilder width: property ] 
-		ifFalse: 
-		[
-			property value isSymbol
-			ifTrue: 
-			[ 
-				(borderBuilder respondsTo: property value) 
-				ifTrue: [ borderBuilder perform: property value ]
-				ifFalse: 
-				[
-					(property isKindOf: PssValue)
-					ifTrue: 
-					[ 
-						"Linear gradient" 
-						| paint |
-						paint := self performFunction: property.
-						paint end: paint end * (self component width pref @ self component height pref).
-						borderBuilder paint: paint
-					]
-				]
-			]
-			ifFalse: 
-			[ 
-				(property value isKindOf: Color)
-				ifTrue: [ borderBuilder paint: property ]
-				ifFalse: [ self notYetImplemented ]
-			]
-		]
-	].
-	
-	self component engineElement border: borderBuilder build.
-]
 
 { #category : #rendering }
 PenBlocButtonDresser >> doAfterApplyStyle [ 
@@ -72,20 +32,14 @@ PenBlocButtonDresser >> doAfterApplyStyle [
 	element childNamed: #text
 		ifFound: [ :anElement | anElement text: ropedText ]
 		ifNone: [].
-	
-	self component isLoading 
-		ifTrue: 
-		[ 
-			element childNamed: #loader
-				ifFound: [ :anElement |  ]
-				ifNone: [ element addChild: self loader as: #loader ]
-		]
-		ifFalse: [ element removeChildNamed: #loader ].
 ]
 
 { #category : #rendering }
 PenBlocButtonDresser >> doBeforeApplyStyle [ 
-	ropedText := self component text asRopedText
+	ropedText := self component text asRopedText.
+	
+	animation ifNotNil: [ animation stop. animation := nil ].
+	self component engineElement removeChildNamed: #loadingIconContainer
 ]
 
 { #category : #dressing }
@@ -105,7 +59,8 @@ PenBlocButtonDresser >> initEngineElement [
 	self component engineElement addChild: textContainer as: #textContainer.
 	
 	"Icon is by default centered on left side of the button"
-	self component icon ifNotNil: [ | iconContainer iconElement |
+	self component icon ifNotNil: [ 
+		| iconContainer iconElement |
 		iconContainer := BlElement new 
 			layout: BlFrameLayout new;
 			relocate: 5@0;
@@ -119,7 +74,7 @@ PenBlocButtonDresser >> initEngineElement [
 				c frame horizontal alignCenter.
 				c frame vertical alignCenter ].
 		iconContainer addChild: iconElement as: #icon.
-		self component engineElement addChild: iconContainer as: #iconContainer 
+		self component engineElement addChild: iconContainer as: #iconContainer
 	].
 	
 	"Initialisation of events"
@@ -127,6 +82,41 @@ PenBlocButtonDresser >> initEngineElement [
 	self component engineElement when: BlMouseDownEvent do: [ :e | self whenMouseDownEvent ].
 	self component engineElement when: BlMouseUpEvent do: [ :e | self whenMouseUpEvent ].
 	self component engineElement when: BlMouseLeaveEvent do: [ :e | self whenMouseLeaveEvent ].
+]
+
+{ #category : #styling }
+PenBlocButtonDresser >> penLoader: aValue [
+	| iconContainer iconElement loopDoneListener |
+	
+	iconContainer := BlElement new 
+		layout: BlFrameLayout new;
+		relocate: 5@0;
+		constraintsDo: [ :c | 
+			c horizontal matchParent.
+			c vertical matchParent ].
+		
+	iconElement := BlElement new
+		size: aValue extent;
+		background: aValue asBlBackground;
+		constraintsDo: [ :c | 
+			c frame horizontal alignCenter.
+			c frame vertical alignCenter ].
+		
+	animation := BlTransformAnimation new.
+	animation transform rotateBy: 90; apply.
+	animation absolute.
+	animation beInfinite.
+	animation duration: 1 second.
+	iconElement addAnimation: animation.
+	loopDoneListener := BlEventHandler 
+		on: BlAnimationLoopDoneEvent 
+		do: [ :anEvent | iconElement transform rotateBy: 0; apply ].
+	animation addEventHandler: loopDoneListener.
+	
+	iconContainer addChild: iconElement as: #loadingIcon.
+	self component engineElement addChild: iconContainer as: #loadingIconContainer 
+	
+	
 ]
 
 { #category : #accessing }

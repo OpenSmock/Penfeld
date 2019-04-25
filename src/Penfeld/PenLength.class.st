@@ -6,7 +6,7 @@ Class {
 		'min',
 		'max'
 	],
-	#category : #'Penfeld-Core'
+	#category : #'Penfeld-Elements support'
 }
 
 { #category : #'instance creation' }

@@ -15,7 +15,7 @@ PenDisplayComponentTest >> testAddAllCallbackFor [
 		with: PenEventSymbol mouseHover 
 		with: PenEventSymbol mouseUp.
 
-	node on: symbols do: [ self inform: 'Custom declaration' ].
+	node onEvents: symbols do: [ self inform: 'Custom declaration' ].
 	self assert: node eventBindings size equals: 1.
 	
 	binding := node eventBindings first.

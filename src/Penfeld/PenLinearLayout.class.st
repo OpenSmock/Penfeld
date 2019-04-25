@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'orientation'
 	],
-	#category : #'Penfeld-Exp-Layouts'
+	#category : #'Penfeld-Elements support'
 }
 
 { #category : #factory }
@@ -28,6 +28,6 @@ PenLinearLayout >> isHorizontal [
 ]
 
 { #category : #testing }
-PenLinearLayout >> isLinearLayout [
+PenLinearLayout >> isLinear [
 	^ true
 ]

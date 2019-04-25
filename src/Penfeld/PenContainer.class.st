@@ -5,7 +5,7 @@ Class {
 		'elements',
 		'layout'
 	],
-	#category : #'Penfeld-Core'
+	#category : #'Penfeld-Components'
 }
 
 { #category : #accessing }
@@ -17,12 +17,19 @@ PenContainer >> addAllElements: aCollection [
 PenContainer >> addElement: anElement [
 	self elements add: anElement.
 	anElement parent: self.
+	
+	self isBuilt ifFalse: [ ^ self ].
+	anElement isBuilt ifFalse: [ anElement build ].
+	self dresser addElement: anElement.
+	
 ]
 
 { #category : #building }
 PenContainer >> build [
-	self elements withIndexDo: [ :item :index | item build: index ].
 	super build.
+	self elements withIndexDo: [ :element :index | 
+		element build: index.
+		self dresser addElement: element ].
 ]
 
 { #category : #accessing }
@@ -39,7 +46,7 @@ PenContainer >> elements: anObject [
 PenContainer >> initialize [
 	super initialize.
 	elements := OrderedCollection new.
-	layout := PenPositionLayout new.
+	layout := PenFlowLayout new.
 ]
 
 { #category : #testing }
@@ -59,7 +66,8 @@ PenContainer >> layout: anObject [
 
 { #category : #accessing }
 PenContainer >> removeElement: anElement [
-	self elements remove: anElement ifAbsent: [ ^ self]
+	self elements remove: anElement ifAbsent: [ ^ self].
+	self dresser removeElement: anElement.
 ]
 
 { #category : #accessing }

@@ -15,6 +15,11 @@ PenBlocDresser >> eventStrategy [
 ]
 
 { #category : #helpers }
+PenBlocDresser >> helperIcon: args [
+	^ (self class environment at: args first value) perform: args second value
+]
+
+{ #category : #helpers }
 PenBlocDresser >> helperLinearGradient: args [
 	| stops direction minIndexColor maxIndexColor factor stop |
 	stops := OrderedCollection new.

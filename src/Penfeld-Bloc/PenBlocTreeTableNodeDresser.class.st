@@ -10,32 +10,46 @@ Class {
 }
 
 { #category : #dressing }
+PenBlocTreeTableNodeDresser >> doAfterApplyStyle [ 
+	self component tree sections do: [ :section | 
+		| selector content fixedSize |
+		selector := section selector.
+		fixedSize := section size.
+		content := self component atSection: selector.
+		content engineElement constraintsDo: [ :c | 
+			fixedSize isNumber ifTrue: [ c horizontal exact: fixedSize ].
+			fixedSize = #maximized ifTrue: [ c horizontal matchParent ]
+		].
+	].
+]
+
+{ #category : #dressing }
 PenBlocTreeTableNodeDresser >> doBeforeApplyStyle [
 	| points icon |
-	points := self model isExpanded
+	points := self component isExpanded
 		ifTrue: [ { 0@0. 8@0. 4@6 } ]
 		ifFalse: [ { 0@0. 6@4. 0@8 } ].
-	icon := self model engineElement childNamed: #icon.
+	icon := self component engineElement childNamed: #icon.
 	icon geometry: (BlPolygon vertices: points).
 ]
 
 { #category : #dressing }
 PenBlocTreeTableNodeDresser >> initEngineElement [
 	| treeSection points icon |
-	self model engineElement: BlElement new.
-	self model engineElement layout: BlLinearLayout horizontal.
+	self component engineElement: BlElement new.
+	self component engineElement layout: BlLinearLayout horizontal.
 	
-	self model engineElement constraintsDo: [ :c |
+	self component engineElement constraintsDo: [ :c |
 		c horizontal matchParent.
-		self flag: 'ideally: c vertical fitContent'.
-		c vertical exact: 20. ].
+		c vertical fitContent.
+	].
 	
-	treeSection := self model atSection: self model tree treeSectionSelector.
-	points := self model isExpanded
+	treeSection := self component atSection: self component tree treeSectionSelector.
+	points := self component isExpanded
 		ifTrue: [ { 0@0. 8@0. 4@6 } ]
 		ifFalse: [ { 0@0. 6@4. 0@8 } ].
 	icon := (BlPolygon vertices: points) asElement.
-	icon background: (self model isLeaf
+	icon background: (self component isLeaf
 		ifTrue: [ Color transparent ]
 		ifFalse: [ Color lightGray ]).
 	icon border: BlBorder empty.
@@ -45,19 +59,19 @@ PenBlocTreeTableNodeDresser >> initEngineElement [
 		addChildFirst: icon 
 		as: #icon.
 	treeSection engineElement 
-		addChildFirst: (BlElement new size: ((self model deepLevel - 1) * 10) @ 1) 
+		addChildFirst: (BlElement new size: ((self component deepLevel - 1) * 10) @ 1) 
 		as: #blank.
 	
-	self model tree sections do: [ :section | 
+	self component tree sections do: [ :section | 
 		| item selector fixedSize |
 		selector := section selector.
 		fixedSize := section size.
-		item := self model atSection: selector.
-		fixedSize ifNotNil: [ item engineElement constraintsDo: [ :c | c horizontal exact: fixedSize ]].
-		self model engineElement addChild: item engineElement as: selector].
+		item := self component atSection: selector.
+		self component engineElement addChild: item engineElement as: selector
+	].
 	
 	iconPushed := false.
-	icon := (self model engineElement childNamed: self model tree treeSectionSelector)
+	icon := (self component engineElement childNamed: self component tree treeSectionSelector)
 		childNamed: #icon.
 	icon when: BlMouseDownEvent do: [ :e | self whenMouseDownEventOnIcon ].
 	icon when: BlMouseUpEvent do: [ :e | self whenMouseUpEventOnIcon ].
@@ -66,20 +80,20 @@ PenBlocTreeTableNodeDresser >> initEngineElement [
 ]
 
 { #category : #styling }
-PenBlocTreeTableNodeDresser >> sectionsOrderChanged: aModel [
+PenBlocTreeTableNodeDresser >> sectionsOrderChanged: aComponent [
 	| temp |
 	temp := Dictionary new.
-	aModel tree sections do: [ :section | | selector |
+	aComponent tree sections do: [ :section | | selector |
 		selector := section selector.
-		temp at: selector put: (aModel engineElement childNamed: selector).
-		aModel engineElement removeChildNamed: selector ].
-	aModel tree sections do: [ :section |
-		aModel engineElement addChild: (temp at: section selector) ]
+		temp at: selector put: (aComponent engineElement childNamed: selector).
+		aComponent engineElement removeChildNamed: selector ].
+	aComponent tree sections do: [ :section |
+		aComponent engineElement addChild: (temp at: section selector) ]
 ]
 
 { #category : #events }
 PenBlocTreeTableNodeDresser >> whenMouseDownEventOnIcon [
-	self model activatePseudoClass: #active.
+	self component activatePseudoClass: #active.
 	iconPushed := true.
 
 ]
@@ -87,12 +101,13 @@ PenBlocTreeTableNodeDresser >> whenMouseDownEventOnIcon [
 { #category : #events }
 PenBlocTreeTableNodeDresser >> whenMouseLeaveEventOnIcon [
 	iconPushed := false.
-	self model resetStyles.
+	self component deactivatePseudoClass: #active.
 ]
 
 { #category : #events }
 PenBlocTreeTableNodeDresser >> whenMouseUpEventOnIcon [
 	iconPushed ifFalse: [ ^ self ].
-	self model resetStyles.
+	self component switchExpand.
+	self component deactivatePseudoClass: #active.
 	iconPushed := false.
 ]

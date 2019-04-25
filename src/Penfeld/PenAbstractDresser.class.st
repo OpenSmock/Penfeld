@@ -5,7 +5,7 @@ Class {
 		'model',
 		'component'
 	],
-	#category : #'Penfeld-Core'
+	#category : #'Penfeld-Abstracts'
 }
 
 { #category : #accessing }

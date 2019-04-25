@@ -1,6 +1,13 @@
 Class {
 	#name : #PenBlocContainerExamples,
 	#superclass : #Object,
+	#classVars : [
+		'mainContainer',
+		'shape1',
+		'shape2',
+		'shape3',
+		'visibleShape'
+	],
 	#category : #'Penfeld-Bloc-Examples'
 }
 
@@ -38,6 +45,74 @@ PenBlocContainerExamples class >> example2 [
 		addElement: label.
 	
 	container openInWorld 
+]
+
+{ #category : #examples }
+PenBlocContainerExamples class >> example3 [
+	| radiosContainer radios |
+	mainContainer := nil.
+	visibleShape := nil.
+	
+	shape1 := PenShape new 
+		key: #shape1;
+		dresser: PenBlocShapeExperimentalDresser new;
+		shape: (BlRectangle new extent: 100@100).
+	shape2 := PenShape new 
+		key: #shape2;
+		dresser: PenBlocShapeExperimentalDresser new;
+		shape: (BlRectangle new extent: 200@200).
+	shape3 := PenShape new 
+		key: #shape3;
+		dresser: PenBlocShapeExperimentalDresser new;
+		shape: (BlRectangle new extent: 300@300).
+	radios := { 
+		PenRadioButton new
+			key: #radio1;
+			text: 'Shape 1';
+			check;
+			onCheckedDo: [ self showShape: shape1 ].
+		PenRadioButton new
+			key: #radio2;
+			text: 'Shape 2';
+			onCheckedDo: [ self showShape: shape2 ].
+		PenRadioButton new
+			key: #radio3;
+			text: 'Shape 3';
+			onCheckedDo: [ self showShape: shape3 ].
+	}.
+	
+	radiosContainer := PenContainer new
+		key: #radios;
+		layout: PenLinearLayout vertical;
+		addAllElements: radios.
+		
+	PenRadioGroup new addAll: radios.
+		
+	visibleShape := shape1.
+	mainContainer := PenContainer new 
+		key: #main;
+		layout: PenLinearLayout horizontal;
+		addAllElements: { radiosContainer. visibleShape }.
+		
+	mainContainer openInWorld.
+]
+
+{ #category : #examples }
+PenBlocContainerExamples class >> exampleShape [
+	PenShape new 
+		dresser: PenBlocShapeExperimentalDresser new;
+		shape: (BlRectangle new extent: 100@100);
+		openInWorld 
+]
+
+{ #category : #examples }
+PenBlocContainerExamples class >> showShape: aShape [
+	mainContainer ifNil: [ ^ self ].
+	aShape = visibleShape ifTrue: [ ^ self ].
+	mainContainer removeElement: visibleShape.
+	visibleShape := aShape.
+	mainContainer addElement: visibleShape.
+	
 ]
 
 { #category : #'see class side' }

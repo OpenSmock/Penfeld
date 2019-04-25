@@ -3,7 +3,7 @@ Trait
 "
 Trait {
 	#name : #TPenSections,
-	#category : #'Penfeld-Elements'
+	#category : #'Penfeld-Elements support'
 }
 
 { #category : #accessing }

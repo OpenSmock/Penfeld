@@ -3,7 +3,7 @@ Trait
 "
 Trait {
 	#name : #TPenTreeNode,
-	#category : #'Penfeld-Elements'
+	#category : #'Penfeld-Elements support'
 }
 
 { #category : #'nodes management' }

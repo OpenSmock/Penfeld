@@ -11,7 +11,7 @@ Class {
 
 { #category : #styling }
 PenBlocLabelDresser >> backgroundColor: aValue [
-	self component engineElement background: aValue
+	self component engineElement background: aValue value
 ]
 
 { #category : #rendering }
@@ -22,8 +22,20 @@ PenBlocLabelDresser >> doAfterApplyStyle [
 	var := self component position.
 	var ifNotNil: [ self component engineElement relocate: var ].
 
+	"Width"
+	var := self component width.
+	var ifNotNil: [ self component engineElement constraintsDo: 
+		[ :c | c horizontal exact: var pref ] 
+	].
+
+	"Height"
+	var := self component height.
+	var ifNotNil: [ self component engineElement constraintsDo: 
+		[ :c | c vertical exact: var pref ] 
+	].
+
 	"Apply roped text"
-	self component engineElement text: ropedText 
+	(self component engineElement childNamed: #text) text: ropedText 
 ]
 
 { #category : #dressing }
@@ -31,9 +43,23 @@ PenBlocLabelDresser >> doBeforeApplyStyle [
 	ropedText := self component text asRopedText
 ]
 
+{ #category : #styling }
+PenBlocLabelDresser >> fontSize: aValue [
+	self ropedText fontSize: aValue value.
+	self component engineElement constraintsDo: [ :c |
+		c vertical exact: aValue value ]
+]
+
 { #category : #dressing }
 PenBlocLabelDresser >> initEngineElement [
-	self component engineElement: BlTextElement new.
+	| element |
+	self component engineElement: BlElement new.
+	element := self component engineElement.
+	element layout: BlFrameLayout new.
+	element constraintsDo: [ :c |
+		c horizontal fitContent.
+		c vertical fitContent ].
+	element addChild: BlTextElement new as: #text.
 ]
 
 { #category : #accessing }
@@ -43,7 +69,11 @@ PenBlocLabelDresser >> ropedText [
 
 { #category : #styling }
 PenBlocLabelDresser >> textAlign: aValue [
-	self component engineElement constraintsDo: [:c | 
+	| textElement |
+	textElement := self component engineElement childNamed: #text
+		ifFound: [ :anElement | anElement ]
+		ifNone: [ ^ self ].
+	textElement constraintsDo: [:c | 
 		aValue = #center 
 		ifTrue: [ 
 			c frame horizontal alignCenter.

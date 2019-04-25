@@ -5,7 +5,7 @@ Class {
 		'dock',
 		'displayComponent'
 	],
-	#category : #'Penfeld-Core'
+	#category : #'Penfeld-Components'
 }
 
 { #category : #'instance creation' }

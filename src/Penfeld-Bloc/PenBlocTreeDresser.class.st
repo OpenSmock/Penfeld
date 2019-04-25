@@ -9,13 +9,13 @@ Class {
 
 { #category : #styling }
 PenBlocTreeDresser >> backgroundColor: aValue [
-	self model engineElement background: aValue
+	self component engineElement background: aValue
 ]
 
 { #category : #dressing }
 PenBlocTreeDresser >> doBeforeApplyStyle [
 	| listElements |
-	listElements := self model getExpandedNodesAsList collect: [ :item | 
+	listElements := self component getExpandedNodesAsList collect: [ :item | 
 		item engineElement ].
 	dataSource elements: listElements.
 	dataSource notifyChanged
@@ -23,11 +23,11 @@ PenBlocTreeDresser >> doBeforeApplyStyle [
 
 { #category : #dressing }
 PenBlocTreeDresser >> initEngineElement [
-	self model engineElement: PenInfiniteListElement new.
-	self model engineElement constraintsDo: [ :c |
+	self component engineElement: PenInfiniteListElement new.
+	self component engineElement constraintsDo: [ :c |
 		c horizontal matchParent.
 		c vertical matchParent ].
 	
 	dataSource := PenInfiniteDataSource new.
-	self model engineElement dataSource: dataSource.
+	self component engineElement dataSource: dataSource.
 ]

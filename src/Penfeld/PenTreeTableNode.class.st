@@ -48,7 +48,6 @@ PenTreeTableNode >> initialize [
 	super initialize.
 	expanded := false.
 	nodes := OrderedCollection new.
-	self onActionDo: [ self switchExpand ]
 ]
 
 { #category : #accessing }

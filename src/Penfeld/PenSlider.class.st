@@ -75,7 +75,7 @@ PenSlider >> min [
 
 { #category : #'api - events' }
 PenSlider >> onValueChangedDo: aBlock [
-	self whenEvent: PenEventSymbol valueChanged on: self do: aBlock
+	self onEvent: PenEventSymbol valueChanged do: aBlock
 ]
 
 { #category : #accessing }

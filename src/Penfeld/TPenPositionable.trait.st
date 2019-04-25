@@ -1,4 +1,4 @@
 Trait {
 	#name : #TPenPositionable,
-	#category : #'Penfeld-Core'
+	#category : #'Penfeld-Elements support'
 }

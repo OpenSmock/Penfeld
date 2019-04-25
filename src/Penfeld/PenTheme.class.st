@@ -8,7 +8,7 @@ Class {
 		'style',
 		'dressersMap'
 	],
-	#category : #'Penfeld-Core'
+	#category : #'Penfeld-Abstracts'
 }
 
 { #category : #'as yet unclassified' }

@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'sections'
 	],
-	#category : #'Penfeld-Experimental'
+	#category : #'Penfeld-Elements support'
 }
 
 { #category : #'as yet unclassified' }

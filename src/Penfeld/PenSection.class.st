@@ -8,7 +8,7 @@ Class {
 		'visible',
 		'size'
 	],
-	#category : #'Penfeld-Elements'
+	#category : #'Penfeld-Elements support'
 }
 
 { #category : #accessing }
@@ -26,6 +26,7 @@ PenSection >> initialize [
 	super initialize.
 	resizable := true.
 	visible := true.
+	size := #maximized
 ]
 
 { #category : #accessing }

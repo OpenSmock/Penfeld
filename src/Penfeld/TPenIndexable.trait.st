@@ -1,4 +1,4 @@
 Trait {
 	#name : #TPenIndexable,
-	#category : #'Penfeld-Core'
+	#category : #'Penfeld-Elements support'
 }

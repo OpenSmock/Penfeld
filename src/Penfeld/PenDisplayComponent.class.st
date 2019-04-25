@@ -1,13 +1,14 @@
 Class {
 	#name : #PenDisplayComponent,
 	#superclass : #PenComponent,
+	#traits : 'TPssStyleable',
+	#classTraits : 'TPssStyleable classTrait',
 	#instVars : [
 		'dresser',
 		'engine',
 		'dressersMap',
 		'stylesheet',
 		'styleClasses',
-		'enabled',
 		'visible',
 		'built',
 		'parent',
@@ -17,53 +18,27 @@ Class {
 		'transformation',
 		'alignment',
 		'pseudoClasses',
-		'engineElement',
-		'eventBindings'
+		'engineElement'
 	],
-	#category : #'Penfeld-Core'
+	#category : #'Penfeld-Components'
 }
-
-{ #category : #events }
-PenDisplayComponent >> actionEvent [
-	self eventBindings do: [ :eventBinding |
-		(eventBinding symbolMatches: PenEventSymbol action)
-			ifTrue: [ eventBinding executeCallback ]].
-]
 
 { #category : #accessing }
 PenDisplayComponent >> activatePseudoClass: aSymbol [
 	self pseudoClasses add: aSymbol -> nil.
-	self refresh
+	self refresh.
 ]
 
 { #category : #accessing }
 PenDisplayComponent >> activatePseudoClass: aSymbol value: anArg [
 	self pseudoClasses add: aSymbol -> anArg.
-	self refresh
-]
-
-{ #category : #private }
-PenDisplayComponent >> addCallback: aBlock for: anEventSymbol [
-	| binding |
-	self deprecated: ''.
-	binding := PenEventBinding for: anEventSymbol do: aBlock.
-	eventBindings add: binding.
-	^ binding
-]
-
-{ #category : #private }
-PenDisplayComponent >> addCallback: aBlock forAll: anEventSymbolList [
-	| binding |
-	self deprecated: ''.
-	binding := PenEventBinding forAll: anEventSymbolList do: aBlock.
-	eventBindings add: binding.
-	^ binding
+	self refresh.
 ]
 
 { #category : #accessing }
 PenDisplayComponent >> addStyleClass: aSymbol [
 	self styleClasses add: aSymbol.
-	self refresh
+	self refresh.
 ]
 
 { #category : #building }
@@ -131,26 +106,14 @@ PenDisplayComponent >> chooseStylesheet [
 { #category : #accessing }
 PenDisplayComponent >> clearAllPseudoClass [
 	self pseudoClasses removeAll.
-	self refresh
-]
-
-{ #category : #events }
-PenDisplayComponent >> clickEvent: anEvent [
-	self eventBindings do: [ :eventBinding |
-		(eventBinding symbolMatches: PenEventSymbol click)
-			ifTrue: [ eventBinding executeCallback: anEvent ]].
+	self refresh.
 ]
 
 { #category : #accessing }
 PenDisplayComponent >> deactivatePseudoClass: aSymbol [
 	pseudoClasses := pseudoClasses reject: [ :association |
 		association key = aSymbol ].
-	self refresh
-]
-
-{ #category : #accessing }
-PenDisplayComponent >> disable [
-	self enabled: false
+	self refresh.
 ]
 
 { #category : #accessing }
@@ -162,6 +125,7 @@ PenDisplayComponent >> dresser [
 PenDisplayComponent >> dresser: aDresser [
 	dresser := aDresser.
 	aDresser component: self.
+	self refresh
 ]
 
 { #category : #accessing }
@@ -172,25 +136,6 @@ PenDisplayComponent >> dressersMap [
 { #category : #accessing }
 PenDisplayComponent >> dressersMap: anObject [
 	dressersMap := anObject
-]
-
-{ #category : #accessing }
-PenDisplayComponent >> enable [
-	self enabled: true
-]
-
-{ #category : #accessing }
-PenDisplayComponent >> enabled: aBoolean [
-	enabled = aBoolean ifTrue: [ ^ self ].
-	
-	enabled := aBoolean.
-	enabled 
-		ifTrue: [ 
-			self deactivatePseudoClass: #disabled.
-			self activatePseudoClass: #enabled. ]
-		ifFalse: [ 
-			self deactivatePseudoClass: #enabled.
-			self activatePseudoClass: #disabled ]
 ]
 
 { #category : #accessing }
@@ -213,11 +158,6 @@ PenDisplayComponent >> engineElement: anObject [
 	engineElement := anObject
 ]
 
-{ #category : #'private-accessing' }
-PenDisplayComponent >> eventBindings [
-	^ eventBindings
-]
-
 { #category : #accessing }
 PenDisplayComponent >> height [
 	^ height
@@ -231,12 +171,10 @@ PenDisplayComponent >> height: aLength [
 { #category : #initialization }
 PenDisplayComponent >> initialize [
 	super initialize.
-	enabled := true.
 	visible := true.
 	built := false.
 	styleClasses := OrderedCollection new.
 	pseudoClasses := OrderedCollection new.
-	eventBindings := OrderedCollection new.
 ]
 
 { #category : #testing }
@@ -250,16 +188,6 @@ PenDisplayComponent >> isContainer [
 ]
 
 { #category : #testing }
-PenDisplayComponent >> isDisabled [
-	^ enabled not
-]
-
-{ #category : #testing }
-PenDisplayComponent >> isEnabled [
-	^ enabled
-]
-
-{ #category : #testing }
 PenDisplayComponent >> isVisible [
 	^ visible
 ]
@@ -267,57 +195,6 @@ PenDisplayComponent >> isVisible [
 { #category : #accessing }
 PenDisplayComponent >> matchedRules [
 	^ self stylesheet matchingRulesFor: self.
-]
-
-{ #category : #events }
-PenDisplayComponent >> mouseDownEvent: anEvent [
-	self eventBindings do: [ :eventBinding |
-		(eventBinding symbolMatches: PenEventSymbol mouseDown)
-			ifTrue: [ eventBinding executeCallback: anEvent ]].
-]
-
-{ #category : #'api - events' }
-PenDisplayComponent >> on: aListOfSymbols do: aBlock [
-	self deprecated: ''.
-	self addCallback: aBlock forAll: aListOfSymbols 
-]
-
-{ #category : #'api - events' }
-PenDisplayComponent >> onEvent: aSymbol do: aBlock [
-	| binding |
-	binding := PenEventBinding for: aSymbol do: aBlock.
-	binding source: self.
-	eventBindings add: binding.
-]
-
-{ #category : #'api - events' }
-PenDisplayComponent >> onEvent: aSymbol perform: aFunction on: aPerformer [
-	| binding |
-	binding := PenEventBinding for: aSymbol perform: aFunction on: aPerformer.
-	binding source: self.
-	eventBindings add: binding.
-]
-
-{ #category : #'api - events' }
-PenDisplayComponent >> onEvents: aListOfSymbols do: aBlock [
-	| binding |
-	binding := PenEventBinding forAll: aListOfSymbols do: aBlock.
-	binding source: self.
-	eventBindings add: binding.
-]
-
-{ #category : #'api - events' }
-PenDisplayComponent >> onEvents: aListOfSymbols perform: aFunction on: aPerformer [
-	| binding |
-	binding := PenEventBinding forAll: aListOfSymbols perform: aFunction on: aPerformer.
-	binding source: self.
-	eventBindings add: binding.
-]
-
-{ #category : #opening }
-PenDisplayComponent >> openInInternalWindow [
-	self deprecated: 'use openInWorld instead'. 
-	self openInWorld.
 ]
 
 { #category : #opening }
@@ -351,16 +228,6 @@ PenDisplayComponent >> position [
 { #category : #accessing }
 PenDisplayComponent >> position: aPoint [
 	position := aPoint
-]
-
-{ #category : #printing }
-PenDisplayComponent >> printOn: aStream [
-	aStream nextPutAll: self className.
-	self key ifNotNil: [ 
-		aStream
-			nextPutAll: ': ';
-			nextPutAll: 	self key printString
-	 ]
 ]
 
 { #category : #accessing }
@@ -413,52 +280,12 @@ PenDisplayComponent >> stylesheet [
 { #category : #accessing }
 PenDisplayComponent >> stylesheet: aStylesheet [
 	stylesheet := aStylesheet.
-	self isBuilt ifTrue: [ self refresh ]
+	self refresh.
 ]
 
 { #category : #accessing }
 PenDisplayComponent >> visible: aBoolean [
 	visible := aBoolean
-]
-
-{ #category : #'api - events' }
-PenDisplayComponent >> whenEvent: aSymbol on: aComponent do: aBlock [
-	| binding |
-	self deprecated: ''.
-	binding := PenEventBinding for: aSymbol do: aBlock.
-	binding source: self.
-	binding target: (aComponent ifNil: [ self ]).
-	eventBindings add: binding.
-]
-
-{ #category : #'api - events' }
-PenDisplayComponent >> whenEvent: aSymbol on: aComponent perform: aFunction with: aPerformer [
-	| binding |
-	self deprecated: ''.
-	binding := PenEventBinding for: aSymbol perform: aFunction on: aPerformer.
-	binding source: self.
-	binding target: (aComponent ifNil: [ self ]).
-	eventBindings add: binding.
-]
-
-{ #category : #'api - events' }
-PenDisplayComponent >> whenEvents: aListOfSymbols on: aComponent do: aBlock [
-	| binding |
-	self deprecated: ''.
-	binding := PenEventBinding forAll: aListOfSymbols do: aBlock.
-	binding source: self.
-	binding target: (aComponent ifNil: [ self ]).
-	eventBindings add: binding.
-]
-
-{ #category : #'api - events' }
-PenDisplayComponent >> whenEvents: aListOfSymbols on: aComponent perform: aFunction with: aPerformer [
-	| binding |
-	self deprecated: ''.
-	binding := PenEventBinding forAll: aListOfSymbols perform: aFunction on: aPerformer.
-	binding source: self.
-	binding target: (aComponent ifNil: [ self ]).
-	eventBindings add: binding.
 ]
 
 { #category : #accessing }

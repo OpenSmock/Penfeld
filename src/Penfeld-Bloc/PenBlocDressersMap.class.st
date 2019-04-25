@@ -23,9 +23,7 @@ PenBlocDressersMap >> initMap [
 		at: PenTreeTableNode put: PenBlocTreeTableNodeDresser ;
 		at: PenComboBox put: PenBlocComboBoxDresser ;
 		at: PenRadioButton put: PenBlocRadioButtonDresser ;
-		at: PenRadioGroup put: PenBlocRadioGroupDresser ;
 		at: PenProgressBar put: PenBlocProgressBarDresser ;
 		at: PenSlider put: PenBlocSliderDresser;
-		at: PenTextEditor put: PenBlocTextEditorDresser 
-	
+		at: PenForm put: PenBlocFormDresser
 ]

@@ -9,7 +9,7 @@ Class {
 		'scale',
 		'scaleCenter'
 	],
-	#category : #'Penfeld-Core'
+	#category : #'Penfeld-Elements support'
 }
 
 { #category : #accessing }

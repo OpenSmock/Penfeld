@@ -1,12 +1,15 @@
 Class {
 	#name : #PenBlocContainerDresser,
 	#superclass : #PenBlocDresser,
+	#traits : 'TPenBlocBackgroundStyle + TPenBlocBorderStyle',
+	#classTraits : 'TPenBlocBackgroundStyle classTrait + TPenBlocBorderStyle classTrait',
 	#category : #'Penfeld-Bloc-Dressers'
 }
 
-{ #category : #styling }
-PenBlocContainerDresser >> backgroundColor: aValue [
-	self component engineElement background: aValue
+{ #category : #dressing }
+PenBlocContainerDresser >> addElement: anElement [
+	self component engineElement addChild: anElement engineElement
+	
 ]
 
 { #category : #dressing }
@@ -24,26 +27,30 @@ PenBlocContainerDresser >> doAfterApplyStyle [
 	]
 ]
 
-{ #category : #dressing }
-PenBlocContainerDresser >> doBeforeApplyStyle [
-	self component engineElement constraintsDo: [ :c |
-		c horizontal matchParent.
-		c vertical matchParent
-	]
-]
-
 { #category : #initialization }
 PenBlocContainerDresser >> initEngineElement [
 	| element |
 	self component engineElement: BlElement new.
 	element := self component engineElement.
 	
-	element layout: (self component layout isLinearLayout
+	element layout: (self component layout isLinear
 		ifTrue: [ self component layout isHorizontal 
 			ifTrue: [ BlLinearLayout horizontal ]
 			ifFalse: [ BlLinearLayout vertical ]]
-		ifFalse: [ BlBasicLayout new ]).
+		ifFalse: [ self component layout isPosition
+			ifTrue: [ BlBasicLayout new ]
+			ifFalse: [ BlFlowLayout new ]
+		]
+	).
 		
-	self component elements do: [ :each |
-		element addChild: each engineElement ]
+	self component engineElement constraintsDo: [ :c |
+		c horizontal fitContent.
+		c vertical fitContent
+	].
+]
+
+{ #category : #dressing }
+PenBlocContainerDresser >> removeElement: anElement [
+	self component engineElement removeChild: anElement engineElement
+	
 ]

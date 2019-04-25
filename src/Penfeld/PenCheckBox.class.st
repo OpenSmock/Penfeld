@@ -30,12 +30,6 @@ PenCheckBox >> isLabelBefore [
 ]
 
 { #category : #accessing }
-PenCheckBox >> label: aString [
-	self flag: 'symbolic utility ?'.
-	self text: aString.
-]
-
-{ #category : #accessing }
 PenCheckBox >> labelAfter [
 	labelPosition := #after.
 ]

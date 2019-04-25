@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'workspaces'
 	],
-	#category : #'Penfeld-Core'
+	#category : #'Penfeld-Components'
 }
 
 { #category : #accessing }

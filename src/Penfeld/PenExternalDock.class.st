@@ -1,7 +1,7 @@
 Class {
 	#name : #PenExternalDock,
 	#superclass : #PenDock,
-	#category : #'Penfeld-Core'
+	#category : #'Penfeld-Components'
 }
 
 { #category : #testing }

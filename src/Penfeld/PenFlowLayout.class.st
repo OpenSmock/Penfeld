@@ -1,10 +1,10 @@
 Class {
-	#name : #PenPositionLayout,
+	#name : #PenFlowLayout,
 	#superclass : #PenLayout,
 	#category : #'Penfeld-Elements support'
 }
 
 { #category : #testing }
-PenPositionLayout >> isPosition [
+PenFlowLayout >> isFlow [
 	^ true
 ]

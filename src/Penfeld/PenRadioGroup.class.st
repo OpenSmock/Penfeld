@@ -1,17 +1,17 @@
 Class {
 	#name : #PenRadioGroup,
-	#superclass : #PenInteractionElement,
+	#superclass : #PenComponent,
 	#instVars : [
 		'checkedButton',
 		'radioButtons'
 	],
-	#category : #'Penfeld-Elements'
+	#category : #'Penfeld-Elements support'
 }
 
 { #category : #adding }
 PenRadioGroup >> add: aRadioButton [
 	self radioButtons add: aRadioButton.
-	aRadioButton parent: self.
+	aRadioButton group: self.
 	aRadioButton uncheck.
 	aRadioButton onCheckedDo: [ self buttonStateChange: aRadioButton ].
 	
@@ -23,17 +23,12 @@ PenRadioGroup >> addAll: aList [
 	aList do: [ :e | self add: e ]
 ]
 
-{ #category : #building }
-PenRadioGroup >> build [
-	self radioButtons do: [ :e | e build ].
-	super build
-]
-
 { #category : #events }
 PenRadioGroup >> buttonStateChange: aRadioButton [
 	checkedButton = aRadioButton ifTrue: [ ^ self ].
 	checkedButton ifNotNil: [ checkedButton uncheck ].
 	checkedButton := aRadioButton.
+	self selectionChangedEvent
 ]
 
 { #category : #initialization }
@@ -44,7 +39,7 @@ PenRadioGroup >> initialize [
 
 { #category : #'api - events' }
 PenRadioGroup >> onSelectionChangedDo: aBlock [
-	self addCallback: aBlock for: PenEventSymbol selectionChanged
+	self onEvent: PenEventSymbol selectionChanged do: aBlock
 ]
 
 { #category : #accessing }
@@ -56,10 +51,5 @@ PenRadioGroup >> radioButtons [
 PenRadioGroup >> selectionChangedEvent [
 	self eventBindings do: [ :eventBinding |
 		(eventBinding symbol = PenEventSymbol selectionChanged)
-			ifTrue: [ eventBinding callback value ]].
-]
-
-{ #category : #accessing }
-PenRadioGroup >> styleName [ 
-	^ #container
+			ifTrue: [ eventBinding executeCallback: checkedButton ]].
 ]

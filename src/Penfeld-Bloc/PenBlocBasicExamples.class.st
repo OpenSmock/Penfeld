@@ -94,7 +94,7 @@ PenBlocBasicExamples class >> exampleDisabledButton [
 		text: 'Button';
 		disable;
 		position: 20@20;
-		action: [ self inform: 'Do Action!' ].
+		onActionDo: [ self inform: 'Do Action!' ].
 	component dresser: PenBlocButtonDresser new.
 	component openInWorld 
 	
@@ -128,10 +128,12 @@ PenBlocBasicExamples class >> exampleLoadingButton [
 	component := PenButton new
 		text: 'Button';
 		position: 20@20.
-	component action: [
-		[ component loading: true.
+	component onActionDo: [
+		[ component disable.
+		component activatePseudoClass: #loading.
 		2 seconds wait.
-		component loading: false.
+		component deactivatePseudoClass: #loading.
+		component enable.
 		self inform: 'Do Action!' ] fork 
 	].
 	component dresser: PenBlocButtonDresser new.
@@ -183,26 +185,32 @@ PenBlocBasicExamples class >> exampleRadioButton [
 
 { #category : #examples }
 PenBlocBasicExamples class >> exampleRadioGroupLabelAfter [
-	| group |
-	group := PenRadioGroup new addAll: 
-		((1 to: 5) collect: [ :i |
-			PenRadioButton new 
-				text: 'Radio Button ', i printString;
-				labelAfter. ] ).
-	group dresser: PenBlocRadioGroupDresser new.
-	group openInWorld
+	| radios container group |
+	radios := ((1 to: 5) collect: [ :i |
+		PenRadioButton new 
+			key: ('radio', i printString) asSymbol;
+			text: 'Radio Button ', i printString;
+			labelAfter. ] ).
+	group := PenRadioGroup new addAll: radios.
+	container := PenContainer new 
+		layout: PenLinearLayout vertical;
+		addAllElements: radios.
+	container openInWorld
 ]
 
 { #category : #examples }
 PenBlocBasicExamples class >> exampleRadioGroupLabelBefore [
-	| group |
-	group := PenRadioGroup new addAll: 
-		((1 to: 5) collect: [ :i |
-			PenRadioButton new 
-				text: 'Radio Button ', i printString;
-				labelBefore. ] ).
-	group dresser: PenBlocRadioGroupDresser new.
-	group openInWorld
+	| radios container group |
+	radios := ((1 to: 5) collect: [ :i |
+		PenRadioButton new 
+			key: ('radio', i printString) asSymbol;
+			text: 'Radio Button ', i printString;
+			labelBefore. ] ).
+	group := PenRadioGroup new addAll: radios.
+	container := PenContainer new 
+		layout: PenLinearLayout vertical;
+		addAllElements: radios.
+	container openInWorld
 ]
 
 { #category : #examples }
@@ -255,7 +263,7 @@ PenBlocBasicExamples class >> exampleToggleButton [
 		position: 20@20;
 		onCheckedDo: [ self inform: 'Checked!' ];
 		onUncheckedDo: [ self inform: 'Unchecked!' ];
-		onActionDo:[self inform: 'Clicked!'].
+		onActionDo: [ self inform: 'Action' ].
 	component dresser: PenBlocButtonDresser new.
 	component openInWorld 
 	

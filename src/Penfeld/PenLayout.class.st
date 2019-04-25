@@ -1,15 +1,20 @@
 Class {
 	#name : #PenLayout,
 	#superclass : #Object,
-	#category : #'Penfeld-Exp-Layouts'
+	#category : #'Penfeld-Elements support'
 }
 
 { #category : #testing }
-PenLayout >> isLinearLayout [
+PenLayout >> isFlow [
 	^ false
 ]
 
 { #category : #testing }
-PenLayout >> isPositionLayout [
+PenLayout >> isLinear [
+	^ false
+]
+
+{ #category : #testing }
+PenLayout >> isPosition [
 	^ false
 ]

@@ -1,5 +1,5 @@
 Class {
 	#name : #PenWindowDresser,
 	#superclass : #PenAbstractDresser,
-	#category : #'Penfeld-Core'
+	#category : #'Penfeld-Abstracts'
 }

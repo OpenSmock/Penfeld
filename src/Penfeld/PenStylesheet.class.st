@@ -4,7 +4,7 @@ Class {
 	#classVars : [
 		'Current'
 	],
-	#category : #'Penfeld-Core'
+	#category : #'Penfeld-Utils'
 }
 
 { #category : #styles }
@@ -48,15 +48,8 @@ PenStylesheet class >> light [
 PenStylesheet class >> stylesheet: colors [
 	^ '
 * { 
-	background-color: ', (colors at: #backgroundColor), ';
-	border: 1px solid ', (colors at: #borderColor), ';
 	font-size: 16;
-	text-align: center;
 	color: ', (colors at: #textColor), ';
- }
-
-label { 
-	background-color: transparent;
  }
 
 *:active { 
@@ -67,6 +60,10 @@ label {
 	background-color: ', (colors at: #checkedColor), ';
  }
 
+*:unchecked { 
+	background-color: ', (colors at: #backgroundColor), ';
+ }
+
 *:disabled { 
 	background-color: ', (colors at: #disabledColor), ';
  }
@@ -74,7 +71,9 @@ label {
 button, toggle { 
 	width: 150;
 	height: 30;
+	text-align: center;
 	background-color: ', (colors at: #buttonBackgroundColor), ';
+	border: 1px solid ', (colors at: #borderColor), ';
  }
 
 .squareButton { 

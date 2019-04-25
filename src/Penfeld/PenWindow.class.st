@@ -7,7 +7,7 @@ Class {
 		'type',
 		'title'
 	],
-	#category : #'Penfeld-Core'
+	#category : #'Penfeld-Components'
 }
 
 { #category : #wizard }
@@ -34,6 +34,16 @@ PenWindow >> close [
 	self engineElement close
 ]
 
+{ #category : #defaults }
+PenWindow >> defaultHeight [
+	^ 600 asLength
+]
+
+{ #category : #defaults }
+PenWindow >> defaultWidth [ 
+	^ 800 asLength
+]
+
 { #category : #opening }
 PenWindow >> displayExternalDock: aDock [
 	self halt: 'to be defined'
@@ -48,13 +58,13 @@ PenWindow >> displayViewDock: aDock [
 	self width ifNil: [ 
 		element width 
 			ifNotNil: [ self width: element width ]
-			ifNil: [ self width: 800 asLength ]
+			ifNil: [ self width: self defaultWidth ]
 	].
 	
 	self height ifNil: [ 
 		element width 
 			ifNotNil: [ self height: element height ]
-			ifNil: [ self height: 600 asLength ]
+			ifNil: [ self height: self defaultHeight ]
 	].
 	
 	self engineElement: (BlSpace new
