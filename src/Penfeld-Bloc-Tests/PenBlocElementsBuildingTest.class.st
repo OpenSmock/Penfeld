@@ -43,7 +43,7 @@ PenBlocElementsBuildingTest >> testButton [
 { #category : #tests }
 PenBlocElementsBuildingTest >> testCheckBox [
 	| component |
-	component := PenCheckBox new label: 'CheckBox'.
+	component := PenCheckBox new text: 'CheckBox'.
 	component engine: PenBlocEngine new.
 	component build
 ]
@@ -70,7 +70,7 @@ PenBlocElementsBuildingTest >> testList [
 { #category : #tests }
 PenBlocElementsBuildingTest >> testRadioButton [
 	| component |
-	component := PenCheckBox new label: 'CheckBox'.
+	component := PenCheckBox new text: 'CheckBox'.
 	component engine: PenBlocEngine new.
 	component build
 ]

@@ -6,8 +6,7 @@ Class {
 	#instVars : [
 		'content',
 		'nodes',
-		'expanded',
-		'builder'
+		'expanded'
 	],
 	#category : #'Penfeld-Elements'
 }
@@ -17,16 +16,6 @@ PenTreeNode >> build [
 	self content build.
 	self nodes do: [ :each | each build ].
 	super build
-]
-
-{ #category : #accessing }
-PenTreeNode >> builder [
-	^ builder
-]
-
-{ #category : #accessing }
-PenTreeNode >> builder: aBuilder [
-	builder := aBuilder
 ]
 
 { #category : #accessing }

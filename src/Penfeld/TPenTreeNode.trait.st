@@ -17,16 +17,6 @@ TPenTreeNode >> addNodes: aCollection [
 	aCollection do: [ :each | self addNode: each ]
 ]
 
-{ #category : #accessing }
-TPenTreeNode >> builder [
-	self explicitRequirement
-]
-
-{ #category : #accessing }
-TPenTreeNode >> builder: aBuilder [
-	self explicitRequirement
-]
-
 { #category : #api }
 TPenTreeNode >> deepLevel [
 	^ self parent deepLevel + 1
@@ -94,7 +84,7 @@ TPenTreeNode >> isExpanded [
 
 { #category : #testing }
 TPenTreeNode >> isLeaf [
-	^ self hasNodes not and: [ self builder isNil ]
+	^ self hasNodes not
 ]
 
 { #category : #accessing }

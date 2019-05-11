@@ -1,5 +1,5 @@
 Class {
-	#name : #PenForm,
+	#name : #PenImage,
 	#superclass : #PenVisualisationElement,
 	#instVars : [
 		'form'
@@ -8,16 +8,16 @@ Class {
 }
 
 { #category : #accessing }
-PenForm >> form [
+PenImage >> form [
 	^ form
 ]
 
 { #category : #accessing }
-PenForm >> form: anObject [
+PenImage >> form: anObject [
 	form := anObject
 ]
 
 { #category : #accessing }
-PenForm >> styleName [
+PenImage >> styleName [
 	^ #form
 ]

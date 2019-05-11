@@ -5,8 +5,7 @@ Class {
 	#classTraits : 'TPenTreeNode classTrait',
 	#instVars : [
 		'nodes',
-		'expanded',
-		'builder'
+		'expanded'
 	],
 	#category : #'Penfeld-Elements'
 }
@@ -15,16 +14,6 @@ Class {
 PenTreeTableNode >> build [
 	self nodes do: [ :each | each build ].
 	super build
-]
-
-{ #category : #accessing }
-PenTreeTableNode >> builder [
-	^ builder
-]
-
-{ #category : #accessing }
-PenTreeTableNode >> builder: aBuilder [
-	builder := aBuilder
 ]
 
 { #category : #accessing }
