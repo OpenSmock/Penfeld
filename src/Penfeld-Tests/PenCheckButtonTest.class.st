@@ -4,7 +4,7 @@ A PenCheckButtonTest is a test class for testing the behavior of PenCheckButton
 Class {
 	#name : #PenCheckButtonTest,
 	#superclass : #TestCase,
-	#category : #'Penfeld-Tests'
+	#category : #'Penfeld-Tests-Elements'
 }
 
 { #category : #test }

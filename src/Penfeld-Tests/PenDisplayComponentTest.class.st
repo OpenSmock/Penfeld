@@ -4,7 +4,7 @@ A PFNodeTest is a test class for testing the behavior of PFNode
 Class {
 	#name : #PenDisplayComponentTest,
 	#superclass : #TestCase,
-	#category : #'Penfeld-Tests'
+	#category : #'Penfeld-Tests-Components'
 }
 
 { #category : #'tests-private' }

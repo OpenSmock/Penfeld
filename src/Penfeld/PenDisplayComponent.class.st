@@ -163,16 +163,6 @@ PenDisplayComponent >> engineElement: anObject [
 	engineElement := anObject
 ]
 
-{ #category : #accessing }
-PenDisplayComponent >> height [
-	^ height
-]
-
-{ #category : #accessing }
-PenDisplayComponent >> height: aLength [
-	height := aLength asLength
-]
-
 { #category : #initialization }
 PenDisplayComponent >> initialize [
 	super initialize.
@@ -252,17 +242,6 @@ PenDisplayComponent >> removeStyleClass: aSymbol [
 ]
 
 { #category : #accessing }
-PenDisplayComponent >> size [
-	^ self width pref @ self height pref
-]
-
-{ #category : #accessing }
-PenDisplayComponent >> size: aPoint [
-	self width: aPoint x.
-	self height: aPoint y.
-]
-
-{ #category : #accessing }
 PenDisplayComponent >> styleClasses [
 	^ styleClasses
 ]
@@ -291,14 +270,4 @@ PenDisplayComponent >> stylesheet: aStylesheet [
 { #category : #accessing }
 PenDisplayComponent >> visible: aBoolean [
 	visible := aBoolean
-]
-
-{ #category : #accessing }
-PenDisplayComponent >> width [ 
-	^ width
-]
-
-{ #category : #accessing }
-PenDisplayComponent >> width: aLength [
-	width := aLength asLength
 ]

@@ -22,6 +22,13 @@ PenLength class >> pref: aNumber min: aNumber2 max: aNumber3 [
 		max: aNumber3
 ]
 
+{ #category : #comparing }
+PenLength >> = aLength [
+	^ self pref = aLength pref 
+		and: [ self min = aLength min 
+			and: [ self max = aLength max ] ]
+]
+
 { #category : #converting }
 PenLength >> asLength [
 	^ self
@@ -33,8 +40,8 @@ PenLength >> max [
 ]
 
 { #category : #accessing }
-PenLength >> max: anObject [
-	max := anObject
+PenLength >> max: aNumber [
+	max := aNumber
 ]
 
 { #category : #accessing }
@@ -43,8 +50,8 @@ PenLength >> min [
 ]
 
 { #category : #accessing }
-PenLength >> min: anObject [
-	min := anObject
+PenLength >> min: aNumber [
+	min := aNumber
 ]
 
 { #category : #accessing }
@@ -53,6 +60,28 @@ PenLength >> pref [
 ]
 
 { #category : #accessing }
-PenLength >> pref: anObject [
-	pref := anObject
+PenLength >> pref: aNumber [
+	pref := aNumber
+]
+
+{ #category : #printing }
+PenLength >> printOn: aStream [
+	| minmax |
+	minmax := self min notNil or: [ self max notNil ].
+	
+	aStream nextPut: $<.
+	
+	minmax ifTrue: [ 
+		aStream nextPutAll: self min printString.
+		aStream nextPut: $,.
+	].
+
+	aStream nextPutAll: self pref printString.
+	
+	minmax ifTrue: [ 
+		aStream nextPut: $,.
+		aStream nextPutAll: self max printString.
+	].
+	
+	aStream nextPut: $>.
 ]

@@ -7,7 +7,8 @@ Class {
 		'key',
 		'description',
 		'eventBindings',
-		'enabled'
+		'enabled',
+		'size'
 	],
 	#category : #'Penfeld-Components'
 }
@@ -54,6 +55,19 @@ PenComponent >> enabled: aBoolean [
 { #category : #'private-accessing' }
 PenComponent >> eventBindings [
 	^ eventBindings
+]
+
+{ #category : #accessing }
+PenComponent >> height [ 
+	^ self size
+		ifNil: [ nil ] 
+		ifNotNil: [ self size height ]
+]
+
+{ #category : #accessing }
+PenComponent >> height: aNumber [
+	self size ifNil: [ self size: PenSize new ].
+	self size height: aNumber asLength
 ]
 
 { #category : #initialization }
@@ -152,4 +166,27 @@ PenComponent >> printOn: aStream [
 			nextPutAll: ': ';
 			nextPutAll: 	self key printString
 	 ]
+]
+
+{ #category : #accessing }
+PenComponent >> size [
+	^ size
+]
+
+{ #category : #accessing }
+PenComponent >> size: aSize [
+	size := aSize asSize
+]
+
+{ #category : #accessing }
+PenComponent >> width [ 
+	^ self size
+		ifNil: [ nil ] 
+		ifNotNil: [ self size width ]
+]
+
+{ #category : #accessing }
+PenComponent >> width: aNumber [
+	self size ifNil: [ self size: PenSize new ].
+	self size width: aNumber asLength
 ]

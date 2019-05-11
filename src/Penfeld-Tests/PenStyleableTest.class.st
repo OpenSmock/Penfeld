@@ -1,7 +1,7 @@
 Class {
 	#name : #PenStyleableTest,
 	#superclass : #TestCase,
-	#category : #'Penfeld-Tests'
+	#category : #'Penfeld-Tests-Elements support'
 }
 
 { #category : #stylesheet }
