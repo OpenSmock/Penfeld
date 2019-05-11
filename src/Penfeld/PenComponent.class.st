@@ -83,6 +83,26 @@ PenComponent >> key: anObject [
 ]
 
 { #category : #'api - events' }
+PenComponent >> onActionDo: aBlock [
+	self onEvent: PenEventSymbol action do: aBlock
+]
+
+{ #category : #'api - events' }
+PenComponent >> onActionPerform: aFunction on: aPerformer [
+	self onEvent: PenEventSymbol action perform: aFunction on: aPerformer
+]
+
+{ #category : #'api - events' }
+PenComponent >> onClickDo: aBlock [
+	self onEvent: PenEventSymbol click do: aBlock
+]
+
+{ #category : #'api - events' }
+PenComponent >> onClickPerform: aFunction on: aPerformer [
+	self onEvent: PenEventSymbol click perform: aFunction on: aPerformer
+]
+
+{ #category : #'api - events' }
 PenComponent >> onEvent: aSymbol do: aBlock [
 	| binding |
 	binding := PenEventBinding for: aSymbol do: aBlock.
@@ -112,6 +132,16 @@ PenComponent >> onEvents: aListOfSymbols perform: aFunction on: aPerformer [
 	binding := PenEventBinding forAll: aListOfSymbols perform: aFunction on: aPerformer.
 	binding source: self.
 	eventBindings add: binding.
+]
+
+{ #category : #'api - events' }
+PenComponent >> onMouseDownDo: aBlock [
+	self onEvent: PenEventSymbol mouseDown do: aBlock
+]
+
+{ #category : #'api - events' }
+PenComponent >> onMouseDownPerform: aFunction on: aPerformer [
+	self onEvent: PenEventSymbol mouseDown perform: aFunction on: aPerformer
 ]
 
 { #category : #printing }
