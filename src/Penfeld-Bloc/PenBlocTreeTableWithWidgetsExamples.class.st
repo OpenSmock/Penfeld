@@ -65,10 +65,15 @@ PenBlocTreeTableWithWidgetsExamples class >> nodeForClass:  aClass [
 
 { #category : #'examples - instance creation' }
 PenBlocTreeTableWithWidgetsExamples class >> radioGroup [
-	^  PenRadioGroup new addAll: 
-		((1 to: 5) collect: [ :i |
-			PenRadioButton  new 
-				text: 'Radio Button ', i printString. ] ).
+	| collection |
+	collection := ((1 to: 5) collect: [ :i | 
+		PenRadioButton  new 
+			text: 'Radio Button ', i printString. ] ).
+	PenRadioGroup new addAll: collection.
+	^ PenContainer new
+		layout: PenLinearLayout vertical;
+		addAllElements: collection;
+		yourself
 ]
 
 { #category : #'see class side' }

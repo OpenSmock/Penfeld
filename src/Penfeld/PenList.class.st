@@ -16,6 +16,11 @@ Class {
 	#category : #'Penfeld-Elements'
 }
 
+{ #category : #accessing }
+PenList class >> styleName [
+	^ #list
+]
+
 { #category : #items }
 PenList >> addAllItems: aList [
 	aList do: [ :each | self addItem: each ]
@@ -206,11 +211,6 @@ PenList >> sortingBlock [
 { #category : #accessing }
 PenList >> sortingBlock: anObject [
 	sortingBlock := anObject
-]
-
-{ #category : #accessing }
-PenList >> styleName [
-	^ #list
 ]
 
 { #category : #accessing }

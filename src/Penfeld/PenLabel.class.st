@@ -7,14 +7,14 @@ Class {
 	#category : #'Penfeld-Elements'
 }
 
+{ #category : #accessing }
+PenLabel class >> styleName [
+	^ #label
+]
+
 { #category : #'instance creation' }
 PenLabel class >> text: aString [
 	^ self new text: aString
-]
-
-{ #category : #accessing }
-PenLabel >> styleName [
-	^ #label
 ]
 
 { #category : #accessing }

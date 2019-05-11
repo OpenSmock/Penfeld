@@ -8,6 +8,11 @@ Class {
 }
 
 { #category : #accessing }
+PenRadioButton class >> styleName [
+	^ #radioButton
+]
+
+{ #category : #accessing }
 PenRadioButton >> group [
 	^ group
 ]
@@ -15,11 +20,6 @@ PenRadioButton >> group [
 { #category : #accessing }
 PenRadioButton >> group: anObject [
 	group := anObject
-]
-
-{ #category : #accessing }
-PenRadioButton >> styleName [
-	^ #radioButton
 ]
 
 { #category : #api }

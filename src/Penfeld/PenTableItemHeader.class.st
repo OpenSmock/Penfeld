@@ -5,6 +5,6 @@ Class {
 }
 
 { #category : #accessing }
-PenTableItemHeader >> styleName [
+PenTableItemHeader class >> styleName [
 	^ #th
 ]

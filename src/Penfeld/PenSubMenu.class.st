@@ -7,6 +7,11 @@ Class {
 	#category : #'Penfeld-Elements'
 }
 
+{ #category : #accessing }
+PenSubMenu class >> styleName [
+	^ #subMenu
+]
+
 { #category : #building }
 PenSubMenu >> build [
 	self menu ifNotNil: [ self build ].
@@ -30,9 +35,4 @@ PenSubMenu >> openMenu [
 { #category : #performing }
 PenSubMenu >> perform [
 	menu ifNotNil: [ self openMenu ]
-]
-
-{ #category : #accessing }
-PenSubMenu >> styleName [
-	^ #subMenu
 ]

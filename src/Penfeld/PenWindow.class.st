@@ -10,6 +10,11 @@ Class {
 	#category : #'Penfeld-Components'
 }
 
+{ #category : #accessing }
+PenWindow class >> styleName [
+	^ #window
+]
+
 { #category : #wizard }
 PenWindow class >> withDisplayComponent: anElement [
 	^ self new 
@@ -149,11 +154,6 @@ PenWindow >> screenConfiguration [
 { #category : #accessing }
 PenWindow >> screenConfiguration: anObject [
 	screenConfiguration := anObject
-]
-
-{ #category : #accessing }
-PenWindow >> styleName [
-	^ #window
 ]
 
 { #category : #accessing }

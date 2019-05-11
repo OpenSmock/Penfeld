@@ -9,6 +9,11 @@ Class {
 }
 
 { #category : #accessing }
+PenProgressBar class >> styleName [ 
+	^ #progressBar
+]
+
+{ #category : #accessing }
 PenProgressBar >> fraction [
 	^ (index - 1) / (interval size - 1)
 ]
@@ -58,11 +63,6 @@ PenProgressBar >> onValueChangedDo: aBlock [
 { #category : #accessing }
 PenProgressBar >> progress [
 	^ interval at: index
-]
-
-{ #category : #accessing }
-PenProgressBar >> styleName [ 
-	^ #progressBar
 ]
 
 { #category : #accessing }

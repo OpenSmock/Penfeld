@@ -11,6 +11,11 @@ Class {
 	#category : #'Penfeld-Elements'
 }
 
+{ #category : #accessing }
+PenTreeNode class >> styleName [
+	^ #treeNode
+]
+
 { #category : #building }
 PenTreeNode >> build [
 	self content build.
@@ -59,9 +64,4 @@ PenTreeNode >> refresh [
 	self isExpanded ifTrue: [ 
 		self nodes do: [ :each | each refresh ]].
 	super refresh
-]
-
-{ #category : #accessing }
-PenTreeNode >> styleName [
-	^ #treeNode
 ]

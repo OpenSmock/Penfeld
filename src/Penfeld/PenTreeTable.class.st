@@ -14,6 +14,11 @@ Class {
 	#category : #'Penfeld-Elements'
 }
 
+{ #category : #accessing }
+PenTreeTable class >> styleName [
+	^ #treeTable
+]
+
 { #category : #building }
 PenTreeTable >> build [
 	(self header isNotNil and: [self showHeader])
@@ -82,11 +87,6 @@ PenTreeTable >> showHeader [
 { #category : #accessing }
 PenTreeTable >> showHeader: aBoolean [
 	showHeader := aBoolean
-]
-
-{ #category : #accessing }
-PenTreeTable >> styleName [
-	^ #treeTable
 ]
 
 { #category : #accessing }

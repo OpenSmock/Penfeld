@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #accessing }
-PenButton >> styleName [
+PenButton class >> styleName [
 	^ #button
 ]
 

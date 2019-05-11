@@ -10,6 +10,11 @@ Class {
 	#category : #'Penfeld-Elements'
 }
 
+{ #category : #accessing }
+PenComboBox class >> styleName [
+	^ #comboBox
+]
+
 { #category : #api }
 PenComboBox >> expand [
 	self expanded: true.
@@ -57,11 +62,6 @@ PenComboBox >> selectedItemString [
 { #category : #accessing }
 PenComboBox >> selection [
 	^ super selection first
-]
-
-{ #category : #accessing }
-PenComboBox >> styleName [
-	^ #comboBox
 ]
 
 { #category : #api }

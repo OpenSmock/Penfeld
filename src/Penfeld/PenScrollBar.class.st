@@ -9,6 +9,6 @@ Class {
 }
 
 { #category : #accessing }
-PenScrollBar >> styleName [
+PenScrollBar class >> styleName [
 	^ #scrollBar
 ]

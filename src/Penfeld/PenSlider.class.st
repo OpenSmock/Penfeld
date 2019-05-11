@@ -8,6 +8,11 @@ Class {
 	#category : #'Penfeld-Elements'
 }
 
+{ #category : #accessing }
+PenSlider class >> styleName [
+	^ #slider
+]
+
 { #category : #api }
 PenSlider >> decrement [
 	self isMin ifTrue: [ ^ self ].
@@ -76,11 +81,6 @@ PenSlider >> min [
 { #category : #'api - events' }
 PenSlider >> onValueChangedDo: aBlock [
 	self onEvent: PenEventSymbol valueChanged do: aBlock
-]
-
-{ #category : #accessing }
-PenSlider >> styleName [
-	^ #slider
 ]
 
 { #category : #api }

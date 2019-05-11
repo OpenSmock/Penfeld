@@ -8,6 +8,11 @@ Class {
 }
 
 { #category : #accessing }
+PenImage class >> styleName [
+	^ #form
+]
+
+{ #category : #accessing }
 PenImage >> form [
 	^ form
 ]
@@ -15,9 +20,4 @@ PenImage >> form [
 { #category : #accessing }
 PenImage >> form: anObject [
 	form := anObject
-]
-
-{ #category : #accessing }
-PenImage >> styleName [
-	^ #form
 ]

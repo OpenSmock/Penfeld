@@ -10,6 +10,11 @@ Class {
 	#category : #'Penfeld-Elements'
 }
 
+{ #category : #accessing }
+PenTree class >> styleName [
+	^ #tree
+]
+
 { #category : #building }
 PenTree >> build [
 	self stylesheet ifNil: [ self chooseStylesheet ].
@@ -114,11 +119,6 @@ PenTree >> sortingBlock [
 { #category : #accessing }
 PenTree >> sortingBlock: anObject [
 	sortingBlock := anObject
-]
-
-{ #category : #accessing }
-PenTree >> styleName [
-	^ #tree
 ]
 
 { #category : #accessing }

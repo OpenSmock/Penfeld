@@ -8,6 +8,11 @@ Class {
 }
 
 { #category : #accessing }
+PenShape class >> styleName [
+	^ #shape
+]
+
+{ #category : #accessing }
 PenShape >> shape [
 	^ shape
 ]
@@ -15,9 +20,4 @@ PenShape >> shape [
 { #category : #accessing }
 PenShape >> shape: anObject [
 	shape := anObject
-]
-
-{ #category : #accessing }
-PenShape >> styleName [
-	^ #shape
 ]

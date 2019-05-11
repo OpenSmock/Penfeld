@@ -12,6 +12,11 @@ Class {
 	#category : #'Penfeld-Elements'
 }
 
+{ #category : #accessing }
+PenTable class >> styleName [
+	^ #table
+]
+
 { #category : #building }
 PenTable >> build [
 	self stylesheet ifNil: [ self chooseStylesheet ].
@@ -82,9 +87,4 @@ PenTable >> showHeader [
 { #category : #accessing }
 PenTable >> showHeader: anObject [
 	showHeader := anObject
-]
-
-{ #category : #accessing }
-PenTable >> styleName [
-	^ #table
 ]

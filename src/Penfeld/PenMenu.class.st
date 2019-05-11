@@ -7,6 +7,11 @@ Class {
 	#category : #'Penfeld-Elements'
 }
 
+{ #category : #accessing }
+PenMenu class >> styleName [
+	^ #menu
+]
+
 { #category : #adding }
 PenMenu >> add: aSubMenu [
 	aSubMenu parent: self.
@@ -30,11 +35,6 @@ PenMenu >> build [
 PenMenu >> initialize [
 	super initialize.
 	subMenus := OrderedCollection new.
-]
-
-{ #category : #accessing }
-PenMenu >> styleName [
-	^ #menu
 ]
 
 { #category : #accessing }

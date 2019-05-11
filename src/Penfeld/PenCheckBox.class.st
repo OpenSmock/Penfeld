@@ -13,6 +13,11 @@ Class {
 	#category : #'Penfeld-Elements'
 }
 
+{ #category : #accessing }
+PenCheckBox class >> styleName [
+	^ #checkBox
+]
+
 { #category : #initialization }
 PenCheckBox >> initialize [
 	super initialize.
@@ -37,9 +42,4 @@ PenCheckBox >> labelAfter [
 { #category : #accessing }
 PenCheckBox >> labelBefore [
 	labelPosition := #before.
-]
-
-{ #category : #accessing }
-PenCheckBox >> styleName [
-	^ #checkBox
 ]

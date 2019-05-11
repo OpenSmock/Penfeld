@@ -24,6 +24,11 @@ Class {
 }
 
 { #category : #accessing }
+PenDisplayComponent class >> styleName [
+	^ self subclassResponsibility 
+]
+
+{ #category : #accessing }
 PenDisplayComponent >> activatePseudoClass: aSymbol [
 	self pseudoClasses add: aSymbol -> nil.
 	self refresh.
@@ -269,7 +274,7 @@ PenDisplayComponent >> styleId [
 
 { #category : #accessing }
 PenDisplayComponent >> styleName [
-	^ self subclassResponsibility 
+	^ self class styleName
 ]
 
 { #category : #accessing }

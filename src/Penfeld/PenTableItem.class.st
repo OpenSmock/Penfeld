@@ -7,6 +7,11 @@ Class {
 	#category : #'Penfeld-Elements'
 }
 
+{ #category : #accessing }
+PenTableItem class >> styleName [
+	^ #tr
+]
+
 { #category : #'as yet unclassified' }
 PenTableItem >> atSection: aSymbol [
 	^ content at: aSymbol
@@ -49,11 +54,6 @@ PenTableItem >> initialize [
 PenTableItem >> refresh [
 	self content do: [ :each | each refresh ].
 	super refresh
-]
-
-{ #category : #accessing }
-PenTableItem >> styleName [
-	^ #tr
 ]
 
 { #category : #accessing }

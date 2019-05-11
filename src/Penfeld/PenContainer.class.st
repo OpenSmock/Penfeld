@@ -9,6 +9,11 @@ Class {
 }
 
 { #category : #accessing }
+PenContainer class >> styleName [
+	^ #container
+]
+
+{ #category : #accessing }
 PenContainer >> addAllElements: aCollection [
 	aCollection do: [ :e | self addElement: e ].
 ]
@@ -68,9 +73,4 @@ PenContainer >> layout: anObject [
 PenContainer >> removeElement: anElement [
 	self elements remove: anElement ifAbsent: [ ^ self].
 	self dresser removeElement: anElement.
-]
-
-{ #category : #accessing }
-PenContainer >> styleName [
-	^ #container
 ]
