@@ -37,13 +37,6 @@ PenBlocWidgetsSample >> disableButton [
 ]
 
 { #category : #accessing }
-PenBlocWidgetsSample >> iconButton [
-	^ PenButton new
-		text: 'Challenge';
-		size: 150 @ 75
-]
-
-{ #category : #accessing }
 PenBlocWidgetsSample >> open [
 	| container |
 	container := PenContainer new
@@ -54,7 +47,6 @@ PenBlocWidgetsSample >> open [
 		self toggleButton position: 110@10.
 		self disableButton position: 10@60.
 		self toggleDisabledButton position: 110@60.
-		self iconButton position: 210@10.
 		self checkBoxs position: 370@10.
 		self radios position: 10@120.
 		self slider position: 10@180.
@@ -75,19 +67,23 @@ PenBlocWidgetsSample >> progressBar [
 PenBlocWidgetsSample >> radioButton: aLabel [
 	^ PenRadioButton new 
 		addStyleClass: #button;
-		label: aLabel; 
+		text: aLabel; 
 		size: 90@50
 			
 ]
 
 { #category : #accessing }
 PenBlocWidgetsSample >> radios [
-	^ PenRadioGroup new addAll:
-		{ 
-			self radioButton: '0 m2'. 
-			self radioButton: '5 m2'. 
-			self radioButton: '50 m2'. 
-		}
+	| radios |
+	radios := { 
+		self radioButton: '0 m2'. 
+		self radioButton: '5 m2'. 
+		self radioButton: '50 m2'. 
+	}.
+	PenRadioGroup new addAll: radios.
+	^ PenContainer new 
+		layout: PenLinearLayout vertical;
+		addAllElements: radios
 ]
 
 { #category : #accessing }

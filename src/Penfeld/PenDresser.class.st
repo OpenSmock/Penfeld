@@ -122,10 +122,6 @@ PenDresser >> margin: aValue [
 PenDresser >> padding: aValue [
 ]
 
-{ #category : #styling }
-PenDresser >> penLoader: aValue [
-]
-
 { #category : #dressing }
 PenDresser >> performFunction: aFunction [
 	^ self 

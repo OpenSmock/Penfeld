@@ -84,41 +84,6 @@ PenBlocButtonDresser >> initEngineElement [
 	self component engineElement when: BlMouseLeaveEvent do: [ :e | self whenMouseLeaveEvent ].
 ]
 
-{ #category : #styling }
-PenBlocButtonDresser >> penLoader: aValue [
-	| iconContainer iconElement loopDoneListener |
-	
-	iconContainer := BlElement new 
-		layout: BlFrameLayout new;
-		relocate: 5@0;
-		constraintsDo: [ :c | 
-			c horizontal matchParent.
-			c vertical matchParent ].
-		
-	iconElement := BlElement new
-		size: aValue extent;
-		background: aValue asBlBackground;
-		constraintsDo: [ :c | 
-			c frame horizontal alignCenter.
-			c frame vertical alignCenter ].
-		
-	animation := BlTransformAnimation new.
-	animation transform rotateBy: 90; apply.
-	animation absolute.
-	animation beInfinite.
-	animation duration: 1 second.
-	iconElement addAnimation: animation.
-	loopDoneListener := BlEventHandler 
-		on: BlAnimationLoopDoneEvent 
-		do: [ :anEvent | iconElement transform rotateBy: 0; apply ].
-	animation addEventHandler: loopDoneListener.
-	
-	iconContainer addChild: iconElement as: #loadingIcon.
-	self component engineElement addChild: iconContainer as: #loadingIconContainer 
-	
-	
-]
-
 { #category : #accessing }
 PenBlocButtonDresser >> ropedText [
 	^ ropedText

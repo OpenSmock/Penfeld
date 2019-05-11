@@ -109,35 +109,3 @@ PenBlocDresser >> helperRgba: args [
 		range: 255) 
 		alpha: args fourth value)
 ]
-
-{ #category : #rendering }
-PenBlocDresser >> loader [
-"Temporary method: it has to become more flexible"
-	| element animation loopDoneListener |
-	element := self loaderIcon.
-	animation := BlTransformAnimation new.
-	animation transform
-		rotateBy: 90;
-		apply.
-	animation absolute.
-	animation beInfinite.
-	animation duration: 1 second.
-	element addAnimation: animation.
-	loopDoneListener := BlEventHandler 
-		on: BlAnimationLoopDoneEvent 
-		do: [ :anEvent | 
-			element transform
-				rotateBy: 0;
-				apply
-		].
-	animation addEventHandler: loopDoneListener.
-	^ element
-]
-
-{ #category : #rendering }
-PenBlocDresser >> loaderIcon [
-	^ BlElement new
-		size: 20 @ 20;
-		geometry: (BlRectangle cornerRadius: 5);
-		border: (BlBorder paint: Color white width: 5).
-]
