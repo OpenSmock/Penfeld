@@ -25,5 +25,5 @@ PenBlocDressersMap >> initMap [
 		at: PenRadioButton put: PenBlocRadioButtonDresser ;
 		at: PenProgressBar put: PenBlocProgressBarDresser ;
 		at: PenSlider put: PenBlocSliderDresser;
-		at: PenImage put: PenBlocFormDresser
+		at: PenImage put: PenBlocImageDresser
 ]

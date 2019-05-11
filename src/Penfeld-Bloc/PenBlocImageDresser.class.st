@@ -1,11 +1,11 @@
 Class {
-	#name : #PenBlocFormDresser,
+	#name : #PenBlocImageDresser,
 	#superclass : #PenBlocDresser,
 	#category : #'Penfeld-Bloc-Dressers'
 }
 
 { #category : #dressing }
-PenBlocFormDresser >> doAfterApplyStyle [ 
+PenBlocImageDresser >> doAfterApplyStyle [ 
 	| var element |
 	element := self component engineElement.
 
@@ -23,6 +23,6 @@ PenBlocFormDresser >> doAfterApplyStyle [
 ]
 
 { #category : #dressing }
-PenBlocFormDresser >> initEngineElement [
+PenBlocImageDresser >> initEngineElement [
 	self component engineElement: (BlElement new background: self component form asBlBackground)
 ]

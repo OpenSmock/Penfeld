@@ -9,9 +9,3 @@ Class {
 	],
 	#category : #'Penfeld-Events'
 }
-
-{ #category : #'instance creation' }
-PenMouseEvent class >> fromBloc: anBlocEvent [
-	self flag: 'mouve it in bloc package'.
-	^ self new
-]
