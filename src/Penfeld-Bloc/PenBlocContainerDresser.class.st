@@ -1,8 +1,8 @@
 Class {
 	#name : #PenBlocContainerDresser,
 	#superclass : #PenBlocDresser,
-	#traits : 'TPenBlocBackgroundStyle + TPenBlocBorderStyle',
-	#classTraits : 'TPenBlocBackgroundStyle classTrait + TPenBlocBorderStyle classTrait',
+	#traits : 'TPenBlocBackgroundStyle + TPenBlocBorderStyle + TPenBlocMarginStyle',
+	#classTraits : 'TPenBlocBackgroundStyle classTrait + TPenBlocBorderStyle classTrait + TPenBlocMarginStyle classTrait',
 	#category : #'Penfeld-Bloc-Dressers'
 }
 

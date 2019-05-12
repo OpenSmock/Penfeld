@@ -1,8 +1,8 @@
 Class {
 	#name : #PenBlocLabelDresser,
 	#superclass : #PenBlocDresser,
-	#traits : 'TPenBlocFontStyle',
-	#classTraits : 'TPenBlocFontStyle classTrait',
+	#traits : 'TPenBlocFontStyle + TPenBlocMarginStyle',
+	#classTraits : 'TPenBlocFontStyle classTrait + TPenBlocMarginStyle classTrait',
 	#instVars : [
 		'ropedText'
 	],

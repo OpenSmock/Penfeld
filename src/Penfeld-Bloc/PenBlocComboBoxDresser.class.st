@@ -1,8 +1,8 @@
 Class {
 	#name : #PenBlocComboBoxDresser,
 	#superclass : #PenBlocDresser,
-	#traits : 'TPenBlocBorderStyle',
-	#classTraits : 'TPenBlocBorderStyle classTrait',
+	#traits : 'TPenBlocBorderStyle + TPenBlocMarginStyle',
+	#classTraits : 'TPenBlocBorderStyle classTrait + TPenBlocMarginStyle classTrait',
 	#instVars : [
 		'dataSource',
 		'list',

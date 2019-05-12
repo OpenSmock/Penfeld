@@ -12,9 +12,7 @@ PenBlocWidgetsSample class >> open [
 
 { #category : #accessing }
 PenBlocWidgetsSample >> button [
-	^ PenButton new
-		text: 'Button';
-		size: 90 @ 40
+	^ PenButton new text: 'Button'
 ]
 
 { #category : #accessing }
@@ -29,29 +27,56 @@ PenBlocWidgetsSample >> checkBoxs [
 ]
 
 { #category : #accessing }
-PenBlocWidgetsSample >> disableButton [
-	^ PenButton new
-		text: 'Button';
-		disable;
-		size: 90 @ 40
+PenBlocWidgetsSample >> comboBox [
+	^ PenComboBox new 
+		addAllItems: ((1 to: 5) 
+			collect: [ :i | PenLabel text: 'Choice ', i printString ])
 ]
 
 { #category : #accessing }
+PenBlocWidgetsSample >> disableButton [
+	^ PenButton new
+		text: 'Disabled';
+		disable
+]
+
+{ #category : #opening }
 PenBlocWidgetsSample >> open [
 	| container |
 	container := PenContainer new
+		layout: PenLinearLayout vertical;
 		key: #mainContainer;
 		size: 800@600.
 	container addAllElements: { 
-		self button position: 10@10.
-		self toggleButton position: 110@10.
-		self disableButton position: 10@60.
-		self toggleDisabledButton position: 110@60.
-		self checkBoxs position: 370@10.
-		self radios position: 10@120.
-		self slider position: 10@180.
-		self slider2 position: 10@240.
-		self progressBar position: 10@300.
+		self titleLabel: 'Buttons'.
+		PenContainer new
+			layout: PenLinearLayout horizontal;
+			addAllElements: { 
+				self button.
+				self toggleButton.
+				self disableButton.
+				self comboBox.
+			}.
+		PenContainer new 
+			layout: PenLinearLayout horizontal;
+			addAllElements: { 
+				PenContainer new
+					layout: PenLinearLayout vertical;
+					addAllElements: { 
+						self titleLabel: 'Check Boxs & Radios'.
+						PenContainer new
+							layout: PenLinearLayout horizontal;
+							addAllElements: { self checkBoxs. self radios. }.
+					}.
+				PenContainer new
+					layout: PenLinearLayout vertical;
+					addAllElements: { 
+						self titleLabel: 'Sliders'.
+						self slider.
+						self slider2.
+					}.
+			}.
+		self progressBar.
 	}.
 	container openInWorld
 ]
@@ -64,21 +89,12 @@ PenBlocWidgetsSample >> progressBar [
 ]
 
 { #category : #accessing }
-PenBlocWidgetsSample >> radioButton: aLabel [
-	^ PenRadioButton new 
-		addStyleClass: #button;
-		text: aLabel; 
-		size: 90@50
-			
-]
-
-{ #category : #accessing }
 PenBlocWidgetsSample >> radios [
 	| radios |
 	radios := { 
-		self radioButton: '0 m2'. 
-		self radioButton: '5 m2'. 
-		self radioButton: '50 m2'. 
+		PenRadioButton new text: 'Choice 1'. 
+		PenRadioButton new text: 'Choice 2'. 
+		PenRadioButton new text: 'Choice 3'. 
 	}.
 	PenRadioGroup new addAll: radios.
 	^ PenContainer new 
@@ -101,17 +117,13 @@ PenBlocWidgetsSample >> slider2 [
 ]
 
 { #category : #accessing }
-PenBlocWidgetsSample >> toggleButton [
-	^ PenToggleButton new
-		text: 'Toggle';
-		size: 90 @ 40
+PenBlocWidgetsSample >> titleLabel: aString [
+	^ PenLabel new
+		text: aString;
+		addStyleClass: #title.
 ]
 
 { #category : #accessing }
-PenBlocWidgetsSample >> toggleDisabledButton [
-	^ PenToggleButton new
-		check;
-		disable;
-		text: 'Toggle';
-		size: 90 @ 40
+PenBlocWidgetsSample >> toggleButton [
+	^ PenToggleButton new text: 'Toggle'
 ]

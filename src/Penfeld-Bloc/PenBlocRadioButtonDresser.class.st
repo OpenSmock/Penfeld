@@ -1,6 +1,8 @@
 Class {
 	#name : #PenBlocRadioButtonDresser,
 	#superclass : #PenBlocDresser,
+	#traits : 'TPenBlocMarginStyle',
+	#classTraits : 'TPenBlocMarginStyle classTrait',
 	#instVars : [
 		'pushed',
 		'pushedItem',
