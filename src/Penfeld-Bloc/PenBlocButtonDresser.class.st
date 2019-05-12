@@ -125,10 +125,3 @@ PenBlocButtonDresser >> whenMouseUpEvent [
 	self component deactivatePseudoClass: #active.
 	pushed := false.
 ]
-
-{ #category : #'accessing structure variables' }
-PenBlocButtonDresser >> width: aValue [
-	self component engineElement constraintsDo: [ :c |
-		self traceCr: aValue printString.
-		c horizontal exact: aValue ] 
-]

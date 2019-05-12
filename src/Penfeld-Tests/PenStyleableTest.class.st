@@ -1,3 +1,6 @@
+"
+A PenStyleableTest is a test class for testing the behavior of TPssStyleable apply for PenDisplayComponent
+"
 Class {
 	#name : #PenStyleableTest,
 	#superclass : #TestCase,
