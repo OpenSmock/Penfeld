@@ -222,7 +222,9 @@ PenDisplayComponent >> position [
 
 { #category : #accessing }
 PenDisplayComponent >> position: aPoint [
-	position := aPoint
+	position = aPoint ifTrue: [ ^ self ].
+	position := aPoint.
+	self refresh
 ]
 
 { #category : #accessing }
@@ -237,7 +239,7 @@ PenDisplayComponent >> refresh [
 
 { #category : #accessing }
 PenDisplayComponent >> removeStyleClass: aSymbol [
-	self styleClasses remove: aSymbol.
+	self styleClasses remove: aSymbol ifAbsent: [^self].
 	self refresh
 ]
 

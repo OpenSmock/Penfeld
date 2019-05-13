@@ -19,12 +19,12 @@ PenEventBinding class >> for: aSymbol do: aBlock [
 ]
 
 { #category : #factory }
-PenEventBinding class >> for: aSymbol perform: aFunction on: aPerformer [
+PenEventBinding class >> for: anEventSymbol perform: aSymbol on: aReceiver [
 	^ PenSimpleEventBinding new
-		symbol: aSymbol;
+		symbol: anEventSymbol;
 		callback: (PenEventFunctionCallback new
-			function: aFunction;
-			performer: aPerformer);
+			symbol: aSymbol;
+			receiver: aReceiver);
 		yourself
 ]
 
@@ -37,12 +37,12 @@ PenEventBinding class >> forAll: aList do: aBlock [
 ]
 
 { #category : #factory }
-PenEventBinding class >> forAll: aList perform: aFunction on: aPerformer [
+PenEventBinding class >> forAll: aList perform: aSymbol on: aReceiver [
 	^ PenCompositeEventBinding new
 		symbols: aList;
 		callback: (PenEventFunctionCallback new
-			function: aFunction;
-			performer: aPerformer);
+			symbol: aSymbol;
+			performer: aReceiver);
 		yourself
 ]
 

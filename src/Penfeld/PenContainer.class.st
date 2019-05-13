@@ -29,6 +29,15 @@ PenContainer >> addElement: anElement [
 	
 ]
 
+{ #category : #accessing }
+PenContainer >> allElements [
+	| collection |
+	collection := self elements copy.
+	self elements do: [ :element | 
+		element isContainer ifTrue: [ collection addAll: element allElements ] ].
+	^ collection
+]
+
 { #category : #building }
 PenContainer >> build [
 	super build.
@@ -45,6 +54,13 @@ PenContainer >> elements [
 { #category : #accessing }
 PenContainer >> elements: anObject [
 	elements := anObject
+]
+
+{ #category : #accessing }
+PenContainer >> getElement: aKey [
+	^ self allElements 
+		detect: [ :element | element key = aKey ]
+		ifNone: [ nil ] 
 ]
 
 { #category : #initialization }
@@ -72,5 +88,5 @@ PenContainer >> layout: anObject [
 { #category : #accessing }
 PenContainer >> removeElement: anElement [
 	self elements remove: anElement ifAbsent: [ ^ self].
-	self dresser removeElement: anElement.
+	self isBuilt ifTrue: [ self dresser removeElement: anElement ].
 ]

@@ -10,30 +10,30 @@ Class {
 
 { #category : #private }
 PenEventFunctionCallback >> executeCallback [
-	self performer perform: self function 
+	self receiver perform: self symbol 
 ]
 
 { #category : #private }
 PenEventFunctionCallback >> executeCallback: anEvent [
-	self performer perform: self function with: anEvent
+	self receiver perform: self symbol with: anEvent
 ]
 
 { #category : #accessing }
-PenEventFunctionCallback >> function [
-	^ function
+PenEventFunctionCallback >> receiver [
+	^ receiver
 ]
 
 { #category : #accessing }
-PenEventFunctionCallback >> function: anObject [
-	function := anObject
+PenEventFunctionCallback >> receiver: anObject [
+	receiver := anObject
 ]
 
 { #category : #accessing }
-PenEventFunctionCallback >> performer [
-	^ performer
+PenEventFunctionCallback >> symbol [
+	^ symbol
 ]
 
 { #category : #accessing }
-PenEventFunctionCallback >> performer: anObject [
-	performer := anObject
+PenEventFunctionCallback >> symbol: anObject [
+	symbol := anObject
 ]

@@ -38,6 +38,7 @@ PenProgressBar >> increment: aNumber [
 PenProgressBar >> initialize [
 	super initialize.
 	index := 1.
+	self interval: (0 to: 10)
 ]
 
 { #category : #accessing }
