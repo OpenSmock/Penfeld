@@ -129,6 +129,11 @@ PenList >> onSelectionChangedDo: aBlock [
 	self onEvent: PenEventSymbol selectionChanged do: aBlock
 ]
 
+{ #category : #'api - events' }
+PenList >> onSelectionChangedPerform: aSymbol on: aReceiver [
+	self onEvent: PenEventSymbol selectionChanged perform: aSymbol on: aReceiver
+]
+
 { #category : #events }
 PenList >> receiveClickEvent: anEvent [
 	self allowToSelect ifFalse: [ ^ self ].

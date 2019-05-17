@@ -8,6 +8,7 @@ Class {
 		'description',
 		'eventBindings',
 		'enabled',
+		'position',
 		'size'
 	],
 	#category : #'Penfeld-Components'
@@ -74,6 +75,7 @@ PenComponent >> height: aNumber [
 PenComponent >> initialize [
 	enabled := true.
 	eventBindings := OrderedCollection new.
+	position := 0@0
 ]
 
 { #category : #testing }
@@ -102,8 +104,8 @@ PenComponent >> onActionDo: aBlock [
 ]
 
 { #category : #'api - events' }
-PenComponent >> onActionPerform: aFunction on: aPerformer [
-	self onEvent: PenEventSymbol action perform: aFunction on: aPerformer
+PenComponent >> onActionPerform: aSymbol on: aReceiver [
+	self onEvent: PenEventSymbol action perform: aSymbol on: aReceiver
 ]
 
 { #category : #'api - events' }
@@ -112,22 +114,22 @@ PenComponent >> onClickDo: aBlock [
 ]
 
 { #category : #'api - events' }
-PenComponent >> onClickPerform: aFunction on: aPerformer [
-	self onEvent: PenEventSymbol click perform: aFunction on: aPerformer
+PenComponent >> onClickPerform: aSymbol on: aReceiver [
+	self onEvent: PenEventSymbol click perform: aSymbol on: aReceiver
 ]
 
 { #category : #'api - events' }
-PenComponent >> onEvent: aSymbol do: aBlock [
+PenComponent >> onEvent: anEventSymbol do: aBlock [
 	| binding |
-	binding := PenEventBinding for: aSymbol do: aBlock.
+	binding := PenEventBinding for: anEventSymbol do: aBlock.
 	binding source: self.
 	eventBindings add: binding.
 ]
 
 { #category : #'api - events' }
-PenComponent >> onEvent: aSymbol perform: aFunction on: aPerformer [
+PenComponent >> onEvent: anEventSymbol perform: aSymbol on: aReceiver [
 	| binding |
-	binding := PenEventBinding for: aSymbol perform: aFunction on: aPerformer.
+	binding := PenEventBinding for: anEventSymbol perform: aSymbol on: aReceiver.
 	binding source: self.
 	eventBindings add: binding.
 ]
@@ -141,9 +143,9 @@ PenComponent >> onEvents: aListOfSymbols do: aBlock [
 ]
 
 { #category : #'api - events' }
-PenComponent >> onEvents: aListOfSymbols perform: aFunction on: aPerformer [
+PenComponent >> onEvents: aListOfSymbols perform: aSymbol on: aReceiver [
 	| binding |
-	binding := PenEventBinding forAll: aListOfSymbols perform: aFunction on: aPerformer.
+	binding := PenEventBinding forAll: aListOfSymbols perform: aSymbol on: aReceiver.
 	binding source: self.
 	eventBindings add: binding.
 ]
@@ -154,8 +156,19 @@ PenComponent >> onMouseDownDo: aBlock [
 ]
 
 { #category : #'api - events' }
-PenComponent >> onMouseDownPerform: aFunction on: aPerformer [
-	self onEvent: PenEventSymbol mouseDown perform: aFunction on: aPerformer
+PenComponent >> onMouseDownPerform: aSymbol on: aReceiver [
+	self onEvent: PenEventSymbol mouseDown perform: aSymbol on: aReceiver
+]
+
+{ #category : #accessing }
+PenComponent >> position [
+	^ position
+]
+
+{ #category : #accessing }
+PenComponent >> position: aPoint [
+	position = aPoint ifTrue: [ ^ self ].
+	position := aPoint.
 ]
 
 { #category : #printing }

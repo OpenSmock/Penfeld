@@ -12,9 +12,6 @@ Class {
 		'visible',
 		'built',
 		'parent',
-		'position',
-		'width',
-		'height',
 		'transformation',
 		'alignment',
 		'pseudoClasses',
@@ -56,6 +53,10 @@ PenDisplayComponent >> build [
 	self dresser ifNil: [ self dresser: (self chooseDresserFor: self) new ].
 	self dresser initEngineElement.
 	self dresser dress.
+	
+	self isVisible
+		ifTrue: [ self dresser show ]
+		ifFalse: [ self dresser hide ].
 	
 	eventStrategy := self dresser eventStrategy.
 	eventBindings do: [ :eventBinding | (eventStrategy tryToBind: eventBinding)
@@ -216,14 +217,8 @@ PenDisplayComponent >> parent: aModel [
 ]
 
 { #category : #accessing }
-PenDisplayComponent >> position [
-	^ position
-]
-
-{ #category : #accessing }
 PenDisplayComponent >> position: aPoint [
-	position = aPoint ifTrue: [ ^ self ].
-	position := aPoint.
+	super position: aPoint.
 	self refresh
 ]
 
@@ -271,5 +266,9 @@ PenDisplayComponent >> stylesheet: aStylesheet [
 
 { #category : #accessing }
 PenDisplayComponent >> visible: aBoolean [
-	visible := aBoolean
+	visible = aBoolean ifTrue: [ ^ self ].
+	visible := aBoolean.
+	self isBuilt ifTrue: [ self isVisible
+		ifTrue: [ self dresser show ]
+		ifFalse: [ self dresser hide ] ]
 ]

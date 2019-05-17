@@ -36,7 +36,9 @@ PenBlocButtonDresser >> doAfterApplyStyle [
 
 { #category : #rendering }
 PenBlocButtonDresser >> doBeforeApplyStyle [ 
-	ropedText := self component text asRopedText.
+	ropedText := self component text
+		ifNotNil: [ self component text asRopedText ] 
+		ifNil: [ '' asRopedText ].
 	
 	animation ifNotNil: [ animation stop. animation := nil ].
 	self component engineElement removeChildNamed: #loadingIconContainer

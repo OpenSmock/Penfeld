@@ -26,7 +26,6 @@ PenBlocBasicExamples class >> exampleButton [
 	| component |
 	component := (PenButton key: #myButton) 
 		text: 'Button';
-		position: 20@20;
 		onActionDo: [ self inform: 'Do Action!' ].
 	component dresser: PenBlocButtonDresser new.
 	component openInWorld 

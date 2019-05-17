@@ -80,7 +80,7 @@ PenSize >> width: aNumber [
 
 { #category : #accessing }
 PenSize >> x [
-	^ x ifNil: [ PenLength new ]
+	^ x
 ]
 
 { #category : #accessing }

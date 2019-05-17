@@ -7,11 +7,6 @@ Class {
 	#category : #'Penfeld-Elements'
 }
 
-{ #category : #initialization }
-PenInteractionElement >> initialize [ 
-	super initialize.
-]
-
 { #category : #accessing }
 PenInteractionElement >> tooltip [
 	^ tooltip

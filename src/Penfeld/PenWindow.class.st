@@ -1,19 +1,15 @@
 Class {
 	#name : #PenWindow,
-	#superclass : #PenDisplayComponent,
+	#superclass : #PenComponent,
 	#instVars : [
 		'screenConfiguration',
 		'docks',
 		'type',
-		'title'
+		'title',
+		'resizable'
 	],
 	#category : #'Penfeld-Components'
 }
-
-{ #category : #accessing }
-PenWindow class >> styleName [
-	^ #window
-]
 
 { #category : #wizard }
 PenWindow class >> withDisplayComponent: anElement [
@@ -49,37 +45,6 @@ PenWindow >> defaultWidth [
 	^ 800 asLength
 ]
 
-{ #category : #opening }
-PenWindow >> displayExternalDock: aDock [
-	self halt: 'to be defined'
-]
-
-{ #category : #opening }
-PenWindow >> displayViewDock: aDock [
-	| element |
-	element := aDock view displayComponent.
-	element isBuilt ifFalse: [ element build ].
-	
-	self width ifNil: [ 
-		element width 
-			ifNotNil: [ self width: element width ]
-			ifNil: [ self width: self defaultWidth ]
-	].
-	
-	self height ifNil: [ 
-		element width 
-			ifNotNil: [ self height: element height ]
-			ifNil: [ self height: self defaultHeight ]
-	].
-	
-	self engineElement: (BlSpace new
-		extent: self width pref @ self height pref;
-		title: self title;
-		yourself).
-	self engineElement root addChild: element engineElement.
-	self engineElement show
-]
-
 { #category : #accessing }
 PenWindow >> docks [
 	^ docks
@@ -90,17 +55,56 @@ PenWindow >> docks: anObject [
 	docks := anObject
 ]
 
+{ #category : #accessing }
+PenWindow >> getView: aKey [
+	^ self docks 
+		detect: [ :d |
+			d view 
+				ifNil: [ false ]
+				ifNotNil: [ d view key = aKey ] ] 
+		ifFound: [ :d | d view ]
+		ifNone: [ nil ]
+]
+
+{ #category : #opening }
+PenWindow >> getWindowSize [
+	| width height element |
+	element := self docks first view displayComponent.
+	self flag: 'calulate size of all docks'.
+	
+	"Width and height"
+	width := self width 
+		ifNil: [ element width 
+			ifNotNil: [ element width ]
+			ifNil: [ 800 asLength ] ]
+		ifNotNil: [ self width ].
+	
+	height := self height 
+		ifNil: [ element height 
+			ifNotNil: [ element height ]
+			ifNil: [ 600 asLength ] ]
+		ifNotNil: [ self height ].
+	
+	^ width pref @ height pref
+]
+
 { #category : #initialization }
 PenWindow >> initialize [
 	super initialize.
 	type := #external.
 	docks := OrderedCollection new.
-	screenConfiguration := PenScreenConfiguration new
+	screenConfiguration := PenScreenConfiguration new.
+	resizable := true.
 ]
 
 { #category : #testing }
 PenWindow >> isMorphic [
 	^ type = #morphic
+]
+
+{ #category : #testing }
+PenWindow >> isResizable [
+	^ resizable
 ]
 
 { #category : #accessing }
@@ -110,29 +114,14 @@ PenWindow >> morphic [
 
 { #category : #opening }
 PenWindow >> open [
-	"self docks isEmpty ifTrue: [ self error: 'nothing to show' ].
+	| engine helper |
+	self flag: #toImprove.
+	engine := PenEngine default.
 	
-	self docks do: [ :dock |
-		dock isViewDock 
-			ifTrue: [ self displayViewDock: dock ]
-			ifFalse: [ self displayExternalDock: dock ] ] "
-	| element |
-	element := self docks first view displayComponent.
-	element isBuilt ifFalse: [ element build ].
-	
-	self width ifNil: [ 
-		element width 
-			ifNotNil: [ self width: element width ]
-			ifNil: [ self width: 800 asLength ]
-	].
-	
-	self height ifNil: [ 
-		element width 
-			ifNotNil: [ self height: element height ]
-			ifNil: [ self height: 600 asLength ]
-	].
-		
-	self build.
+	helper := PenWindowHelper forEngine: engine class.
+	helper 
+		ifNil: [ self inform: 'Can not find a window helper for engine: ', engine printString. ] 
+		ifNotNil: [ helper new buildWindow: self ].
 ]
 
 { #category : #opening }
@@ -144,6 +133,11 @@ PenWindow >> openInWindow [
 PenWindow >> openInWorld [
 	self morphic.
 	self open
+]
+
+{ #category : #accessing }
+PenWindow >> resizable: anObject [
+	resizable := anObject
 ]
 
 { #category : #accessing }
@@ -162,8 +156,8 @@ PenWindow >> title [
 ]
 
 { #category : #accessing }
-PenWindow >> title: anObject [
-	title := anObject
+PenWindow >> title: aString [
+	title := aString
 ]
 
 { #category : #initialization }

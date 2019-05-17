@@ -24,5 +24,6 @@ PenBlocImageDresser >> doAfterApplyStyle [
 
 { #category : #dressing }
 PenBlocImageDresser >> initEngineElement [
-	self component engineElement: (BlElement new background: self component form asBlBackground)
+	self component engineElement: (BlElement new background: self component form asBlBackground).
+	self component engineElement preventMeAndChildrenMouseEvents.
 ]

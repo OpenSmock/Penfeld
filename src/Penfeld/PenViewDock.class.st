@@ -33,6 +33,6 @@ PenViewDock >> view [
 ]
 
 { #category : #accessing }
-PenViewDock >> view: anObject [
-	view := anObject
+PenViewDock >> view: aView [
+	view := aView.
 ]

@@ -109,3 +109,13 @@ PenBlocDresser >> helperRgba: args [
 		range: 255) 
 		alpha: args fourth value)
 ]
+
+{ #category : #dressing }
+PenBlocDresser >> hide [
+	self component engineElement visibility: BlVisibility hidden.
+]
+
+{ #category : #dressing }
+PenBlocDresser >> show [
+	self component engineElement visibility: BlVisibility visible.
+]

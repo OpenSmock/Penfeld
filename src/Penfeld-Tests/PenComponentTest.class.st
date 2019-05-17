@@ -34,7 +34,20 @@ PenComponentTest >> testSize [
 ]
 
 { #category : #tests }
-PenComponentTest >> testSize2 [
+PenComponentTest >> testSizeXNil [
+	| component |
+	component := PenComponent new.
+	self assert: component width equals: nil.
+	self assert: component height equals: nil.
+	
+	component height: 200.
+	self assert: component height equals: 200 asLength.
+	self assert: component width equals: nil.
+	
+]
+
+{ #category : #tests }
+PenComponentTest >> testSizeYNil [
 	| component |
 	component := PenComponent new.
 	self assert: component width equals: nil.

@@ -1,8 +1,9 @@
 Class {
 	#name : #PenDresser,
-	#superclass : #PenAbstractDresser,
+	#superclass : #Object,
 	#instVars : [
-		'styleSelector'
+		'styleSelector',
+		'component'
 	],
 	#category : #'Penfeld-Abstracts'
 }
@@ -40,6 +41,16 @@ PenDresser >> borderLeft: aStyle [
 
 { #category : #styling }
 PenDresser >> color: aValue [
+]
+
+{ #category : #accessing }
+PenDresser >> component [ 
+	^ component
+]
+
+{ #category : #accessing }
+PenDresser >> component: aComponent [
+	component := aComponent
 ]
 
 { #category : #dressing }
@@ -110,6 +121,11 @@ PenDresser >> helperRgba: args [
 ]
 
 { #category : #dressing }
+PenDresser >> hide [ 
+	^ self subclassResponsibility
+]
+
+{ #category : #dressing }
 PenDresser >> initEngineElement [
 	^ self subclassResponsibility
 ]
@@ -127,6 +143,11 @@ PenDresser >> performFunction: aFunction [
 	^ self 
 		perform: ('helper' , aFunction asCamelCase) asSymbol asMutator 
 		with: aFunction args 
+]
+
+{ #category : #dressing }
+PenDresser >> show [ 
+	^ self subclassResponsibility
 ]
 
 { #category : #styling }

@@ -2,7 +2,10 @@ Class {
 	#name : #PenShape,
 	#superclass : #PenVisualisationElement,
 	#instVars : [
-		'shape'
+		'shape',
+		'fillColor',
+		'strokeColor',
+		'strokeStyle'
 	],
 	#category : #'Penfeld-Elements'
 }

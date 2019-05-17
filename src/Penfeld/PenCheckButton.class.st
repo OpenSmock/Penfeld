@@ -3,7 +3,8 @@ Class {
 	#superclass : #PenInteractionElement,
 	#instVars : [
 		'value',
-		'text'
+		'text',
+		'group'
 	],
 	#category : #'Penfeld-Elements'
 }
@@ -11,6 +12,16 @@ Class {
 { #category : #api }
 PenCheckButton >> check [
 	self value: true
+]
+
+{ #category : #accessing }
+PenCheckButton >> group [
+	^ group
+]
+
+{ #category : #accessing }
+PenCheckButton >> group: anObject [
+	group := anObject
 ]
 
 { #category : #initialization }

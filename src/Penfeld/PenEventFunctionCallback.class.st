@@ -2,8 +2,8 @@ Class {
 	#name : #PenEventFunctionCallback,
 	#superclass : #PenEventCallback,
 	#instVars : [
-		'performer',
-		'function'
+		'receiver',
+		'symbol'
 	],
 	#category : #'Penfeld-Events'
 }

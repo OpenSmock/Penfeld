@@ -16,15 +16,15 @@ PenBlocListDresser >> doAfterApplyStyle [
 
 	"Position"
 	var := self component position.
-	var ifNotNil: [ self model engineElement relocate: var ].
+	var ifNotNil: [ self component engineElement relocate: var ].
 
 	"Width"
 	var := self component width.
-	var ifNotNil: [ self model engineElement width: var pref ].
+	var ifNotNil: [ self component engineElement width: var pref ].
 	
 	"Height"
 	var := self component height.
-	var ifNotNil: [ self model engineElement height: var pref ]
+	var ifNotNil: [ self component engineElement height: var pref ]
 ]
 
 { #category : #dressing }
