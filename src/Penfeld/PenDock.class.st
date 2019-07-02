@@ -1,9 +1,9 @@
 Class {
 	#name : #PenDock,
 	#superclass : #PenComponent,
-	#classTraits : 'TPenIndexable classTrait + TPenPositionable classTrait',
 	#instVars : [
-		'docks'
+		'docks',
+		'window'
 	],
 	#category : #'Penfeld-Components'
 }
@@ -26,4 +26,14 @@ PenDock >> isExternalDock [
 { #category : #testing }
 PenDock >> isViewDock [
 	^ false
+]
+
+{ #category : #accessing }
+PenDock >> window [
+	^ window
+]
+
+{ #category : #accessing }
+PenDock >> window: anObject [
+	window := anObject
 ]

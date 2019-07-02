@@ -20,3 +20,8 @@ PenWindowHelper class >> forEngine: anEngine [
 PenWindowHelper >> buildWindow: aWindow [
 	^ self subclassResponsibility 
 ]
+
+{ #category : #building }
+PenWindowHelper >> updateViewDock: aDock [
+	^ self subclassResponsibility  
+]

@@ -35,4 +35,5 @@ PenViewDock >> view [
 { #category : #accessing }
 PenViewDock >> view: aView [
 	view := aView.
+	self window ifNotNil: [ self window updateViewDock: self ].
 ]

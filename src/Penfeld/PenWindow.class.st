@@ -6,7 +6,9 @@ Class {
 		'docks',
 		'type',
 		'title',
-		'resizable'
+		'resizable',
+		'helper',
+		'opened'
 	],
 	#category : #'Penfeld-Components'
 }
@@ -27,7 +29,8 @@ PenWindow class >> withDock: aDock [
 
 { #category : #accessing }
 PenWindow >> addDock: aDock [
-	self docks add: aDock
+	self docks add: aDock.
+	aDock window: self.
 ]
 
 { #category : #opening }
@@ -95,11 +98,17 @@ PenWindow >> initialize [
 	docks := OrderedCollection new.
 	screenConfiguration := PenScreenConfiguration new.
 	resizable := true.
+	opened := false.
 ]
 
 { #category : #testing }
 PenWindow >> isMorphic [
 	^ type = #morphic
+]
+
+{ #category : #testing }
+PenWindow >> isOpened [
+	^ opened
 ]
 
 { #category : #testing }
@@ -114,14 +123,19 @@ PenWindow >> morphic [
 
 { #category : #opening }
 PenWindow >> open [
-	| engine helper |
+	| engine helperClass |
 	self flag: #toImprove.
 	engine := PenEngine default.
 	
-	helper := PenWindowHelper forEngine: engine class.
-	helper 
+	helperClass := PenWindowHelper forEngine: engine class.
+	helperClass 
 		ifNil: [ self inform: 'Can not find a window helper for engine: ', engine printString. ] 
-		ifNotNil: [ helper new buildWindow: self ].
+		ifNotNil: [ 
+			helper := helperClass new.
+			helper buildWindow: self. 
+			opened := true.
+		].
+		
 ]
 
 { #category : #opening }
@@ -158,6 +172,12 @@ PenWindow >> title [
 { #category : #accessing }
 PenWindow >> title: aString [
 	title := aString
+]
+
+{ #category : #building }
+PenWindow >> updateViewDock: aViewDock [
+	self isOpened ifFalse: [ ^ self ].
+	helper updateViewDock: aViewDock
 ]
 
 { #category : #initialization }

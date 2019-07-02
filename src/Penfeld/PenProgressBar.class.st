@@ -21,17 +21,21 @@ PenProgressBar >> fraction [
 { #category : #api }
 PenProgressBar >> increment [
 	self isMax ifTrue: [ ^ self ].
-	index := index + 1.
-	self refresh.
-	self valueChangedEvent  
+	self index: index + 1.
 ]
 
 { #category : #api }
 PenProgressBar >> increment: aNumber [
 	self isMax ifTrue: [ ^ self ].
-	index := (index + aNumber) min: interval size.
+	self index: ((index + aNumber) min: interval size).
+]
+
+{ #category : #accessing }
+PenProgressBar >> index: aNumber [
+	index = aNumber ifTrue: [ ^ self ].
+	index := aNumber.
+	self valueChangedEvent.
 	self refresh.
-	self valueChangedEvent  
 ]
 
 { #category : #initialization }
@@ -64,6 +68,11 @@ PenProgressBar >> onValueChangedDo: aBlock [
 { #category : #accessing }
 PenProgressBar >> progress [
 	^ interval at: index
+]
+
+{ #category : #api }
+PenProgressBar >> reinit [
+	self index: 1
 ]
 
 { #category : #accessing }

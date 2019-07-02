@@ -16,9 +16,7 @@ PenSlider class >> styleName [
 { #category : #api }
 PenSlider >> decrement [
 	self isMin ifTrue: [ ^ self ].
-	index := index - 1.
-	self refresh.
-	self valueChangedEvent  
+	self index: index - 1.
 ]
 
 { #category : #accessing }
@@ -29,9 +27,20 @@ PenSlider >> fraction [
 { #category : #api }
 PenSlider >> increment [
 	self isMax ifTrue: [ ^ self ].
-	index := index + 1.
+	self index: index + 1.
+]
+
+{ #category : #accessing }
+PenSlider >> index [
+	^ index
+]
+
+{ #category : #accessing }
+PenSlider >> index: aNumber [
+	index = aNumber ifTrue: [ ^ self ].
+	index := aNumber.
+	self valueChangedEvent.
 	self refresh.
-	self valueChangedEvent  
 ]
 
 { #category : #initialization }
@@ -62,20 +71,17 @@ PenSlider >> isMin [
 
 { #category : #api }
 PenSlider >> max [
-	index := 1.
-	self valueChangedEvent  
+	self index: self interval size.
 ]
 
 { #category : #api }
 PenSlider >> middle [
-	index := (self interval size / 2) asInteger.
-	self valueChangedEvent  
+	self index: (self interval size / 2) asInteger.
 ]
 
 { #category : #api }
-PenSlider >> min [
-	index := 1.
-	self valueChangedEvent  
+PenSlider >> min [ 
+	self index: 1.
 ]
 
 { #category : #'api - events' }
@@ -85,6 +91,7 @@ PenSlider >> onValueChangedDo: aBlock [
 
 { #category : #api }
 PenSlider >> updateFraction: aNumber [
+"Click on a fraction of the bar, update the interval value"
 	| newIndex |
 	newIndex := ((aNumber * (interval size - 1)) + 1) rounded.
 	newIndex := newIndex min: self interval size.
@@ -102,7 +109,7 @@ PenSlider >> value [
 	^ interval at: index
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #events }
 PenSlider >> valueChangedEvent [
 	self eventBindings do: [ :eventBinding |
 		(eventBinding symbol = PenEventSymbol valueChanged)

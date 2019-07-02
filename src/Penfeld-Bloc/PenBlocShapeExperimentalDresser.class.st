@@ -34,5 +34,8 @@ PenBlocShapeExperimentalDresser >> doAfterApplyStyle [
 PenBlocShapeExperimentalDresser >> initEngineElement [
 	self component engineElement: (self component shape
 		ifNil: [ BlElement new ]
-		ifNotNil: [ self component shape ])
+		ifNotNil: [ self component shape ]).
+		
+	"Reinit BlElement values"
+	self component engineElement border: BlBorder empty.
 ]
