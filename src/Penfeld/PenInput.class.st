@@ -1,6 +1,11 @@
 Class {
 	#name : #PenInput,
 	#superclass : #PenInteractionElement,
+	#traits : 'TPenValueChangedEvent',
+	#classTraits : 'TPenValueChangedEvent classTrait',
+	#instVars : [
+		'text'
+	],
 	#category : #'Penfeld-Elements'
 }
 
@@ -9,7 +14,11 @@ PenInput class >> styleName [
 	^ #input
 ]
 
-{ #category : #'api - events' }
-PenInput >> onValueChangedDo: aBlock [
-	self onEvent: PenEventSymbol valueChanged do: aBlock
+{ #category : #accessing }
+PenInput >> text: aString [
+	aString = text ifTrue: [ ^ self ].
+	
+	text := aString.
+	self refresh.
+	self valueChangedEvent.
 ]
