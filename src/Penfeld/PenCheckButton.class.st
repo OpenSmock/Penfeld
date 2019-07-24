@@ -1,6 +1,8 @@
 Class {
 	#name : #PenCheckButton,
 	#superclass : #PenInteractionElement,
+	#traits : 'TPenValueChangedEvent',
+	#classTraits : 'TPenValueChangedEvent classTrait',
 	#instVars : [
 		'value',
 		'text',
@@ -39,11 +41,6 @@ PenCheckButton >> onCheckedDo: aBlock [
 { #category : #'api - events' }
 PenCheckButton >> onUncheckedDo: aBlock [
 	self onValueChangedDo: [ self value ifFalse: [ aBlock value ] ] 
-]
-
-{ #category : #'api - events' }
-PenCheckButton >> onValueChangedDo: aBlock [
-	self onEvent: PenEventSymbol valueChanged do: aBlock
 ]
 
 { #category : #accessing }
@@ -89,11 +86,4 @@ PenCheckButton >> value: aBoolean [
 	].
 	self valueChangedEvent.
 	self refresh
-]
-
-{ #category : #'as yet unclassified' }
-PenCheckButton >> valueChangedEvent [
-	self eventBindings do: [ :eventBinding |
-		(eventBinding symbolMatches: PenEventSymbol valueChanged)
-			ifTrue: [ eventBinding executeCallback ]].
 ]

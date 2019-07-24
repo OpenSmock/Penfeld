@@ -1,6 +1,8 @@
 Class {
 	#name : #PenSlider,
 	#superclass : #PenInteractionElement,
+	#traits : 'TPenValueChangedEvent',
+	#classTraits : 'TPenValueChangedEvent classTrait',
 	#instVars : [
 		'interval',
 		'index'
@@ -84,11 +86,6 @@ PenSlider >> min [
 	self index: 1.
 ]
 
-{ #category : #'api - events' }
-PenSlider >> onValueChangedDo: aBlock [
-	self onEvent: PenEventSymbol valueChanged do: aBlock
-]
-
 { #category : #api }
 PenSlider >> updateFraction: aNumber [
 "Click on a fraction of the bar, update the interval value"
@@ -107,11 +104,4 @@ PenSlider >> updateFraction: aNumber [
 { #category : #accessing }
 PenSlider >> value [
 	^ interval at: index
-]
-
-{ #category : #events }
-PenSlider >> valueChangedEvent [
-	self eventBindings do: [ :eventBinding |
-		(eventBinding symbol = PenEventSymbol valueChanged)
-			ifTrue: [ eventBinding executeCallback ]].
 ]

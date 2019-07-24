@@ -5,6 +5,8 @@ Class {
 	#classTraits : 'TPenSections classTrait',
 	#instVars : [
 		'sections',
+		'dataStrategy',
+		'dataSource',
 		'header',
 		'showHeader',
 		'dragSections'
@@ -23,6 +25,26 @@ PenTable >> build [
 	(self header isNotNil and: [self showHeader])
 		ifTrue: [ self header build ].
 	super build
+]
+
+{ #category : #accessing }
+PenTable >> dataSource [
+	^ dataSource
+]
+
+{ #category : #accessing }
+PenTable >> dataSource: anObject [
+	dataSource := anObject
+]
+
+{ #category : #accessing }
+PenTable >> dataStrategy [
+	^ dataStrategy
+]
+
+{ #category : #accessing }
+PenTable >> dataStrategy: anObject [
+	dataStrategy := anObject
 ]
 
 { #category : #accessing }
