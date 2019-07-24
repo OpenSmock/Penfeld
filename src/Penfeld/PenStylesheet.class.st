@@ -12,6 +12,103 @@ PenStylesheet class >> cleanUp [
 	Current := nil
 ]
 
+{ #category : #styles }
+PenStylesheet class >> colored [
+	<script: 'self colored'>
+	Current := #coloredStyle.
+	^ self current 
+]
+
+{ #category : #private }
+PenStylesheet class >> coloredStyle [
+	^ PssParser parse: (self createStylesheet2: {
+		#lightTextColor -> '#CDE1E4'.
+		#darkTextColor -> '#343A3B'.
+		#backgroundColor -> '#9AA3A4'.
+		#borderColor -> '#3B919E'.
+		#activeColor -> '#9E3B63'.
+		#checkedColor -> '#4EA5C5'.
+		#disabledColor -> '#344A71'.
+		#buttonBackgroundColor -> '#374D8D'.
+		#buttonBackgroundColor2 -> '#4E6DC5'.
+	} asDictionary).
+]
+
+{ #category : #private }
+PenStylesheet class >> createStylesheet2: colors [
+	^ '
+* { 
+	font-size: 16;
+	color: ', (colors at: #darkTextColor), ';
+ }
+
+.root { 
+	background-color: ', (colors at: #backgroundColor), ';
+}
+
+label.title { 
+	font-size: 16;
+	font-style: italic;
+	margin: 15px 10px 5px;
+}
+
+*:active { 
+	background-color: ', (colors at: #activeColor), ';
+ }
+
+*:checked { 
+	background-color: ', (colors at: #checkedColor), ';
+ }
+
+*:unchecked { 
+	background-color: ', (colors at: #buttonBackgroundColor), ';
+ }
+
+*:disabled { 
+	background-color: ', (colors at: #disabledColor), ';
+ }
+
+button, toggle { 
+	width: 100;
+	height: 45;
+	text-align: center;
+	margin: 5px 10px;
+	background-image: linear-gradient(
+		', (colors at: #buttonBackgroundColor2), ' 0%,
+		', (colors at: #buttonBackgroundColor), ' 100%
+	);
+	border: 4px solid ', (colors at: #borderColor), ';
+	color: ', (colors at: #lightTextColor), ';
+ }
+
+button:unchecked, toggle:unchecked { 
+	background-image: linear-gradient(
+		', (colors at: #buttonBackgroundColor2), ' 0%,
+		', (colors at: #buttonBackgroundColor), ' 100%
+	);
+}
+
+radioButton, checkButton { 
+	margin: 0 10px;
+ }
+
+th { 
+	background-color: ', (colors at: #buttonBackgroundColor), ';
+ }
+
+comboBox { 
+	margin: 5px;
+}
+
+comboBox.cbbutton { 
+	width: 30;
+	height: 30;
+	background-color: ', (colors at: #buttonBackgroundColor), ';
+ }
+
+'
+]
+
 { #category : #private }
 PenStylesheet class >> createStylesheet: colors [
 	^ '
@@ -19,6 +116,10 @@ PenStylesheet class >> createStylesheet: colors [
 	font-size: 14;
 	color: ', (colors at: #textColor), ';
  }
+
+.root { 
+	background-color: ', (colors at: #backgroundColor), ';
+}
 
 label.title { 
 	font-size: 16;
@@ -68,6 +169,11 @@ comboBox.cbbutton {
 	height: 30;
 	background-color: ', (colors at: #buttonBackgroundColor), ';
  }
+
+list, tree, table { 
+	width: 300;
+	margin: 20;
+}
 
 '
 ]

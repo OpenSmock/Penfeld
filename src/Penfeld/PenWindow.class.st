@@ -27,6 +27,13 @@ PenWindow class >> withDock: aDock [
 		yourself
 ]
 
+{ #category : #wizard }
+PenWindow class >> withView: aView [
+	^ self new 
+		withView: aView;
+		yourself
+]
+
 { #category : #accessing }
 PenWindow >> addDock: aDock [
 	self docks add: aDock.
@@ -180,10 +187,17 @@ PenWindow >> updateViewDock: aViewDock [
 	helper updateViewDock: aViewDock
 ]
 
-{ #category : #initialization }
+{ #category : #wizard }
 PenWindow >> withDisplayComponent: anElement [
 	| view dock |
 	view := PenView with: anElement.
 	dock := PenViewDock with: view.
+	self docks add: dock.
+]
+
+{ #category : #wizard }
+PenWindow >> withView: aView [
+	| dock |
+	dock := PenViewDock with: aView.
 	self docks add: dock.
 ]

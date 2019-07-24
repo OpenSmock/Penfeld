@@ -62,6 +62,7 @@ PenTreeNode >> nodes [
 { #category : #building }
 PenTreeNode >> refresh [
 	self isExpanded ifTrue: [ 
+		content refresh.
 		self nodes do: [ :each | each refresh ]].
 	super refresh
 ]

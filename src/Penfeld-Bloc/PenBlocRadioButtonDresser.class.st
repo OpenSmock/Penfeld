@@ -1,8 +1,8 @@
 Class {
 	#name : #PenBlocRadioButtonDresser,
 	#superclass : #PenBlocDresser,
-	#traits : 'TPenBlocMarginStyle',
-	#classTraits : 'TPenBlocMarginStyle classTrait',
+	#traits : 'TPenBlocMarginStyle + TPenBlocFontStyle',
+	#classTraits : 'TPenBlocMarginStyle classTrait + TPenBlocFontStyle classTrait',
 	#instVars : [
 		'pushed',
 		'pushedItem',
@@ -45,15 +45,6 @@ PenBlocRadioButtonDresser >> border: aValue [
 	(self component engineElement childNamed: #check) background: borderBuilder paint.
 ]
 
-{ #category : #styling }
-PenBlocRadioButtonDresser >> color: aValue [
-	| textElement |
-	textElement := self component engineElement childNamed: #text
-		ifFound: [ :anElement | anElement ]
-		ifNone: [ ^ self ].
-	textElement text foreground: aValue
-]
-
 { #category : #dressing }
 PenBlocRadioButtonDresser >> doAfterApplyStyle [ 
 	| var |
@@ -84,27 +75,6 @@ PenBlocRadioButtonDresser >> doBeforeApplyStyle [
 		
 	ropedText := self component text asRopedText
 
-]
-
-{ #category : #styling }
-PenBlocRadioButtonDresser >> fontFamily: aValue [
-	ropedText fontName: aValue first.
-]
-
-{ #category : #styling }
-PenBlocRadioButtonDresser >> fontSize: aValue [
-	| size box check |
-	size := aValue value.
-
-	ropedText fontSize: size.
-	
-	box := self component engineElement childNamed: #box.
-	box geometry: (BlEllipse diameter: size - 3).
-	box size: (size - 3) asPoint.
-	
-	check := box childNamed: #check.
-	check geometry: (BlEllipse diameter: size - 10).
-	check size: (size - 10) asPoint. 
 ]
 
 { #category : #dressing }
@@ -146,6 +116,11 @@ PenBlocRadioButtonDresser >> initEngineElement [
 	self component engineElement when: BlMouseDownEvent do: [ :e | self whenMouseDownEvent ].
 	self component engineElement when: BlMouseUpEvent do: [ :e | self whenMouseUpEvent ].
 	self component engineElement when: BlMouseLeaveEvent do: [ :e | self whenMouseLeaveEvent ].
+]
+
+{ #category : #accessing }
+PenBlocRadioButtonDresser >> ropedText [
+	^ ropedText
 ]
 
 { #category : #events }

@@ -1,6 +1,6 @@
 Class {
 	#name : #PenBlocWidgetsSample,
-	#superclass : #PenStylesheet,
+	#superclass : #PenView,
 	#category : #'Penfeld-Bloc-Examples'
 }
 
@@ -8,6 +8,21 @@ Class {
 PenBlocWidgetsSample class >> open [
 	<script: 'self open'>
 	^ self new open
+]
+
+{ #category : #accessing }
+PenBlocWidgetsSample >> allSubclasses: aClass [
+	| list |
+	list := OrderedCollection new.
+	aClass withAllSubclassesDo: [ :class | | row |
+		row := PenTableItem new.
+		row key: class name asSymbol.
+		row dresser: PenBlocTableItemDresser new.
+		row atSection: #name put: (PenLabel text: class name).
+		row atSection: #numberOfSubclasses put: (PenLabel text: class subclasses size printString).
+		row atSection: #numberOfVariables put: (PenLabel text: class instanceVariables size printString).
+		list add: row].
+	^ list
 ]
 
 { #category : #accessing }
@@ -40,13 +55,28 @@ PenBlocWidgetsSample >> disableButton [
 		disable
 ]
 
+{ #category : #accessing }
+PenBlocWidgetsSample >> header [
+	^ PenTableItem new
+		dresser: PenBlocTableItemHeaderDresser new;
+		atSection: #name put: (PenLabel new text: 'Nom');
+		atSection: #numberOfSubclasses put: (PenLabel new text: 'Sub.');
+		atSection: #numberOfVariables put: (PenLabel new text: 'Inst.');
+		yourself
+	
+]
+
 { #category : #opening }
-PenBlocWidgetsSample >> open [
+PenBlocWidgetsSample >> initContent [
 	| container |
+	
 	container := PenContainer new
 		layout: PenLinearLayout vertical;
 		key: #mainContainer;
 		size: 800@600.
+		
+	self displayComponent: container.
+	
 	container addAllElements: { 
 		self titleLabel: 'Buttons'.
 		PenContainer new
@@ -55,7 +85,7 @@ PenBlocWidgetsSample >> open [
 				self button.
 				self toggleButton.
 				self disableButton.
-				self comboBox.
+				"self comboBox."
 			}.
 		PenContainer new 
 			layout: PenLinearLayout horizontal;
@@ -76,9 +106,67 @@ PenBlocWidgetsSample >> open [
 						self slider2.
 					}.
 			}.
-		self progressBar.
+		PenContainer new
+			layout: PenLinearLayout horizontal;
+			addAllElements: { 
+				PenShape new size: 10@0.
+				PenContainer new
+					layout: PenLinearLayout vertical;
+					addAllElements: { 
+						self titleLabel: 'List'.
+						self list.
+					}.
+				PenShape new size: 15@0.
+				PenContainer new
+					layout: PenLinearLayout vertical;
+					addAllElements: { 
+						self titleLabel: 'Table'.
+						self table.
+					}.
+				PenShape new size: 15@0.
+				PenContainer new
+					layout: PenLinearLayout vertical;
+					addAllElements: { 
+						self titleLabel: 'Tree'.
+						self tree.
+					}.
+			}.
 	}.
-	container openInWorld
+]
+
+{ #category : #opening }
+PenBlocWidgetsSample >> initialize [ 
+	super initialize.
+	self initContent.
+]
+
+{ #category : #accessing }
+PenBlocWidgetsSample >> list [
+	^ PenList new 
+		size: 220@280;
+		addAllItems:  (PenElement withAllSubclasses 
+			collect: [ :c | PenLabel new text: c name ]);
+		sortingBlock: [ :a :b | a text < b text ];
+		allowToSelect: true;
+		multiSelection: true;
+		yourself
+]
+
+{ #category : #accessing }
+PenBlocWidgetsSample >> nodeForClass: aClass [
+	| node |
+	node := PenTreeNode new.
+	node key: aClass name asSymbol.
+	node dresser: WATreeNodeDresser new.
+	node content: (PenLabel new text: aClass name).
+	aClass subclasses do: [ :subclass | 
+		node addNode: (self nodeForClass: subclass)].
+	^ node
+]
+
+{ #category : #opening }
+PenBlocWidgetsSample >> open [
+	self openInWorld 
 ]
 
 { #category : #accessing }
@@ -117,6 +205,23 @@ PenBlocWidgetsSample >> slider2 [
 ]
 
 { #category : #accessing }
+PenBlocWidgetsSample >> table [
+	| component |
+	component := PenTable new.
+	component size: 220@280.
+	component sections: { 
+		PenSection new selector: #name.
+		PenSection new selector: #numberOfSubclasses; size: 40.
+		PenSection new selector: #numberOfVariables; size: 40 }.
+	component header: self header.
+	component addAllItems: (self allSubclasses: PenComponent).
+	component sortingBlock: [ :a :b | a key < b key ].
+	component dragSections: true.
+	component allowToSelect: true.
+	^ component
+]
+
+{ #category : #accessing }
 PenBlocWidgetsSample >> titleLabel: aString [
 	^ PenLabel new
 		text: aString;
@@ -126,4 +231,13 @@ PenBlocWidgetsSample >> titleLabel: aString [
 { #category : #accessing }
 PenBlocWidgetsSample >> toggleButton [
 	^ PenToggleButton new text: 'Toggle'
+]
+
+{ #category : #accessing }
+PenBlocWidgetsSample >> tree [
+	^ PenTree new
+		size: 220@280;
+		root: (self nodeForClass: PenComponent);
+		dresser: PenBlocTreeDresser new;
+		sortingBlock: [ :a :b | a key < b key ].
 ]

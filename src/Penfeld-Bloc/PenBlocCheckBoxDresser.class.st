@@ -1,8 +1,8 @@
 Class {
 	#name : #PenBlocCheckBoxDresser,
 	#superclass : #PenBlocDresser,
-	#traits : 'TPenBlocMarginStyle',
-	#classTraits : 'TPenBlocMarginStyle classTrait',
+	#traits : 'TPenBlocMarginStyle + TPenBlocFontStyle',
+	#classTraits : 'TPenBlocMarginStyle classTrait + TPenBlocFontStyle classTrait',
 	#instVars : [
 		'ropedText',
 		'pushed'
@@ -59,15 +59,6 @@ PenBlocCheckBoxDresser >> border: aValue [
 	box border: borderBuilder build.
 ]
 
-{ #category : #styling }
-PenBlocCheckBoxDresser >> color: aValue [
-	| textElement |
-	textElement := self component engineElement childNamed: #text
-		ifFound: [ :anElement | anElement ]
-		ifNone: [ ^ self ].
-	textElement text foreground: aValue
-]
-
 { #category : #dressing }
 PenBlocCheckBoxDresser >> doAfterApplyStyle [ 
 	| var |
@@ -100,32 +91,6 @@ PenBlocCheckBoxDresser >> doBeforeApplyStyle [
 
 ]
 
-{ #category : #styling }
-PenBlocCheckBoxDresser >> fontFamily: aValue [
-	ropedText fontName: aValue first.
-]
-
-{ #category : #styling }
-PenBlocCheckBoxDresser >> fontSize: aValue [
-	| size box check |
-	size := aValue value.
-
-	ropedText fontSize: size.
-	
-	size := size - 3.
-	
-	box := self component engineElement childNamed: #box.
-	box size: size asPoint.
-	
-	check := box childNamed: #check.
-	check geometry: (BlPolyline vertices: 
-	{ 
-		(0.18 * size) rounded @ (0.55 * size) rounded. 
-		(0.36 * size) rounded @ (0.91 * size) rounded. 
-		(0.91 * size) rounded @ (0.27 * size) rounded
-	}).
-]
-
 { #category : #dressing }
 PenBlocCheckBoxDresser >> initEngineElement [
 	| box check |
@@ -152,6 +117,11 @@ PenBlocCheckBoxDresser >> initEngineElement [
 	self component engineElement when: BlMouseDownEvent do: [ :e | self whenMouseDownEvent ].
 	self component engineElement when: BlMouseUpEvent do: [ :e | self whenMouseUpEvent ].
 	self component engineElement when: BlMouseLeaveEvent do: [ :e | self whenMouseLeaveEvent ].
+]
+
+{ #category : #accessing }
+PenBlocCheckBoxDresser >> ropedText [
+	^ ropedText
 ]
 
 { #category : #events }

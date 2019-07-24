@@ -22,7 +22,8 @@ PenView >> displayComponent [
 
 { #category : #accessing }
 PenView >> displayComponent: anObject [
-	displayComponent := anObject
+	displayComponent := anObject.
+	anObject addStyleClass: #root.
 ]
 
 { #category : #accessing }

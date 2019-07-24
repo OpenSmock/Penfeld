@@ -28,10 +28,10 @@ PenList >> addAllItems: aList [
 
 { #category : #items }
 PenList >> addItem: anItem [
-	| eventBinding |
 	items add: anItem.
 	anItem parent: self.
 	anItem onActionDo: [ self select: anItem ].
+	self setUnselected: anItem.
 ]
 
 { #category : #accessing }
@@ -66,8 +66,7 @@ PenList >> build [
 
 { #category : #selecting }
 PenList >> clearSelectedList [
-	selectedIndexList do: [ :i |
-		(self items at: i) deactivatePseudoClass: #checked ].
+	selectedIndexList do: [ :i | self setUnselected: (self items at: i) ].
 	selectedIndexList removeAll.
 ]
 
@@ -160,17 +159,19 @@ PenList >> select: anItem [
 	self selectedIndexList isEmpty
 		ifTrue: [ 
 			self selectedIndexList add: index.
-			anItem activatePseudoClass: #checked. ]
+			self setSelected: anItem. ]
 		ifFalse: [ 
 			(self selectedIndexList includes: index)
 				ifTrue: [ 
 					self allowToDeselect
-						ifTrue: [ self selectedIndexList remove: index. anItem deactivatePseudoClass: #checked ]
-						ifFalse: [ anItem activatePseudoClass: #checked ]]
+						ifTrue: [ 
+							self selectedIndexList remove: index. 
+							self setUnselected: anItem ]
+						ifFalse: [ self setSelected: anItem]]
 				ifFalse: [ 
 					self multiSelection ifFalse: [ self clearSelectedList ].
 					self selectedIndexList add: index.
-					anItem activatePseudoClass: #checked ] ].
+					self setSelected: anItem ] ].
 
 	self selectionChangedEvent 
 	
@@ -195,7 +196,21 @@ PenList >> selection [
 PenList >> selectionChangedEvent [
 	self eventBindings do: [ :eventBinding |
 		(eventBinding symbol = PenEventSymbol selectionChanged)
-			ifTrue: [ eventBinding callback value ]].
+			ifTrue: [ eventBinding executeCallback ]].
+]
+
+{ #category : #private }
+PenList >> setSelected: anItem [
+	anItem activatePseudoClass: #checked.
+	anItem deactivatePseudoClass: #unchecked.
+	anItem refresh
+]
+
+{ #category : #private }
+PenList >> setUnselected: anItem [
+	anItem deactivatePseudoClass: #checked.
+	anItem activatePseudoClass: #unchecked.
+	anItem refresh
 ]
 
 { #category : #api }

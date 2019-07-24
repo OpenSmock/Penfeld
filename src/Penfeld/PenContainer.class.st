@@ -90,3 +90,9 @@ PenContainer >> removeElement: anElement [
 	self elements remove: anElement ifAbsent: [ ^ self].
 	self isBuilt ifTrue: [ self dresser removeElement: anElement ].
 ]
+
+{ #category : #accessing }
+PenContainer >> stylesheet: aStylesheet [
+	super stylesheet: aStylesheet.
+	self elements do: [ :element | element stylesheet: aStylesheet ]
+]

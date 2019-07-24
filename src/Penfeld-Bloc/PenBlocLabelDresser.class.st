@@ -56,7 +56,7 @@ PenBlocLabelDresser >> initEngineElement [
 	self component engineElement: BlElement new.
 	element := self component engineElement.
 	element layout: BlFrameLayout new.
-	element preventMeAndChildrenMouseEvents.
+	"element preventMeAndChildrenMouseEvents."
 	element constraintsDo: [ :c |
 		c horizontal fitContent.
 		c vertical fitContent ].
