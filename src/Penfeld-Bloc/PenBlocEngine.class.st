@@ -14,7 +14,7 @@ PenBlocEngine >> eventStrategy [
 	^ PenBlocEventStrategy new
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 PenBlocEngine >> name [
 	^ 'Bloc'
 ]
