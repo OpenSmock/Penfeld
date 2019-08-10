@@ -14,10 +14,15 @@ PenSpaceBuilder class >> engine [
 ]
 
 { #category : #building }
+PenSpaceBuilder >> borderless: aBoolean [
+	space borderless: aBoolean
+]
+
+{ #category : #building }
 PenSpaceBuilder >> buildWindow: aWindow [
 	aWindow docks isEmpty ifTrue: [ self error: 'nothing to show' ].
 	
-	space := BlSpace new
+	space
 		title: aWindow title;
 		resizable: aWindow isResizable;
 		yourself.
@@ -51,6 +56,7 @@ PenSpaceBuilder >> displayViewDock: aDock on: aWindow [
 { #category : #initialization }
 PenSpaceBuilder >> initialize [
 	memento := Dictionary new.
+	space := BlSpace new
 ]
 
 { #category : #building }

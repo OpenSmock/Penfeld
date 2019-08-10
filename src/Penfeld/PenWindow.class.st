@@ -43,6 +43,11 @@ PenWindow >> addDock: aDock [
 	aDock window: self.
 ]
 
+{ #category : #accessing }
+PenWindow >> borderless: aBoolean [
+	builder borderless: aBoolean
+]
+
 { #category : #opening }
 PenWindow >> close [
 	self engineElement close

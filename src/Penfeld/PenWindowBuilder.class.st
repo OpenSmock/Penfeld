@@ -17,6 +17,11 @@ PenWindowBuilder class >> forEngine: anEngine [
 ]
 
 { #category : #building }
+PenWindowBuilder >> borderless: aBoolean [
+	^ self subclassResponsibility
+]
+
+{ #category : #building }
 PenWindowBuilder >> buildWindow: aWindow [
 	^ self subclassResponsibility 
 ]

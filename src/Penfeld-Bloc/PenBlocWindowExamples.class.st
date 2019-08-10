@@ -10,6 +10,13 @@ PenBlocWindowExamples class >> example [
 ]
 
 { #category : #examples }
+PenBlocWindowExamples class >> exampleBorderlessWindow [
+	self window1
+		borderless: true;
+		open
+]
+
+{ #category : #examples }
 PenBlocWindowExamples class >> window1 [
 	| container label button window |
 	label := PenLabel new 
