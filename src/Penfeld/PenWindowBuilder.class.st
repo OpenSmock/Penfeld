@@ -1,27 +1,27 @@
 Class {
-	#name : #PenWindowHelper,
+	#name : #PenWindowBuilder,
 	#superclass : #Object,
 	#category : #'Penfeld-Abstracts'
 }
 
 { #category : #accessing }
-PenWindowHelper class >> engine [
+PenWindowBuilder class >> engine [
 	^ self subclassResponsibility 
 ]
 
 { #category : #accessing }
-PenWindowHelper class >> forEngine: anEngine [
+PenWindowBuilder class >> forEngine: anEngine [
 	^ self allSubclasses 
 		detect: [ :c | c engine = anEngine ]
 		ifNone: [ nil ].
 ]
 
 { #category : #building }
-PenWindowHelper >> buildWindow: aWindow [
+PenWindowBuilder >> buildWindow: aWindow [
 	^ self subclassResponsibility 
 ]
 
 { #category : #building }
-PenWindowHelper >> updateViewDock: aDock [
+PenWindowBuilder >> updateViewDock: aDock [
 	^ self subclassResponsibility  
 ]

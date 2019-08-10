@@ -7,8 +7,11 @@ Class {
 		'type',
 		'title',
 		'resizable',
-		'helper',
-		'opened'
+		'opened',
+		'builder'
+	],
+	#classVars : [
+		'EngineClass'
 	],
 	#category : #'Penfeld-Components'
 }
@@ -106,6 +109,17 @@ PenWindow >> initialize [
 	screenConfiguration := PenScreenConfiguration new.
 	resizable := true.
 	opened := false.
+	self initializeBuilder
+]
+
+{ #category : #initialization }
+PenWindow >> initializeBuilder [
+	| builderClass |
+	builderClass := PenWindowBuilder forEngine: PenEngine default class.
+	builderClass
+		ifNil: [ PenEngineNotFoundException new
+				signal: 'Cannot find builder for engine' ].
+	builder := builderClass new
 ]
 
 { #category : #testing }
@@ -130,19 +144,8 @@ PenWindow >> morphic [
 
 { #category : #opening }
 PenWindow >> open [
-	| engine helperClass |
-	self flag: #toImprove.
-	engine := PenEngine default.
-	
-	helperClass := PenWindowHelper forEngine: engine class.
-	helperClass 
-		ifNil: [ self inform: 'Can not find a window helper for engine: ', engine printString. ] 
-		ifNotNil: [ 
-			helper := helperClass new.
-			helper buildWindow: self. 
-			opened := true.
-		].
-		
+	builder buildWindow: self.
+	opened := true
 ]
 
 { #category : #opening }
@@ -184,7 +187,7 @@ PenWindow >> title: aString [
 { #category : #building }
 PenWindow >> updateViewDock: aViewDock [
 	self isOpened ifFalse: [ ^ self ].
-	helper updateViewDock: aViewDock
+	builder updateViewDock: aViewDock
 ]
 
 { #category : #wizard }
