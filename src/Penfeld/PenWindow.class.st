@@ -74,6 +74,11 @@ PenWindow >> docks: anObject [
 ]
 
 { #category : #accessing }
+PenWindow >> fullscreen: aBoolean [
+	builder fullscreen: aBoolean
+]
+
+{ #category : #accessing }
 PenWindow >> getView: aKey [
 	^ self docks 
 		detect: [ :d |

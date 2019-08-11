@@ -17,6 +17,13 @@ PenBlocWindowExamples class >> exampleBorderlessWindow [
 ]
 
 { #category : #examples }
+PenBlocWindowExamples class >> exampleFullscreenWindow [
+	self window1
+		fullscreen: true;
+		open
+]
+
+{ #category : #examples }
 PenBlocWindowExamples class >> window1 [
 	| container label button window |
 	label := PenLabel new 

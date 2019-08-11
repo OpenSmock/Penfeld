@@ -1,6 +1,9 @@
 Class {
 	#name : #PenWindowBuilder,
 	#superclass : #Object,
+	#instVars : [
+		'fullscreen'
+	],
 	#category : #'Penfeld-Abstracts'
 }
 
@@ -24,6 +27,16 @@ PenWindowBuilder >> borderless: aBoolean [
 { #category : #building }
 PenWindowBuilder >> buildWindow: aWindow [
 	^ self subclassResponsibility 
+]
+
+{ #category : #building }
+PenWindowBuilder >> fullscreen [
+	^ fullscreen ifNil: [ fullscreen := false ]
+]
+
+{ #category : #building }
+PenWindowBuilder >> fullscreen: aBoolean [
+	fullscreen := aBoolean
 ]
 
 { #category : #building }

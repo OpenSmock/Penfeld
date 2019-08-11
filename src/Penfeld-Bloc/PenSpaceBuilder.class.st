@@ -24,8 +24,7 @@ PenSpaceBuilder >> buildWindow: aWindow [
 	
 	space
 		title: aWindow title;
-		resizable: aWindow isResizable;
-		yourself.
+		resizable: aWindow isResizable.
 	
 	aWindow docks do: [ :dock |
 		dock isViewDock 
@@ -34,6 +33,9 @@ PenSpaceBuilder >> buildWindow: aWindow [
 		
 	space extent: aWindow getWindowSize.
 	space show.
+	
+	self fullscreen ifTrue:[space position: 0@0.
+	space extent: DisplayScreen actualScreenSize]
 ]
 
 { #category : #building }
