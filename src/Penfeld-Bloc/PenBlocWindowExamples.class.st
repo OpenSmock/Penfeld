@@ -17,6 +17,15 @@ PenBlocWindowExamples class >> exampleBorderlessWindow [
 ]
 
 { #category : #examples }
+PenBlocWindowExamples class >> exampleFullscreenBorderlessWindow [
+	(PenWindow
+		withDisplayComponent: PenBlocWidgetsSample new displayComponent)
+		borderless: true;
+		fullscreen: true;
+		open
+]
+
+{ #category : #examples }
 PenBlocWindowExamples class >> exampleFullscreenWindow [
 	self window1
 		fullscreen: true;
