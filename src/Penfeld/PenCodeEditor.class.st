@@ -28,3 +28,9 @@ PenCodeEditor >> method: aCompiledMethod [
 	displayedMethod := aCompiledMethod.
 	self setText: displayedMethod sourceCode
 ]
+
+{ #category : #API }
+PenCodeEditor >> setSelectionInterval: anInterval [
+	self editor selectNone.
+	self editor select: anInterval first - 1 to: anInterval last
+]

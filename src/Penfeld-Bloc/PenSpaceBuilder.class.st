@@ -1,6 +1,6 @@
 Class {
-	#name : #PenSpaceHelper,
-	#superclass : #PenWindowHelper,
+	#name : #PenSpaceBuilder,
+	#superclass : #PenWindowBuilder,
 	#instVars : [
 		'space',
 		'memento'
@@ -9,18 +9,22 @@ Class {
 }
 
 { #category : #accessing }
-PenSpaceHelper class >> engine [
+PenSpaceBuilder class >> engine [
 	^ PenBlocEngine
 ]
 
 { #category : #building }
-PenSpaceHelper >> buildWindow: aWindow [
+PenSpaceBuilder >> borderless: aBoolean [
+	space borderless: aBoolean
+]
+
+{ #category : #building }
+PenSpaceBuilder >> buildWindow: aWindow [
 	aWindow docks isEmpty ifTrue: [ self error: 'nothing to show' ].
 	
-	space := BlSpace new
+	space
 		title: aWindow title;
-		resizable: aWindow isResizable;
-		yourself.
+		resizable: aWindow isResizable.
 	
 	aWindow docks do: [ :dock |
 		dock isViewDock 
@@ -29,15 +33,18 @@ PenSpaceHelper >> buildWindow: aWindow [
 		
 	space extent: aWindow getWindowSize.
 	space show.
+	
+	self fullscreen ifTrue:[space position: 0@0.
+	space extent: DisplayScreen actualScreenSize]
 ]
 
 { #category : #building }
-PenSpaceHelper >> displayExternalDock: aDock on: aWindow [
+PenSpaceBuilder >> displayExternalDock: aDock on: aWindow [
 	self halt: 'to be defined'
 ]
 
 { #category : #building }
-PenSpaceHelper >> displayViewDock: aDock on: aWindow [
+PenSpaceBuilder >> displayViewDock: aDock on: aWindow [
 	| element |
 	element := aDock view displayComponent.
 	element isBuilt ifFalse: [ element build ].
@@ -49,12 +56,13 @@ PenSpaceHelper >> displayViewDock: aDock on: aWindow [
 ]
 
 { #category : #initialization }
-PenSpaceHelper >> initialize [
+PenSpaceBuilder >> initialize [
 	memento := Dictionary new.
+	space := BlSpace new
 ]
 
 { #category : #building }
-PenSpaceHelper >> updateViewDock: aDock [
+PenSpaceBuilder >> updateViewDock: aDock [
 	| element oldElement |
 	element := aDock view displayComponent.
 	element isBuilt ifFalse: [ element build ].
