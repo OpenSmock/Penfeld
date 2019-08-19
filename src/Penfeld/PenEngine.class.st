@@ -27,5 +27,5 @@ PenEngine >> dressersMap [
 
 { #category : #accessing }
 PenEngine >> name [
-	^ self subclassResponsibility 
+	^ self subclassResponsibility
 ]

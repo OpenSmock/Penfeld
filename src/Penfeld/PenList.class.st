@@ -148,6 +148,12 @@ PenList >> refresh [
 		(sortedList at: i) activatePseudoClass: #checked ]
 ]
 
+{ #category : #removing }
+PenList >> removeAllItems [
+	self clearSelectedList.
+	items removeAll
+]
+
 { #category : #selecting }
 PenList >> select: anItem [
 	| index |
