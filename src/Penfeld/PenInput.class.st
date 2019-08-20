@@ -14,6 +14,22 @@ PenInput class >> styleName [
 	^ #input
 ]
 
+{ #category : #initialization }
+PenInput >> defaultText [ 
+	^ ''
+]
+
+{ #category : #initialization }
+PenInput >> initialize [ 
+	super initialize.
+	text := self defaultText.
+]
+
+{ #category : #accessing }
+PenInput >> text [ 
+	^ text
+]
+
 { #category : #accessing }
 PenInput >> text: aString [
 	aString = text ifTrue: [ ^ self ].
