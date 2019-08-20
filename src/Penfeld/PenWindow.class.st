@@ -7,6 +7,8 @@ Class {
 		'type',
 		'title',
 		'resizable',
+		'borderless',
+		'fullscreen',
 		'opened',
 		'builder'
 	],
@@ -44,8 +46,13 @@ PenWindow >> addDock: aDock [
 ]
 
 { #category : #accessing }
+PenWindow >> borderless [
+	^ borderless
+]
+
+{ #category : #accessing }
 PenWindow >> borderless: aBoolean [
-	builder borderless: aBoolean
+	borderless := aBoolean
 ]
 
 { #category : #opening }
@@ -74,8 +81,18 @@ PenWindow >> docks: anObject [
 ]
 
 { #category : #accessing }
+PenWindow >> fullscreen [
+	^ fullscreen
+]
+
+{ #category : #accessing }
 PenWindow >> fullscreen: aBoolean [
-	builder fullscreen: aBoolean
+	fullscreen := aBoolean
+]
+
+{ #category : #accessing }
+PenWindow >> getDock: aKey [
+	^ self docks detect: [ :d | d key = aKey ] ifNone: [ nil ]
 ]
 
 { #category : #accessing }
@@ -93,22 +110,27 @@ PenWindow >> getView: aKey [
 PenWindow >> getWindowSize [
 	| width height element |
 	element := self docks first view displayComponent.
-	self flag: 'calulate size of all docks'.
+	self flag: 'TODO: calulate size of all docks'.
 	
 	"Width and height"
 	width := self width 
 		ifNil: [ element width 
 			ifNotNil: [ element width ]
-			ifNil: [ 800 asLength ] ]
+			ifNil: [ self defaultWidth ] ]
 		ifNotNil: [ self width ].
 	
 	height := self height 
 		ifNil: [ element height 
 			ifNotNil: [ element height ]
-			ifNil: [ 600 asLength ] ]
+			ifNil: [ self defaultHeight ] ]
 		ifNotNil: [ self height ].
 	
 	^ width pref @ height pref
+]
+
+{ #category : #accessing }
+PenWindow >> id [
+	^ builder windowId
 ]
 
 { #category : #initialization }
@@ -118,6 +140,8 @@ PenWindow >> initialize [
 	docks := OrderedCollection new.
 	screenConfiguration := PenScreenConfiguration new.
 	resizable := true.
+	borderless := false.
+	fullscreen := false.
 	opened := false.
 	self initializeBuilder
 ]
