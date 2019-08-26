@@ -64,11 +64,21 @@ PenBlocButtonDresser >> initEngineElement [
 	self component icon ifNotNil: [ 
 		| iconContainer iconElement |
 		iconContainer := BlElement new 
-			layout: BlFrameLayout new;
-			relocate: 5@0;
-			constraintsDo: [ :c | 
-				c horizontal exact: self component icon extent x.
-				c vertical matchParent ].
+			layout: BlFrameLayout new.
+		self component text 
+			ifNil: [ 
+				"Icon centered"
+				iconContainer constraintsDo: [ :c | 
+					c horizontal matchParent.
+					c vertical matchParent ].
+			]
+			ifNotNil: [ 
+				"Icon on left"
+				iconContainer constraintsDo: [ :c | 
+					c padding: (BlInsets left: 5).
+					c horizontal exact: self component icon extent x + 5.
+					c vertical matchParent ].
+			].
 		iconElement := BlElement new
 			size: self component icon extent;
 			background: self component icon asBlBackground;

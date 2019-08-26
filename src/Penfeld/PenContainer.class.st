@@ -20,13 +20,17 @@ PenContainer >> addAllElements: aCollection [
 
 { #category : #accessing }
 PenContainer >> addElement: anElement [
-	self elements add: anElement.
+	self addElement: anElement afterIndex: self elements size.
+]
+
+{ #category : #accessing }
+PenContainer >> addElement: anElement afterIndex: anIndex [
+	self elements add: anElement afterIndex: anIndex.
 	anElement parent: self.
 	
 	self isBuilt ifFalse: [ ^ self ].
 	anElement isBuilt ifFalse: [ anElement build ].
-	self dresser addElement: anElement.
-	
+	self dresser addElement: anElement at: anIndex.
 ]
 
 { #category : #accessing }

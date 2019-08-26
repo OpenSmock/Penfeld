@@ -22,25 +22,34 @@ PenSpaceBuilder >> borderless: aBoolean [
 PenSpaceBuilder >> buildWindow: aWindow [
 	aWindow docks isEmpty ifTrue: [ self error: 'nothing to show' ].
 	
-	space
+	space := BlSpace new
 		title: aWindow title;
-		resizable: aWindow isResizable.
+		position: aWindow position;
+		resizable: aWindow isResizable;
+		host: (aWindow isMorphic 
+			ifTrue: [ self worldHost ]
+			ifFalse: [ BlOSWindowHost new ]);
+		borderless: aWindow borderless;
+		yourself.
 	
 	aWindow docks do: [ :dock |
 		dock isViewDock 
 			ifTrue: [ self displayViewDock: dock on: space ]
 			ifFalse: [ self displayExternalDock: dock on: space ] ].
-		
-	space extent: aWindow getWindowSize.
-	space show.
 	
-	self fullscreen ifTrue:[space position: 0@0.
-	space extent: DisplayScreen actualScreenSize]
+	aWindow fullscreen 
+		ifTrue: [
+			space position: 0@0.
+			space extent: DisplayScreen actualScreenSize ]
+		ifFalse: [ 
+			space extent: aWindow getWindowSize ].
+		
+	space show.
 ]
 
 { #category : #building }
 PenSpaceBuilder >> displayExternalDock: aDock on: aWindow [
-	self halt: 'to be defined'
+	"do nothing yet"
 ]
 
 { #category : #building }
@@ -58,7 +67,6 @@ PenSpaceBuilder >> displayViewDock: aDock on: aWindow [
 { #category : #initialization }
 PenSpaceBuilder >> initialize [
 	memento := Dictionary new.
-	space := BlSpace new
 ]
 
 { #category : #building }
@@ -74,4 +82,17 @@ PenSpaceBuilder >> updateViewDock: aDock [
 	"Add new element"
 	space root addChild: (element engineElement relocate: aDock position).
 	memento at: aDock key put: element engineElement.
+]
+
+{ #category : #accessing }
+PenSpaceBuilder >> windowId [
+	^ space hostSpace windowId
+]
+
+{ #category : #accessing }
+PenSpaceBuilder >> worldHost [
+	self flag: 'not the best way to find the world instance ...'.
+	^ BlMorphicHost new
+		containerMorph: WorldMorph allInstances first;
+		yourself
 ]
