@@ -24,6 +24,7 @@ PenSpaceBuilder >> buildWindow: aWindow [
 	
 	space := BlSpace new
 		title: aWindow title;
+		position: aWindow position;
 		resizable: aWindow isResizable;
 		host: (aWindow isMorphic 
 			ifTrue: [ self worldHost ]
