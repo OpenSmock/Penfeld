@@ -1,3 +1,6 @@
+"
+A display component is a concrete visual component of the user interface.
+"
 Class {
 	#name : #PenDisplayComponent,
 	#superclass : #PenComponent,
