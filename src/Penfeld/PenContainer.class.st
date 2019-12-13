@@ -90,6 +90,14 @@ PenContainer >> layout: anObject [
 ]
 
 { #category : #accessing }
+PenContainer >> removeAllElements [
+	self elements copy do: [ :element |
+		self elements remove: element ifAbsent: [ ^ self].
+		self isBuilt ifTrue: [ self dresser removeElement: element ].
+	].
+]
+
+{ #category : #accessing }
 PenContainer >> removeElement: anElement [
 	self elements remove: anElement ifAbsent: [ ^ self].
 	self isBuilt ifTrue: [ self dresser removeElement: anElement ].

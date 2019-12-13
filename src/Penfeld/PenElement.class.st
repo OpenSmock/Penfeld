@@ -14,5 +14,6 @@ PenElement >> icon [
 
 { #category : #accessing }
 PenElement >> icon: anObject [
-	icon := anObject
+	icon := anObject.
+	self refresh
 ]

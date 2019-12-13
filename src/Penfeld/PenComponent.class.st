@@ -1,8 +1,8 @@
 Class {
 	#name : #PenComponent,
 	#superclass : #Object,
-	#traits : 'TPenDebug + TPenIdentifiable',
-	#classTraits : 'TPenDebug classTrait + TPenIdentifiable classTrait',
+	#traits : 'TPenIdentifiable',
+	#classTraits : 'TPenIdentifiable classTrait',
 	#instVars : [
 		'key',
 		'description',
@@ -56,6 +56,11 @@ PenComponent >> enabled: aBoolean [
 { #category : #'private-accessing' }
 PenComponent >> eventBindings [
 	^ eventBindings
+]
+
+{ #category : #testing }
+PenComponent >> hasEvents [
+	^ eventBindings notEmpty
 ]
 
 { #category : #accessing }
@@ -179,6 +184,11 @@ PenComponent >> printOn: aStream [
 			nextPutAll: ': ';
 			nextPutAll: 	self key printString
 	 ]
+]
+
+{ #category : #'api - events' }
+PenComponent >> removeAllEvents [
+	eventBindings := OrderedCollection new.
 ]
 
 { #category : #accessing }

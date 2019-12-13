@@ -38,4 +38,6 @@ PenBlocShapeExperimentalDresser >> initEngineElement [
 		
 	"Reinit BlElement values"
 	self component engineElement border: BlBorder empty.
+	
+	self component hasEvents ifFalse: [ self component engineElement preventMeAndChildrenMouseEvents ].
 ]

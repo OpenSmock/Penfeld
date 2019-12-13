@@ -1,8 +1,6 @@
 Class {
 	#name : #PenEventBinding,
 	#superclass : #Object,
-	#traits : 'TPenDebug',
-	#classTraits : 'TPenDebug classTrait',
 	#instVars : [
 		'source',
 		'callback'

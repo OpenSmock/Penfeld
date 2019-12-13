@@ -5,6 +5,7 @@ Class {
 	#classTraits : 'TPenBlocSizeStyle classTrait + TPenBlocBackgroundStyle classTrait + TPenBlocFontStyle classTrait + TPenBlocBorderStyle classTrait + TPenBlocMarginStyle classTrait',
 	#instVars : [
 		'ropedText',
+		'iconElement',
 		'pushed',
 		'animation'
 	],
@@ -36,17 +37,28 @@ PenBlocButtonDresser >> doAfterApplyStyle [
 
 { #category : #rendering }
 PenBlocButtonDresser >> doBeforeApplyStyle [ 
+	| iconContainer |
+	
+	"Text"
 	ropedText := self component text
 		ifNotNil: [ self component text asRopedText ] 
 		ifNil: [ '' asRopedText ].
-	
-	animation ifNotNil: [ animation stop. animation := nil ].
+		
+	"Icon"
+	self component icon ifNotNil: [ 
+		iconElement 
+			size: self component icon extent;
+			background: self component icon asBlBackground ].
+		
+	animation ifNotNil: [ 
+		animation isRunning ifTrue: [ animation stop ]. 
+		animation := nil ].
 	self component engineElement removeChildNamed: #loadingIconContainer
 ]
 
 { #category : #dressing }
 PenBlocButtonDresser >> initEngineElement [
-	| textContainer |
+	| textContainer iconContainer |
 	
 	self component engineElement: BlElement new.
 	
@@ -59,46 +71,62 @@ PenBlocButtonDresser >> initEngineElement [
 		].
 	textContainer addChild: BlTextElement new as: #text.
 	self component engineElement addChild: textContainer as: #textContainer.
-	
-	"Icon is by default centered on left side of the button"
-	self component icon ifNotNil: [ 
-		| iconContainer iconElement |
-		iconContainer := BlElement new 
-			layout: BlFrameLayout new.
-		self component text 
-			ifNil: [ 
-				"Icon centered"
-				iconContainer constraintsDo: [ :c | 
-					c horizontal matchParent.
-					c vertical matchParent ].
-			]
-			ifNotNil: [ 
-				"Icon on left"
-				iconContainer constraintsDo: [ :c | 
-					c padding: (BlInsets left: 5).
-					c horizontal exact: self component icon extent x + 5.
-					c vertical matchParent ].
-			].
-		iconElement := BlElement new
-			size: self component icon extent;
-			background: self component icon asBlBackground;
-			constraintsDo: [ :c | 
-				c frame horizontal alignCenter.
-				c frame vertical alignCenter ].
-		iconContainer addChild: iconElement as: #icon.
-		self component engineElement addChild: iconContainer as: #iconContainer
-	].
+		
+	"Icon"
+	iconContainer := self setIcon.
+	iconContainer ifNil: [ iconContainer := BlElement new ].
+	self component engineElement addChild: iconContainer as: #iconContainer.
 	
 	"Initialisation of events"
 	pushed := false.
 	self component engineElement when: BlMouseDownEvent do: [ :e | self whenMouseDownEvent ].
 	self component engineElement when: BlMouseUpEvent do: [ :e | self whenMouseUpEvent ].
 	self component engineElement when: BlMouseLeaveEvent do: [ :e | self whenMouseLeaveEvent ].
+	self component engineElement preventChildrenMouseEvents.
 ]
 
 { #category : #accessing }
 PenBlocButtonDresser >> ropedText [
 	^ ropedText
+]
+
+{ #category : #dressing }
+PenBlocButtonDresser >> setIcon [
+	
+	| iconContainer |
+
+	self component icon ifNil: [ ^ nil ].
+		
+	"Icon is by default centered on left side of the button"
+	iconContainer := BlElement new layout: BlFrameLayout new.
+	
+	self component text 
+		ifNil: [ 
+			"Icon centered"
+			iconContainer constraintsDo: [ :c | 
+				c horizontal matchParent.
+				c vertical matchParent ].
+		]
+		ifNotNil: [ 
+			"Icon on left"
+			iconContainer constraintsDo: [ :c | 
+				c padding: (BlInsets left: 5).
+				c horizontal exact: self component icon extent x + 5.
+				c vertical matchParent ].
+		].
+	
+	iconElement ifNil: [ 
+		iconElement := BlElement new
+			size: self component icon extent;
+			background: self component icon asBlBackground;
+			constraintsDo: [ :c | 
+				c frame horizontal alignCenter.
+				c frame vertical alignCenter ]
+	].
+
+	iconContainer addChild: iconElement as: #icon.
+	^ iconContainer
+	
 ]
 
 { #category : #styling }

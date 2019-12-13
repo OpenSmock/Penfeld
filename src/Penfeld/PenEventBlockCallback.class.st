@@ -24,5 +24,5 @@ PenEventBlockCallback >> executeCallback [
 
 { #category : #private }
 PenEventBlockCallback >> executeCallback: anEvent [
-	self block value: anEvent
+	self block cull: anEvent
 ]

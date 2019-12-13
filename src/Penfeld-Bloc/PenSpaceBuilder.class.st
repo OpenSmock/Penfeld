@@ -28,8 +28,9 @@ PenSpaceBuilder >> buildWindow: aWindow [
 		resizable: aWindow isResizable;
 		host: (aWindow isMorphic 
 			ifTrue: [ self worldHost ]
-			ifFalse: [ BlOSWindowHost new ]);
+			ifFalse: [ BlOSWindowHost default ]);
 		borderless: aWindow borderless;
+		fullscreen: aWindow fullscreen;
 		yourself.
 	
 	aWindow docks do: [ :dock |
@@ -45,6 +46,7 @@ PenSpaceBuilder >> buildWindow: aWindow [
 			space extent: aWindow getWindowSize ].
 		
 	space show.
+	^ space
 ]
 
 { #category : #building }
@@ -80,7 +82,7 @@ PenSpaceBuilder >> updateViewDock: aDock [
 	oldElement ifNotNil: [ space root removeChild: oldElement ].
 	
 	"Add new element"
-	space root addChild: (element engineElement relocate: aDock position).
+	space root addChild: (element engineElement relocate: aDock position + aDock view position).
 	memento at: aDock key put: element engineElement.
 ]
 

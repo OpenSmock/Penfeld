@@ -46,6 +46,12 @@ PenDisplayComponent >> addStyleClass: aSymbol [
 	self refresh.
 ]
 
+{ #category : #accessing }
+PenDisplayComponent >> addStyleClasses: aList [
+	aList do: [ :aSymbol | self addStyleClass: aSymbol ].
+	self refresh.
+]
+
 { #category : #building }
 PenDisplayComponent >> build [ 
 	| eventStrategy |
@@ -63,7 +69,7 @@ PenDisplayComponent >> build [
 	
 	eventStrategy := self dresser eventStrategy.
 	eventBindings do: [ :eventBinding | (eventStrategy tryToBind: eventBinding)
-		ifFalse: [ self warn: 'Can not bind ', eventBinding symbol ] ].
+		ifFalse: [ "self traceCr: 'Can not bind ', eventBinding symbol" ] ].
 
 	built := true.
 ]
@@ -167,6 +173,11 @@ PenDisplayComponent >> engineElement: anObject [
 	engineElement := anObject
 ]
 
+{ #category : #accessing }
+PenDisplayComponent >> hide [ 
+	self visible: false
+]
+
 { #category : #initialization }
 PenDisplayComponent >> initialize [
 	super initialize.
@@ -239,6 +250,11 @@ PenDisplayComponent >> refresh [
 PenDisplayComponent >> removeStyleClass: aSymbol [
 	self styleClasses remove: aSymbol ifAbsent: [^self].
 	self refresh
+]
+
+{ #category : #accessing }
+PenDisplayComponent >> show [ 
+	self visible: true
 ]
 
 { #category : #accessing }

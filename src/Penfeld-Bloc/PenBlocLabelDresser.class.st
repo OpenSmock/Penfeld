@@ -56,7 +56,7 @@ PenBlocLabelDresser >> initEngineElement [
 	self component engineElement: BlElement new.
 	element := self component engineElement.
 	element layout: BlFrameLayout new.
-	"element preventMeAndChildrenMouseEvents."
+	self component hasEvents ifFalse: [ element preventMeAndChildrenMouseEvents ].
 	element constraintsDo: [ :c |
 		c horizontal fitContent.
 		c vertical fitContent ].
@@ -75,10 +75,14 @@ PenBlocLabelDresser >> textAlign: aValue [
 		ifFound: [ :anElement | anElement ]
 		ifNone: [ ^ self ].
 	textElement constraintsDo: [:c | 
+		c frame vertical alignCenter.
 		aValue = #center 
-		ifTrue: [ 
-			c frame horizontal alignCenter.
-			c frame vertical alignCenter
-		]
-		ifFalse: [ self notYetImplemented  ] ].
+			ifTrue: [ c frame horizontal alignCenter ]
+			ifFalse: [ 
+				aValue = #right 
+					ifTrue: [ c frame horizontal alignRight ] 
+					ifFalse: [ 
+						aValue = #left 
+							ifTrue: [ c frame horizontal alignLeft ]
+							ifFalse: [  self notYetImplemented ] ] ] ].
 ]

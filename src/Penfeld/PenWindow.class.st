@@ -10,7 +10,8 @@ Class {
 		'borderless',
 		'fullscreen',
 		'opened',
-		'builder'
+		'builder',
+		'handle'
 	],
 	#classVars : [
 		'EngineClass'
@@ -57,7 +58,7 @@ PenWindow >> borderless: aBoolean [
 
 { #category : #opening }
 PenWindow >> close [
-	self engineElement close
+	self handle close
 ]
 
 { #category : #defaults }
@@ -129,6 +130,16 @@ PenWindow >> getWindowSize [
 ]
 
 { #category : #accessing }
+PenWindow >> handle [
+	^ handle
+]
+
+{ #category : #accessing }
+PenWindow >> handle: anObject [
+	handle := anObject
+]
+
+{ #category : #accessing }
 PenWindow >> id [
 	^ builder windowId
 ]
@@ -178,7 +189,7 @@ PenWindow >> morphic [
 
 { #category : #opening }
 PenWindow >> open [
-	builder buildWindow: self.
+	handle := builder buildWindow: self.
 	opened := true
 ]
 

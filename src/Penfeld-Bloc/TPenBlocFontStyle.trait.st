@@ -10,7 +10,7 @@ TPenBlocFontStyle >> color: aValue [
 
 { #category : #styling }
 TPenBlocFontStyle >> fontFamily: aValue [
-	self ropedText fontName: aValue first.
+	self ropedText fontName: aValue value.
 ]
 
 { #category : #styling }

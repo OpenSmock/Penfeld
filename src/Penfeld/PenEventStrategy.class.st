@@ -1,8 +1,6 @@
 Class {
 	#name : #PenEventStrategy,
 	#superclass : #Object,
-	#traits : 'TPenDebug',
-	#classTraits : 'TPenDebug classTrait',
 	#category : #'Penfeld-Events'
 }
 
@@ -26,7 +24,7 @@ PenEventStrategy >> tryToBind: anEventBinding [
 	| symbol |
 	
 	anEventBinding isCompositeEvent ifTrue: [ 
-		self warn: 'Can not bind composite binding.'.
+		"self traceCr: 'Can not bind composite binding.'."
 		^ false ].
 	
 	symbol := anEventBinding symbol.
@@ -35,5 +33,5 @@ PenEventStrategy >> tryToBind: anEventBinding [
 		ifFalse: 
 	[ symbol = PenEventSymbol action
 		ifTrue: [ ^ self bindAction: anEventBinding ]
-		ifFalse: [ self warn: self printString, ' can not bind ', symbol. ^ false]]
+		ifFalse: [ "self traceCr: self printString, ' can not bind ', symbol." ^ false]]
 ]
