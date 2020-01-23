@@ -1,8 +1,8 @@
 Class {
 	#name : #PenBlocProgressBarDresser,
 	#superclass : #PenBlocDresser,
-	#traits : 'TPenBlocBackgroundStyle',
-	#classTraits : 'TPenBlocBackgroundStyle classTrait',
+	#traits : 'TPenBlocBackgroundStyle + TPenBlocMarginStyle',
+	#classTraits : 'TPenBlocBackgroundStyle classTrait + TPenBlocMarginStyle classTrait',
 	#instVars : [
 		'extent'
 	],

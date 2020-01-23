@@ -1,6 +1,6 @@
 Class {
-	#name : #PenSpaceHelper,
-	#superclass : #PenWindowHelper,
+	#name : #PenSpaceBuilder,
+	#superclass : #PenWindowBuilder,
 	#instVars : [
 		'space',
 		'memento'
@@ -9,35 +9,53 @@ Class {
 }
 
 { #category : #accessing }
-PenSpaceHelper class >> engine [
+PenSpaceBuilder class >> engine [
 	^ PenBlocEngine
 ]
 
 { #category : #building }
-PenSpaceHelper >> buildWindow: aWindow [
+PenSpaceBuilder >> borderless: aBoolean [
+	space borderless: aBoolean
+]
+
+{ #category : #building }
+PenSpaceBuilder >> buildWindow: aWindow [
 	aWindow docks isEmpty ifTrue: [ self error: 'nothing to show' ].
 	
 	space := BlSpace new
 		title: aWindow title;
+		position: aWindow position;
 		resizable: aWindow isResizable;
+		host: (aWindow isMorphic 
+			ifTrue: [ self worldHost ]
+			ifFalse: [ BlOSWindowHost default ]);
+		borderless: aWindow borderless;
+		fullscreen: aWindow fullscreen;
 		yourself.
 	
 	aWindow docks do: [ :dock |
 		dock isViewDock 
 			ifTrue: [ self displayViewDock: dock on: space ]
 			ifFalse: [ self displayExternalDock: dock on: space ] ].
+	
+	aWindow fullscreen 
+		ifTrue: [
+			space position: 0@0.
+			space extent: DisplayScreen actualScreenSize ]
+		ifFalse: [ 
+			space extent: aWindow getWindowSize ].
 		
-	space extent: aWindow getWindowSize.
 	space show.
+	^ space
 ]
 
 { #category : #building }
-PenSpaceHelper >> displayExternalDock: aDock on: aWindow [
+PenSpaceBuilder >> displayExternalDock: aDock on: aWindow [
 	"do nothing yet"
 ]
 
 { #category : #building }
-PenSpaceHelper >> displayViewDock: aDock on: aWindow [
+PenSpaceBuilder >> displayViewDock: aDock on: aWindow [
 	| element |
 	element := aDock view displayComponent.
 	element isBuilt ifFalse: [ element build ].
@@ -49,12 +67,12 @@ PenSpaceHelper >> displayViewDock: aDock on: aWindow [
 ]
 
 { #category : #initialization }
-PenSpaceHelper >> initialize [
+PenSpaceBuilder >> initialize [
 	memento := Dictionary new.
 ]
 
 { #category : #building }
-PenSpaceHelper >> updateViewDock: aDock [
+PenSpaceBuilder >> updateViewDock: aDock [
 	| element oldElement |
 	element := aDock view displayComponent.
 	element isBuilt ifFalse: [ element build ].
@@ -64,6 +82,19 @@ PenSpaceHelper >> updateViewDock: aDock [
 	oldElement ifNotNil: [ space root removeChild: oldElement ].
 	
 	"Add new element"
-	space root addChild: (element engineElement relocate: aDock position).
+	space root addChild: (element engineElement relocate: aDock position + aDock view position).
 	memento at: aDock key put: element engineElement.
+]
+
+{ #category : #accessing }
+PenSpaceBuilder >> windowId [
+	^ space hostSpace windowId
+]
+
+{ #category : #accessing }
+PenSpaceBuilder >> worldHost [
+	self flag: 'not the best way to find the world instance ...'.
+	^ BlMorphicHost new
+		containerMorph: WorldMorph allInstances first;
+		yourself
 ]

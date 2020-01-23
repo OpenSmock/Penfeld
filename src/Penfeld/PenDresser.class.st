@@ -135,6 +135,14 @@ PenDresser >> margin: aValue [
 ]
 
 { #category : #styling }
+PenDresser >> maxHeight: aValue [
+]
+
+{ #category : #styling }
+PenDresser >> maxWidth: aValue [
+]
+
+{ #category : #styling }
 PenDresser >> padding: aValue [
 ]
 

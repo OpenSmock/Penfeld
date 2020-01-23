@@ -1,6 +1,8 @@
 Class {
 	#name : #PenBlocSliderDresser,
 	#superclass : #PenBlocDresser,
+	#traits : 'TPenBlocMarginStyle',
+	#classTraits : 'TPenBlocMarginStyle classTrait',
 	#instVars : [
 		'progression',
 		'cursorSize',
@@ -79,7 +81,16 @@ PenBlocSliderDresser >> doAfterApplyStyle [
 
 { #category : #dressing }
 PenBlocSliderDresser >> doBeforeApplyStyle [
-	| cursor x |
+	| cursor x bx by |
+	
+	bx := barSize x.
+	by := barSize y.
+	
+	self component width ifNotNil: [ bx := self component width pref ].
+	self component height ifNotNil: [ by := self component height pref ].
+	
+	barSize := bx @ by.
+	
 	x := (self component fraction * barSize x) asInteger.
 	cursor := self component engineElement childNamed: #cursor.
 	cursor relocate: x @ 0

@@ -13,6 +13,11 @@ PenBlocContainerDresser >> addElement: anElement [
 ]
 
 { #category : #dressing }
+PenBlocContainerDresser >> addElement: anElement at: anIndex [
+	self component engineElement addChild: anElement engineElement at: anIndex + 1
+]
+
+{ #category : #dressing }
 PenBlocContainerDresser >> doAfterApplyStyle [
 	| var |
 

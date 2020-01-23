@@ -20,13 +20,17 @@ PenContainer >> addAllElements: aCollection [
 
 { #category : #accessing }
 PenContainer >> addElement: anElement [
-	self elements add: anElement.
+	self addElement: anElement afterIndex: self elements size.
+]
+
+{ #category : #accessing }
+PenContainer >> addElement: anElement afterIndex: anIndex [
+	self elements add: anElement afterIndex: anIndex.
 	anElement parent: self.
 	
 	self isBuilt ifFalse: [ ^ self ].
 	anElement isBuilt ifFalse: [ anElement build ].
-	self dresser addElement: anElement.
-	
+	self dresser addElement: anElement at: anIndex.
 ]
 
 { #category : #accessing }
@@ -83,6 +87,14 @@ PenContainer >> layout [
 { #category : #accessing }
 PenContainer >> layout: anObject [
 	layout := anObject
+]
+
+{ #category : #accessing }
+PenContainer >> removeAllElements [
+	self elements copy do: [ :element |
+		self elements remove: element ifAbsent: [ ^ self].
+		self isBuilt ifTrue: [ self dresser removeElement: element ].
+	].
 ]
 
 { #category : #accessing }

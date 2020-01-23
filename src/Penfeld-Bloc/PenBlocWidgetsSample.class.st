@@ -14,14 +14,20 @@ PenBlocWidgetsSample class >> open [
 PenBlocWidgetsSample >> allSubclasses: aClass [
 	| list |
 	list := OrderedCollection new.
-	aClass withAllSubclassesDo: [ :class | | row |
-		row := PenTableItem new.
-		row key: class name asSymbol.
-		row dresser: PenBlocTableItemDresser new.
-		row atSection: #name put: (PenLabel text: class name).
-		row atSection: #numberOfSubclasses put: (PenLabel text: class subclasses size printString).
-		row atSection: #numberOfVariables put: (PenLabel text: class instanceVariables size printString).
-		list add: row].
+	aClass
+		withAllSubclassesDo: [ :class | 
+			| row |
+			row := PenTableItem new.
+			row key: class name asSymbol.
+			row dresser: PenBlocTableItemDresser new.
+			row atSection: #name put: (PenLabel text: class name).
+			row
+				atSection: #numberOfSubclasses
+				put: (PenLabel text: class subclasses size printString).
+			row
+				atSection: #numberOfVariables
+				put: (PenLabel text: class instVarNames size printString).
+			list add: row ].
 	^ list
 ]
 

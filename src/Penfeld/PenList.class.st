@@ -75,13 +75,15 @@ PenList >> defaultSortingBlock [
 	^ [:a :b | true]
 ]
 
-{ #category : #api }
+{ #category : #API }
 PenList >> hideHorizontalScrollBar [
+	self deprecated: ''.
 	showHorizontalScrollBar := false
 ]
 
-{ #category : #api }
+{ #category : #API }
 PenList >> hideVerticalScrollBar [
+	self deprecated: ''.
 	showVerticalScrollBar := false
 ]
 
@@ -100,11 +102,13 @@ PenList >> initialize [
 
 { #category : #testing }
 PenList >> isHorizontalScrollBarVisible [
+	self deprecated: ''.
 	^ showHorizontalScrollBar 
 ]
 
 { #category : #testing }
 PenList >> isVerticalScrollBarVisible [
+	self deprecated: ''.
 	^ showVerticalScrollBar
 ]
 
@@ -146,6 +150,12 @@ PenList >> refresh [
 	sortedList := self items.
 	self selectedIndexList do: [ :i |
 		(sortedList at: i) activatePseudoClass: #checked ]
+]
+
+{ #category : #removing }
+PenList >> removeAllItems [
+	self clearSelectedList.
+	items removeAll
 ]
 
 { #category : #selecting }
@@ -213,13 +223,15 @@ PenList >> setUnselected: anItem [
 	anItem refresh
 ]
 
-{ #category : #api }
+{ #category : #API }
 PenList >> showHorizontalScrollBar [
+	self deprecated: ''.
 	showHorizontalScrollBar := true
 ]
 
-{ #category : #api }
+{ #category : #API }
 PenList >> showVerticalScrollBar [
+	self deprecated: ''.
 	showVerticalScrollBar := true
 ]
 

@@ -7,8 +7,14 @@ Class {
 		'type',
 		'title',
 		'resizable',
-		'helper',
-		'opened'
+		'borderless',
+		'fullscreen',
+		'opened',
+		'builder',
+		'handle'
+	],
+	#classVars : [
+		'EngineClass'
 	],
 	#category : #'Penfeld-Components'
 }
@@ -40,9 +46,19 @@ PenWindow >> addDock: aDock [
 	aDock window: self.
 ]
 
+{ #category : #accessing }
+PenWindow >> borderless [
+	^ borderless
+]
+
+{ #category : #accessing }
+PenWindow >> borderless: aBoolean [
+	borderless := aBoolean
+]
+
 { #category : #opening }
 PenWindow >> close [
-	self engineElement close
+	self handle close
 ]
 
 { #category : #defaults }
@@ -66,6 +82,21 @@ PenWindow >> docks: anObject [
 ]
 
 { #category : #accessing }
+PenWindow >> fullscreen [
+	^ fullscreen
+]
+
+{ #category : #accessing }
+PenWindow >> fullscreen: aBoolean [
+	fullscreen := aBoolean
+]
+
+{ #category : #accessing }
+PenWindow >> getDock: aKey [
+	^ self docks detect: [ :d | d key = aKey ] ifNone: [ nil ]
+]
+
+{ #category : #accessing }
 PenWindow >> getView: aKey [
 	^ self docks 
 		detect: [ :d |
@@ -80,22 +111,37 @@ PenWindow >> getView: aKey [
 PenWindow >> getWindowSize [
 	| width height element |
 	element := self docks first view displayComponent.
-	self flag: 'calulate size of all docks'.
+	self flag: 'TODO: calulate size of all docks'.
 	
 	"Width and height"
 	width := self width 
 		ifNil: [ element width 
 			ifNotNil: [ element width ]
-			ifNil: [ 800 asLength ] ]
+			ifNil: [ self defaultWidth ] ]
 		ifNotNil: [ self width ].
 	
 	height := self height 
 		ifNil: [ element height 
 			ifNotNil: [ element height ]
-			ifNil: [ 600 asLength ] ]
+			ifNil: [ self defaultHeight ] ]
 		ifNotNil: [ self height ].
 	
 	^ width pref @ height pref
+]
+
+{ #category : #accessing }
+PenWindow >> handle [
+	^ handle
+]
+
+{ #category : #accessing }
+PenWindow >> handle: anObject [
+	handle := anObject
+]
+
+{ #category : #accessing }
+PenWindow >> id [
+	^ builder windowId
 ]
 
 { #category : #initialization }
@@ -105,7 +151,20 @@ PenWindow >> initialize [
 	docks := OrderedCollection new.
 	screenConfiguration := PenScreenConfiguration new.
 	resizable := true.
+	borderless := false.
+	fullscreen := false.
 	opened := false.
+	self initializeBuilder
+]
+
+{ #category : #initialization }
+PenWindow >> initializeBuilder [
+	| builderClass |
+	builderClass := PenWindowBuilder forEngine: PenEngine default class.
+	builderClass
+		ifNil: [ PenEngineNotFoundException new
+				signal: 'Cannot find builder for engine' ].
+	builder := builderClass new
 ]
 
 { #category : #testing }
@@ -130,19 +189,8 @@ PenWindow >> morphic [
 
 { #category : #opening }
 PenWindow >> open [
-	| engine helperClass |
-	self flag: #toImprove.
-	engine := PenEngine default.
-	
-	helperClass := PenWindowHelper forEngine: engine class.
-	helperClass 
-		ifNil: [ self inform: 'Can not find a window helper for engine: ', engine printString. ] 
-		ifNotNil: [ 
-			helper := helperClass new.
-			helper buildWindow: self. 
-			opened := true.
-		].
-		
+	handle := builder buildWindow: self.
+	opened := true
 ]
 
 { #category : #opening }
@@ -184,7 +232,7 @@ PenWindow >> title: aString [
 { #category : #building }
 PenWindow >> updateViewDock: aViewDock [
 	self isOpened ifFalse: [ ^ self ].
-	helper updateViewDock: aViewDock
+	builder updateViewDock: aViewDock
 ]
 
 { #category : #wizard }

@@ -4,8 +4,27 @@ A PenComponentTest is a test class for testing the behavior of PenComponent
 Class {
 	#name : #PenComponentTest,
 	#superclass : #TestCase,
+	#instVars : [
+		'status'
+	],
 	#category : #'Penfeld-Tests-Components'
 }
+
+{ #category : #private }
+PenComponentTest >> setUp [
+	status := false.
+]
+
+{ #category : #'test - events' }
+PenComponentTest >> testHasEvents [
+
+	| c |
+	c := PenComponent new.
+	self deny: c hasEvents.
+	
+	c onActionDo: [  ].
+	self assert: c hasEvents.
+]
 
 { #category : #test }
 PenComponentTest >> testHeight [
@@ -18,6 +37,36 @@ PenComponentTest >> testHeight [
 	component height: 200.
 	self assert: component height equals: 200 asLength.
 	
+]
+
+{ #category : #test }
+PenComponentTest >> testOnActionPerformOn [
+	| c |
+	c := PenComponent new.
+	c onActionPerform: #toggleStatus on: self.
+	self assert: c eventBindings notEmpty.
+	
+	self deny: status.
+	c eventBindings first executeCallback.
+	self assert: status.
+]
+
+{ #category : #'test - events' }
+PenComponentTest >> testRemoveAllEvents [
+
+	| c |
+	c := PenComponent new.
+	
+	c onActionDo: [  ].
+	self assert: c hasEvents.
+	c removeAllEvents.
+	self deny: c hasEvents.
+	
+	c onActionDo: [  ].
+	c onClickDo: [  ].
+	self assert: c hasEvents.
+	c removeAllEvents.
+	self deny: c hasEvents.
 ]
 
 { #category : #test }
@@ -91,4 +140,9 @@ PenComponentTest >> testWidth [
 	component width: 200.
 	self assert: component width equals: 200 asLength.
 	
+]
+
+{ #category : #private }
+PenComponentTest >> toggleStatus [
+	status := status not.
 ]

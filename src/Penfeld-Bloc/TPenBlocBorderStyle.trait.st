@@ -27,7 +27,7 @@ TPenBlocBorderStyle >> border: aValue [
 						"Linear gradient" 
 						| paint |
 						paint := self performFunction: property.
-						paint end: paint end * (self component width pref @ self component height pref).
+						paint value class = Color ifFalse: [ paint end: paint end * (self component width pref @ self component height pref) ].
 						borderBuilder paint: paint
 					]
 				]
@@ -42,4 +42,17 @@ TPenBlocBorderStyle >> border: aValue [
 	].
 	
 	self component engineElement border: borderBuilder build.
+]
+
+{ #category : #styling }
+TPenBlocBorderStyle >> borderRadius: aValue [
+	| radius |
+	aValue class = PssPercentValue 
+		ifTrue: [ self component size 
+			ifNil: [ ^ self ]
+			ifNotNil: [ | minLength |
+				minLength := self component size x pref min: self component size y pref.
+				radius := (aValue value * minLength) rounded] ]
+		ifFalse: [ radius := aValue value ].
+	self component engineElement geometry: (BlRectangle cornerRadius: radius)
 ]

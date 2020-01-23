@@ -78,7 +78,7 @@ PenSlider >> max [
 
 { #category : #api }
 PenSlider >> middle [
-	self index: (self interval size / 2) asInteger.
+	self index: (self interval size / 2) rounded.
 ]
 
 { #category : #api }

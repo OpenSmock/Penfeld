@@ -10,6 +10,29 @@ PenBlocWindowExamples class >> example [
 ]
 
 { #category : #examples }
+PenBlocWindowExamples class >> exampleBorderlessWindow [
+	self window1
+		borderless: true;
+		open
+]
+
+{ #category : #examples }
+PenBlocWindowExamples class >> exampleFullscreenBorderlessWindow [
+	(PenWindow
+		withDisplayComponent: PenBlocWidgetsSample new displayComponent)
+		borderless: true;
+		fullscreen: true;
+		open
+]
+
+{ #category : #examples }
+PenBlocWindowExamples class >> exampleFullscreenWindow [
+	self window1
+		fullscreen: true;
+		open
+]
+
+{ #category : #examples }
 PenBlocWindowExamples class >> window1 [
 	| container label button window |
 	label := PenLabel new 

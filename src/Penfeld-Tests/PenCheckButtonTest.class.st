@@ -29,6 +29,19 @@ PenCheckButtonTest >> testOnCheckedDo [
 ]
 
 { #category : #test }
+PenCheckButtonTest >> testOnCheckedDo2Subscribptions [
+	| component i |
+	i := 0.
+	component := PenCheckButton new.
+	component value: false.
+	component onCheckedDo: [ i := i + 2 ].
+	component onCheckedDo: [ i := i - 1 ].
+	
+	component toggle.
+	self assert: i equals: 1.
+]
+
+{ #category : #test }
 PenCheckButtonTest >> testOnUncheckedDo [
 	| component i |
 	i := 0.
@@ -68,4 +81,19 @@ PenCheckButtonTest >> testOnValueChangedDo [
 	
 	component value: false.
 	self assert: i equals: 2.
+]
+
+{ #category : #tests }
+PenCheckButtonTest >> testToggle [
+	| component |
+	component := PenCheckButton new.
+	
+	component value: false.
+	self deny: component value.
+	
+	component toggle.
+	self assert: component value.
+	
+	component toggle.
+	self deny: component value.
 ]

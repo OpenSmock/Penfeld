@@ -8,7 +8,7 @@ Class {
 PenBlocEventStrategy >> bindAction: anEventBinding [
 	anEventBinding source engineElement 
 		when: BlClickEvent 
-		do: [ :e | anEventBinding executeCallback ].
+		do: [ :e | anEventBinding executeCallback. e consumed: true. ].
 	^ true
 ]
 
