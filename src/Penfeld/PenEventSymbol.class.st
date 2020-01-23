@@ -35,6 +35,11 @@ PenEventSymbol class >> mouseUp [
 ]
 
 { #category : #symbols }
+PenEventSymbol class >> resize [
+	^ #resize
+]
+
+{ #category : #symbols }
 PenEventSymbol class >> selectionChanged [
 	^ #selectionChanged
 ]

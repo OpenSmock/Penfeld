@@ -7,7 +7,7 @@ Class {
 	#category : #'Penfeld-Tests-Components'
 }
 
-{ #category : #tests }
+{ #category : #test }
 PenComponentTest >> testHeight [
 	| component |
 	component := PenComponent new.
@@ -20,7 +20,28 @@ PenComponentTest >> testHeight [
 	
 ]
 
-{ #category : #tests }
+{ #category : #test }
+PenComponentTest >> testResizeEvent [
+	| component i |
+	component := PenComponent new.
+	i := 0.
+	
+	component onResizeDo: [ i := i + 1 ].
+	
+	component size: 600@400.
+	self assert: i equals: 1.
+	self assert: component size equals: (600@400) asSize.
+	
+	component size x: 700.
+	self assert: i equals: 2.
+	self assert: component size equals: (700@400) asSize.
+	
+	component size x min: 200.
+	self assert: i equals: 3.
+	self assert: component size x min equals: 200.
+]
+
+{ #category : #test }
 PenComponentTest >> testSize [ 
 	| component |
 	component := PenComponent new.
@@ -33,7 +54,7 @@ PenComponentTest >> testSize [
 	
 ]
 
-{ #category : #tests }
+{ #category : #test }
 PenComponentTest >> testSizeXNil [
 	| component |
 	component := PenComponent new.
@@ -46,7 +67,7 @@ PenComponentTest >> testSizeXNil [
 	
 ]
 
-{ #category : #tests }
+{ #category : #test }
 PenComponentTest >> testSizeYNil [
 	| component |
 	component := PenComponent new.
@@ -59,7 +80,7 @@ PenComponentTest >> testSizeYNil [
 	
 ]
 
-{ #category : #tests }
+{ #category : #test }
 PenComponentTest >> testWidth [
 	| component |
 	component := PenComponent new.

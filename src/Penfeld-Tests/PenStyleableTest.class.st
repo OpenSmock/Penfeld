@@ -7,9 +7,14 @@ Class {
 	#category : #'Penfeld-Tests-Elements support'
 }
 
+{ #category : #parsing }
+PenStyleableTest >> parse: aString [
+	^ PssSimpleParser parse: aString
+]
+
 { #category : #stylesheet }
 PenStyleableTest >> stylesheet1 [
-	^ PssParser parse: '
+	^ self parse: '
 * { color: #000000; }
 button { color: #111111; }
 #myButton { color: #222222; }

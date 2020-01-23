@@ -68,6 +68,11 @@ PenSize >> printOn: aStream [
 		nextPut: $)
 ]
 
+{ #category : #'events-triggering' }
+PenSize >> sendResizeEvent [
+	self triggerEvent: #resize
+]
+
 { #category : #accessing }
 PenSize >> width [ 
 	^ self x 
@@ -85,7 +90,9 @@ PenSize >> x [
 
 { #category : #accessing }
 PenSize >> x: aLength [
-	x := aLength asLength
+	x := aLength asLength.
+	x when: #resize send: #sendResizeEvent to: self.
+	self sendResizeEvent.
 ]
 
 { #category : #accessing }
@@ -95,7 +102,9 @@ PenSize >> y [
 
 { #category : #accessing }
 PenSize >> y: aLength [
-	y := aLength asLength
+	y := aLength asLength.
+	y when: #resize send: #sendResizeEvent to: self.
+	self sendResizeEvent.
 ]
 
 { #category : #accessing }
@@ -105,5 +114,7 @@ PenSize >> z [
 
 { #category : #accessing }
 PenSize >> z: aLength [
-	z := aLength asLength
+	z := aLength asLength.
+	z when: #resize send: #sendResizeEvent to: self.
+	self sendResizeEvent.
 ]

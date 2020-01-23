@@ -33,7 +33,7 @@ PenSpaceHelper >> buildWindow: aWindow [
 
 { #category : #building }
 PenSpaceHelper >> displayExternalDock: aDock on: aWindow [
-	self halt: 'to be defined'
+	"do nothing yet"
 ]
 
 { #category : #building }

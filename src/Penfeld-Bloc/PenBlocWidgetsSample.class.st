@@ -157,7 +157,6 @@ PenBlocWidgetsSample >> nodeForClass: aClass [
 	| node |
 	node := PenTreeNode new.
 	node key: aClass name asSymbol.
-	node dresser: WATreeNodeDresser new.
 	node content: (PenLabel new text: aClass name).
 	aClass subclasses do: [ :subclass | 
 		node addNode: (self nodeForClass: subclass)].

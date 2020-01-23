@@ -41,7 +41,8 @@ PenLength >> max [
 
 { #category : #accessing }
 PenLength >> max: aNumber [
-	max := aNumber
+	max := aNumber.
+	self sendResizeEvent.
 ]
 
 { #category : #accessing }
@@ -51,7 +52,8 @@ PenLength >> min [
 
 { #category : #accessing }
 PenLength >> min: aNumber [
-	min := aNumber
+	min := aNumber.
+	self sendResizeEvent.
 ]
 
 { #category : #accessing }
@@ -61,7 +63,8 @@ PenLength >> pref [
 
 { #category : #accessing }
 PenLength >> pref: aNumber [
-	pref := aNumber
+	pref := aNumber.
+	self sendResizeEvent.
 ]
 
 { #category : #printing }
@@ -84,4 +87,9 @@ PenLength >> printOn: aStream [
 	].
 	
 	aStream nextPut: $>.
+]
+
+{ #category : #'events-triggering' }
+PenLength >> sendResizeEvent [
+	self triggerEvent: #resize
 ]

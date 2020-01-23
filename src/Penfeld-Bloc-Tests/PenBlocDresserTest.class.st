@@ -4,10 +4,15 @@ Class {
 	#category : #'Penfeld-Bloc-Tests'
 }
 
+{ #category : #parsing }
+PenBlocDresserTest >> parse: aString [
+	^ PssSimpleParser parse: aString
+]
+
 { #category : #tests }
 PenBlocDresserTest >> testMargin1 [
 	| stylesheet container button |
-	stylesheet := PssParser parse: 'button { margin: 10px; }'.
+	stylesheet := self parse: 'button { margin: 10px; }'.
 	
 	button := PenButton new.
 	button text: 'Button'.
@@ -26,7 +31,7 @@ PenBlocDresserTest >> testMargin1 [
 { #category : #tests }
 PenBlocDresserTest >> testMargin2 [
 	| stylesheet container button |
-	stylesheet := PssParser parse: 'button { margin: 10px 20px; }'.
+	stylesheet := self parse: 'button { margin: 10px 20px; }'.
 	
 	button := PenButton new.
 	button text: 'Button'.
@@ -45,7 +50,7 @@ PenBlocDresserTest >> testMargin2 [
 { #category : #tests }
 PenBlocDresserTest >> testMargin2b [
 	| stylesheet container button |
-	stylesheet := PssParser parse: 'button { margin: 0 20px; }'.
+	stylesheet := self parse: 'button { margin: 0 20px; }'.
 	
 	button := PenButton new.
 	button text: 'Button'.
@@ -64,7 +69,7 @@ PenBlocDresserTest >> testMargin2b [
 { #category : #tests }
 PenBlocDresserTest >> testMargin3 [
 	| stylesheet container button1 button2 |
-	stylesheet := PssParser parse: 'button { margin: 10px 20px 30px; }'.
+	stylesheet := self parse: 'button { margin: 10px 20px 30px; }'.
 	
 	button1 := PenButton new size: 50@20.
 	button2 := PenButton new.
@@ -84,7 +89,7 @@ PenBlocDresserTest >> testMargin3 [
 { #category : #tests }
 PenBlocDresserTest >> testMargin4 [
 	| stylesheet container1 container2 button1 button2 button3 |
-	stylesheet := PssParser parse: 'button { 
+	stylesheet := self parse: 'button { 
 		margin: 10px 20px 30px 40px;
 		width: 50px;
 		height: 20px;
