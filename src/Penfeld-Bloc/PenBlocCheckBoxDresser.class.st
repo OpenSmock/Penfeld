@@ -119,7 +119,7 @@ PenBlocCheckBoxDresser >> initEngineElement [
 	self component engineElement when: BlMouseLeaveEvent do: [ :e | self whenMouseLeaveEvent ].
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - font' }
 PenBlocCheckBoxDresser >> ropedText [
 	^ ropedText
 ]

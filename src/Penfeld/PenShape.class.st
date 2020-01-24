@@ -17,11 +17,13 @@ PenShape class >> styleName [
 
 { #category : #accessing }
 PenShape >> fillColor [
+	self deprecated: 'Use stylesheet instead'.
 	^ fillColor
 ]
 
 { #category : #accessing }
 PenShape >> fillColor: aColor [
+	self deprecated: 'Use stylesheet instead'.
 	fillColor = aColor ifTrue: [ ^ self ].
 	fillColor := aColor.
 	self refresh.
@@ -33,26 +35,30 @@ PenShape >> shape [
 ]
 
 { #category : #accessing }
-PenShape >> shape: anObject [
-	shape := anObject
+PenShape >> shape: aGShape [
+	shape := aGShape
 ]
 
 { #category : #accessing }
 PenShape >> strokeColor [
+	self deprecated: 'Use stylesheet instead'.
 	^ strokeColor
 ]
 
 { #category : #accessing }
 PenShape >> strokeColor: anObject [
+	self deprecated: 'Use stylesheet instead'.
 	strokeColor := anObject
 ]
 
 { #category : #accessing }
 PenShape >> strokeStyle [
+	self deprecated: 'Use stylesheet instead'.
 	^ strokeStyle
 ]
 
 { #category : #accessing }
 PenShape >> strokeStyle: anObject [
+	self deprecated: 'Use stylesheet instead'.
 	strokeStyle := anObject
 ]

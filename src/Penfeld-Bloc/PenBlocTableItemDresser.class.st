@@ -20,7 +20,7 @@ PenBlocTableItemDresser >> doAfterApplyStyle [
 	].
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'styling - size' }
 PenBlocTableItemDresser >> height: aValue [
 	self component engineElement constraintsDo: [ :c |
 		c vertical exact: aValue ].

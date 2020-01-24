@@ -59,7 +59,7 @@ PenBlocInputDresser >> initEngineElement [
 		do: [ :e | self component text: dataSource text copy ].
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - font' }
 PenBlocInputDresser >> ropedText [
 	^ ropedText
 ]

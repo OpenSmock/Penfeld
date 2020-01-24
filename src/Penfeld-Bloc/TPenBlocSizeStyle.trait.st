@@ -3,13 +3,13 @@ Trait {
 	#category : #'Penfeld-Bloc-Styles'
 }
 
-{ #category : #'accessing structure variables' }
+{ #category : #'styling - size' }
 TPenBlocSizeStyle >> height: aValue [
 	self component engineElement constraintsDo: [ :c |
 		c vertical exact: aValue ] 
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'styling - size' }
 TPenBlocSizeStyle >> width: aValue [
 	self component engineElement constraintsDo: [ :c |
 		c horizontal exact: aValue ] 

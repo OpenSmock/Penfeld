@@ -6,6 +6,12 @@ Class {
 	#category : #'Penfeld-Bloc-Dressers'
 }
 
+{ #category : #testing }
+PenBlocShapeExperimentalDresser class >> isDeprecated [
+	self flag: 'Use PenBlocShapeDresser and GShape instead'.
+	^ true
+]
+
 { #category : #dressing }
 PenBlocShapeExperimentalDresser >> doAfterApplyStyle [ 
 	| var element |

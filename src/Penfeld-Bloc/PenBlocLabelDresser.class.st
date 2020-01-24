@@ -43,7 +43,7 @@ PenBlocLabelDresser >> doBeforeApplyStyle [
 	ropedText := self component text asRopedText
 ]
 
-{ #category : #styling }
+{ #category : #'styling - font' }
 PenBlocLabelDresser >> fontSize: aValue [
 	self ropedText fontSize: aValue value.
 	self component engineElement constraintsDo: [ :c |
@@ -63,7 +63,7 @@ PenBlocLabelDresser >> initEngineElement [
 	element addChild: BlTextElement new as: #text.
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - font' }
 PenBlocLabelDresser >> ropedText [
 	^ ropedText
 ]

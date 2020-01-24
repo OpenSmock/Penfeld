@@ -3,12 +3,12 @@ Trait {
 	#category : #'Penfeld-Bloc-Styles'
 }
 
-{ #category : #styling }
+{ #category : #'styling - background' }
 TPenBlocBackgroundStyle >> backgroundColor: aValue [
 	self component engineElement background: aValue
 ]
 
-{ #category : #styling }
+{ #category : #'styling - background' }
 TPenBlocBackgroundStyle >> backgroundImage: aValue [
 	self component engineElement background: aValue
 ]

@@ -3,7 +3,7 @@ Trait {
 	#category : #'Penfeld-Bloc-Styles'
 }
 
-{ #category : #styling }
+{ #category : #'styling - border' }
 TPenBlocBorderStyle >> border: aValue [
 	| borderBuilder |	
 	borderBuilder := BlBorderBuilder new.
@@ -44,7 +44,7 @@ TPenBlocBorderStyle >> border: aValue [
 	self component engineElement border: borderBuilder build.
 ]
 
-{ #category : #styling }
+{ #category : #'styling - border' }
 TPenBlocBorderStyle >> borderRadius: aValue [
 	| radius |
 	aValue class = PssPercentValue 

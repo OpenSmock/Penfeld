@@ -9,20 +9,10 @@ BaselineOfPenfeld >> baseline: spec [
 	<baseline>
 	spec
 		for: #common
-		do: [ "Bloc"
-			spec
-				baseline: 'Bloc'
-				with: [ spec repository: 'github://pharo-graphics/Bloc/src' ].
-			
-			"Brick text editor"
-			spec
-				baseline: 'Brick'
-				with: [ spec repository: 'github://StevenCostiou/Brick/src'. ].
-
-			"PharoStylesheet"
-			spec
-				baseline: 'PharoStylesheet'
-				with: [ spec repository: 'github://GlennCavarle/PharoStylesheet/src' ].
+		do: [
+			self geometry: spec.
+			self stylesheet: spec.
+			self bloc: spec.
 
 			"Penfeld"
 			spec
@@ -35,4 +25,30 @@ BaselineOfPenfeld >> baseline: spec [
 				package: 'Penfeld-Bloc-Tests'
 				with: [ spec requires: 'Penfeld-Bloc' ].
 			spec package: 'Penfeld-Tests' with: [ spec requires: 'Penfeld' ] ]
+]
+
+{ #category : #dependencies }
+BaselineOfPenfeld >> bloc: spec [
+	spec
+		baseline: 'Bloc'
+		with: [ spec repository: 'github://feenkcom/Bloc/src' ].
+		
+	"Brick text editor"
+	spec
+		baseline: 'Brick'
+		with: [ spec repository: 'github://StevenCostiou/Brick/src'. ].
+]
+
+{ #category : #dependencies }
+BaselineOfPenfeld >> geometry: spec [
+	spec
+		baseline: 'Geometry'
+		with: [ spec repository: 'github://TelescopeSt/Geometry/src' ]
+]
+
+{ #category : #dependencies }
+BaselineOfPenfeld >> stylesheet: spec [
+	spec
+		baseline: 'PharoStylesheet'
+		with: [ spec repository: 'github://GlennCavarle/PharoStylesheet/src' ]
 ]

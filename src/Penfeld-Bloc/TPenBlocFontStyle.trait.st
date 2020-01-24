@@ -3,22 +3,22 @@ Trait {
 	#category : #'Penfeld-Bloc-Styles'
 }
 
-{ #category : #styling }
+{ #category : #'styling - font' }
 TPenBlocFontStyle >> color: aValue [
 	self ropedText foreground: aValue
 ]
 
-{ #category : #styling }
+{ #category : #'styling - font' }
 TPenBlocFontStyle >> fontFamily: aValue [
 	self ropedText fontName: aValue value.
 ]
 
-{ #category : #styling }
+{ #category : #'styling - font' }
 TPenBlocFontStyle >> fontSize: aValue [
 	self ropedText fontSize: aValue value
 ]
 
-{ #category : #styling }
+{ #category : #'styling - font' }
 TPenBlocFontStyle >> fontStyle: aValue [
 	| symbol |
 	symbol := aValue value.
@@ -26,7 +26,7 @@ TPenBlocFontStyle >> fontStyle: aValue [
 		ifTrue: [ self ropedText perform: symbol ]
 ]
 
-{ #category : #styling }
+{ #category : #'styling - font' }
 TPenBlocFontStyle >> fontWeight: aValue [
 	| symbol |
 	symbol := aValue value.
@@ -34,7 +34,7 @@ TPenBlocFontStyle >> fontWeight: aValue [
 		ifTrue: [ self ropedText perform: symbol ]
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - font' }
 TPenBlocFontStyle >> ropedText [
 	self explicitRequirement
 ]

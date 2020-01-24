@@ -26,5 +26,5 @@ PenBlocDressersMap >> initMap [
 		at: PenProgressBar put: PenBlocProgressBarDresser ;
 		at: PenSlider put: PenBlocSliderDresser;
 		at: PenImage put: PenBlocImageDresser;
-		at: PenShape put: PenBlocShapeExperimentalDresser 
+		at: PenShape put: PenBlocShapeDresser 
 ]

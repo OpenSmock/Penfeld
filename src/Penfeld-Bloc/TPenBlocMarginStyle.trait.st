@@ -3,7 +3,7 @@ Trait {
 	#category : #'Penfeld-Bloc-Styles'
 }
 
-{ #category : #accessing }
+{ #category : #'styling - margin' }
 TPenBlocMarginStyle >> margin: aValue [
 	| insets array |
 	aValue isArray

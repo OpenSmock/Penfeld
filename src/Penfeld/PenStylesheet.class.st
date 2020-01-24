@@ -175,6 +175,11 @@ list, tree, table {
 	margin: 20;
 }
 
+shape { 
+	background-color: ', (colors at: #activeColor), ';
+	border: 1px solid ', (colors at: #borderColor), ';
+}
+
 '
 ]
 

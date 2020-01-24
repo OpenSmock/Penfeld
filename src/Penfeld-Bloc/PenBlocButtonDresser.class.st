@@ -85,7 +85,7 @@ PenBlocButtonDresser >> initEngineElement [
 	self component engineElement preventChildrenMouseEvents.
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - font' }
 PenBlocButtonDresser >> ropedText [
 	^ ropedText
 ]
