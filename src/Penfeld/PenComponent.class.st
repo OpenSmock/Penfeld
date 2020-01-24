@@ -16,7 +16,7 @@ Class {
 
 { #category : #'instance creation' }
 PenComponent class >> key: aSymbol [
-	^ self basicNew initialize; key: aSymbol
+	^ self new key: aSymbol
 ]
 
 { #category : #accessing }
@@ -165,6 +165,16 @@ PenComponent >> onMouseDownPerform: aSymbol on: aReceiver [
 	self onEvent: PenEventSymbol mouseDown perform: aSymbol on: aReceiver
 ]
 
+{ #category : #'api - events' }
+PenComponent >> onResizeDo: aBlock [
+	self onEvent: PenEventSymbol resize do: aBlock
+]
+
+{ #category : #'api - events' }
+PenComponent >> onResizePerform: aSymbol on: aReceiver [
+	self onEvent: PenEventSymbol resize perform: aSymbol on: aReceiver
+]
+
 { #category : #accessing }
 PenComponent >> position [
 	^ position
@@ -191,6 +201,13 @@ PenComponent >> removeAllEvents [
 	eventBindings := OrderedCollection new.
 ]
 
+{ #category : #events }
+PenComponent >> resizeEvent [
+	self eventBindings do: [ :eventBinding |
+		(eventBinding symbol = PenEventSymbol resize)
+			ifTrue: [ eventBinding executeCallback ]].
+]
+
 { #category : #accessing }
 PenComponent >> size [
 	^ size
@@ -198,7 +215,9 @@ PenComponent >> size [
 
 { #category : #accessing }
 PenComponent >> size: aSize [
-	size := aSize asSize
+	size := aSize asSize.
+	size when: #resize send: #resizeEvent to: self.
+	self resizeEvent.
 ]
 
 { #category : #accessing }

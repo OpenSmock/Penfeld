@@ -21,7 +21,7 @@ PenStylesheet class >> colored [
 
 { #category : #private }
 PenStylesheet class >> coloredStyle [
-	^ PssParser parse: (self createStylesheet2: {
+	^ self parse: (self createStylesheet2: {
 		#lightTextColor -> '#CDE1E4'.
 		#darkTextColor -> '#343A3B'.
 		#backgroundColor -> '#9AA3A4'.
@@ -194,7 +194,7 @@ PenStylesheet class >> dark [
 
 { #category : #private }
 PenStylesheet class >> darkStyle [
-	^ PssParser parse: (self createStylesheet: {
+	^ self parse: (self createStylesheet: {
 		#textColor -> '#E6E6E6'.
 		#backgroundColor -> '#141414'.
 		#borderColor -> '#C8C8C8'.
@@ -214,7 +214,7 @@ PenStylesheet class >> light [
 
 { #category : #private }
 PenStylesheet class >> lightStyle [
-	^ PssParser parse: (self createStylesheet: {
+	^ self parse: (self createStylesheet: {
 		#textColor -> '#1E1E1E'.
 		#backgroundColor -> '#F0F0F0'.
 		#borderColor -> '#505050'.
@@ -223,4 +223,9 @@ PenStylesheet class >> lightStyle [
 		#disabledColor -> '#787878'.
 		#buttonBackgroundColor -> '#D2D2D2'.
 	} asDictionary).
+]
+
+{ #category : #parsing }
+PenStylesheet class >> parse: aString [
+	^ PssSimpleParser parse: aString
 ]
