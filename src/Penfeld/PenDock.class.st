@@ -29,6 +29,11 @@ PenDock >> isViewDock [
 ]
 
 { #category : #accessing }
+PenDock >> refresh [
+	self subclassResponsibility 
+]
+
+{ #category : #accessing }
 PenDock >> window [
 	^ window
 ]

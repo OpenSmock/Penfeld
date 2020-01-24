@@ -30,7 +30,18 @@ PenBlocTableDresser >> doAfterApplyStyle [
 
 { #category : #dressing }
 PenBlocTableDresser >> doBeforeApplyStyle [
+]
+
+{ #category : #dressing }
+PenBlocTableDresser >> initEngineElement [
 	| listElements |
+	dataSource := PenInfiniteDataSource new.
+	
+	self component engineElement: PenInfiniteListElement new.
+	self component engineElement constraintsDo: [ :c |
+		c horizontal matchParent.
+		c vertical matchParent ].
+	
 	listElements := self component items collect: [ :item | 
 		item engineElement ].
 	self component header ifNotNil: [ 
@@ -38,17 +49,6 @@ PenBlocTableDresser >> doBeforeApplyStyle [
 	].
 	dataSource elements: listElements.
 	self component engineElement dataSource: dataSource.
-	dataSource notifyChanged
-]
-
-{ #category : #dressing }
-PenBlocTableDresser >> initEngineElement [
-	dataSource := PenInfiniteDataSource new.
-	
-	self component engineElement: PenInfiniteListElement new.
-	self component engineElement constraintsDo: [ :c |
-		c horizontal matchParent.
-		c vertical matchParent ].
 	
 	self component allowToSelect ifFalse: [ ^ self ].
 

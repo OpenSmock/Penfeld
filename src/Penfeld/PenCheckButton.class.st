@@ -11,9 +11,24 @@ Class {
 	#category : #'Penfeld-Elements'
 }
 
+{ #category : #'instance creation' }
+PenCheckButton class >> new [ 
+	^ self basicNew initialize; autoBindToggle; yourself
+]
+
+{ #category : #'instance creation' }
+PenCheckButton class >> wait [
+	^ self basicNew initialize
+]
+
+{ #category : #private }
+PenCheckButton >> autoBindToggle [
+	self onActionDo: [ self toggle ].
+]
+
 { #category : #api }
 PenCheckButton >> check [
-	self value: true
+	(self setValue: true) ifTrue: [ self valueChangedEvent ].
 ]
 
 { #category : #accessing }
@@ -30,7 +45,6 @@ PenCheckButton >> group: anObject [
 PenCheckButton >> initialize [
 	super initialize.
 	self value: false.
-	self onActionDo: [ self toggle ].
 ]
 
 { #category : #'api - events' }
@@ -41,6 +55,24 @@ PenCheckButton >> onCheckedDo: aBlock [
 { #category : #'api - events' }
 PenCheckButton >> onUncheckedDo: aBlock [
 	self onValueChangedDo: [ self value ifFalse: [ aBlock value ] ] 
+]
+
+{ #category : #accessing }
+PenCheckButton >> setValue: aBoolean [
+	value = aBoolean ifTrue: [ ^ false ].
+	value := aBoolean.
+	self key ifNotNil: [(self key, ' move to ', value printString) traceCr].
+	value 
+	ifTrue: [ 
+		self activatePseudoClass: #checked.
+		self deactivatePseudoClass: #unchecked
+	]
+	ifFalse: [ 
+		self activatePseudoClass: #unchecked.
+		self deactivatePseudoClass: #checked 
+	].
+	self refresh.
+	^ true
 ]
 
 { #category : #accessing }
@@ -57,12 +89,13 @@ PenCheckButton >> text: aString [
 
 { #category : #api }
 PenCheckButton >> toggle [
-	self value: self value not
+	self setValue: self value not.
+	self valueChangedEvent.
 ]
 
 { #category : #api }
 PenCheckButton >> uncheck [
-	self value: false
+	(self setValue: false) ifTrue: [ self valueChangedEvent ].
 ]
 
 { #category : #accessing }
@@ -72,18 +105,5 @@ PenCheckButton >> value [
 
 { #category : #accessing }
 PenCheckButton >> value: aBoolean [
-	value = aBoolean 
-		ifTrue: [ ^ self ].
-	value := aBoolean.
-	value 
-	ifTrue: [ 
-		self activatePseudoClass: #checked.
-		self deactivatePseudoClass: #unchecked
-	]
-	ifFalse: [ 
-		self activatePseudoClass: #unchecked.
-		self deactivatePseudoClass: #checked 
-	].
-	self valueChangedEvent.
-	self refresh
+	(self setValue: aBoolean) ifTrue: [ self valueChangedEvent ]
 ]

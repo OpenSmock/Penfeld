@@ -37,7 +37,30 @@ PenView >> dock: anObject [
 ]
 
 { #category : #opening }
+PenView >> openInMorphic [
+	dock ifNil: [ dock := PenViewDock with: self ].
+	dock openInMorphic.
+]
+
+{ #category : #opening }
+PenView >> openInMorphicWindow [
+	dock ifNil: [ dock := PenViewDock with: self ].
+	dock openInWindow.
+]
+
+{ #category : #opening }
+PenView >> openInWindow [
+	dock ifNil: [ dock := PenViewDock with: self ].
+	dock openInWindow.
+]
+
+{ #category : #opening }
 PenView >> openInWorld [
 	dock ifNil: [ dock := PenViewDock with: self ].
 	dock openInWorld.
+]
+
+{ #category : #accessing }
+PenView >> refresh [
+	self displayComponent loopRefresh
 ]

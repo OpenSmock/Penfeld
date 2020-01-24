@@ -11,7 +11,8 @@ Class {
 		'fullscreen',
 		'opened',
 		'builder',
-		'handle'
+		'handle',
+		'process'
 	],
 	#classVars : [
 		'EngineClass'
@@ -58,7 +59,8 @@ PenWindow >> borderless: aBoolean [
 
 { #category : #opening }
 PenWindow >> close [
-	self handle close
+	self flag: 'never called'.
+	process terminate
 ]
 
 { #category : #defaults }
@@ -182,26 +184,47 @@ PenWindow >> isResizable [
 	^ resizable
 ]
 
-{ #category : #accessing }
-PenWindow >> morphic [
-	type := #morphic
+{ #category : #testing }
+PenWindow >> isWindow [
+	^ type = #window
+]
+
+{ #category : #testing }
+PenWindow >> isWorld [
+	^ type = #world
 ]
 
 { #category : #opening }
 PenWindow >> open [
 	handle := builder buildWindow: self.
-	opened := true
+	opened := true.
+	process := [ [ 
+			self docks do: [ :aDock | aDock refresh ]. 
+			20 milliSeconds wait ] 
+		repeat ] fork.
+]
+
+{ #category : #opening }
+PenWindow >> openInMorphic [
+	self useMorphic.
+	self open 
 ]
 
 { #category : #opening }
 PenWindow >> openInWindow [
-	^ self notYetImplemented 
+	self useWindow.
+	self open 
 ]
 
 { #category : #opening }
 PenWindow >> openInWorld [
-	self morphic.
+	self useMorphic.
 	self open
+]
+
+{ #category : #closing }
+PenWindow >> quitImage [
+	Smalltalk snapshot: false andQuit: true
 ]
 
 { #category : #accessing }
@@ -233,6 +256,21 @@ PenWindow >> title: aString [
 PenWindow >> updateViewDock: aViewDock [
 	self isOpened ifFalse: [ ^ self ].
 	builder updateViewDock: aViewDock
+]
+
+{ #category : #accessing }
+PenWindow >> useMorphic [
+	type := #morphic
+]
+
+{ #category : #accessing }
+PenWindow >> useWindow [
+	type := #window
+]
+
+{ #category : #accessing }
+PenWindow >> useWorld [
+	type := #world
 ]
 
 { #category : #wizard }

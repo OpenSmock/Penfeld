@@ -11,7 +11,7 @@ PenBlocEngine >> dressersMap [
 
 { #category : #accessing }
 PenBlocEngine >> eventStrategy [
-	^ PenBlocEventStrategy new
+	^ PenBlocEventStrategy
 ]
 
 { #category : #accessing }

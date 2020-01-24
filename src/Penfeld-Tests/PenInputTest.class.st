@@ -5,23 +5,6 @@ Class {
 }
 
 { #category : #tests }
-PenInputTest >> testFormat [
-	| input |
-	
-	input := PenInput new.
-	input text: 'Penfeld'.
-	self assert: input formatter isNil.
-	
-	input format.
-	self assert: input text equals: 'Penfeld'.
-	
-	input formatter: PenFormatter new.
-	self assert: input formatter notNil.
-	input format.
-	self assert: input text equals: 'Penfeld'.
-]
-
-{ #category : #tests }
 PenInputTest >> testText [
 	| input |
 	input := PenInput new.
@@ -34,26 +17,6 @@ PenInputTest >> testText [
 ]
 
 { #category : #tests }
-PenInputTest >> testValidate [
-	| input |
-	
-	input := PenInput new.
-	input text: 'Penfeld'.
-	self assert: input valider isNil.
-	
-	input validate.
-	self assert: (input includesPseudoClass: #valid ) not.
-	self assert: (input includesPseudoClass: #invalid ) not.
-	
-	input valider: PenValider new.
-	self assert: input valider notNil.
-	
-	input validate.
-	self assert: (input includesPseudoClass: #valid ).
-	self assert: (input includesPseudoClass: #invalid ) not.
-]
-
-{ #category : #tests }
 PenInputTest >> testValueChangedEvent [
 	| input counter |
 	input := PenInput new.
@@ -63,12 +26,15 @@ PenInputTest >> testValueChangedEvent [
 	self assert: counter equals: 0.
 	
 	input text: 'Penfeld'.
+	Processor yield.
 	self assert: counter equals: 1.
 	
 	input text: 'Penfeld'.
+	Processor yield.
 	self assert: counter equals: 1.
 	
 	input text: ''.
+	Processor yield.
 	self assert: counter equals: 2.
 	
 ]

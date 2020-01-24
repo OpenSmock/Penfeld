@@ -103,5 +103,11 @@ PenSlider >> updateFraction: aNumber [
 
 { #category : #accessing }
 PenSlider >> value [
-	^ interval at: index
+	^ self interval at: index
+]
+
+{ #category : #api }
+PenSlider >> value: anObject [
+	index := self interval indexOf: anObject ifAbsent: [ ^ self ].
+	self index: index
 ]

@@ -25,5 +25,5 @@ PenLabel >> text [
 { #category : #accessing }
 PenLabel >> text: aString [
 	text := aString.
-	self isBuilt ifTrue: [ self refresh ]
+	self refresh
 ]

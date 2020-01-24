@@ -19,5 +19,6 @@ PenImage >> form [
 
 { #category : #accessing }
 PenImage >> form: anObject [
-	form := anObject
+	form := anObject.
+	self refresh
 ]

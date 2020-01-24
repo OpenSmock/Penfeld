@@ -42,7 +42,7 @@ PenBlocContainerDresser >> initEngineElement [
 		ifTrue: [ self component layout isHorizontal 
 			ifTrue: [ BlLinearLayout horizontal ]
 			ifFalse: [ BlLinearLayout vertical ]]
-		ifFalse: [ self component layout isPosition
+		ifFalse: [ self component layout isAbsolute
 			ifTrue: [ BlBasicLayout new ]
 			ifFalse: [ BlFlowLayout new ]
 		]

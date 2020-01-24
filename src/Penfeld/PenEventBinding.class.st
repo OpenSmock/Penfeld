@@ -57,13 +57,13 @@ PenEventBinding >> callback: aBlock [
 { #category : #accessing }
 PenEventBinding >> executeCallback [
 	self source isDisabled ifTrue: [ ^ self ].
-	self callback executeCallback.
+	[ self callback executeCallback ] fork.
 ]
 
 { #category : #accessing }
 PenEventBinding >> executeCallback: anEvent [
 	self source isDisabled ifTrue: [ ^ self ].
-	self callback executeCallback: anEvent.
+	[ self callback executeCallback: anEvent ] fork.
 ]
 
 { #category : #testing }

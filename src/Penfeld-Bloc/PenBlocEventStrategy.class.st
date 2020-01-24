@@ -4,8 +4,8 @@ Class {
 	#category : #'Penfeld-Bloc-Utils'
 }
 
-{ #category : #installing }
-PenBlocEventStrategy >> bindAction: anEventBinding [
+{ #category : #binding }
+PenBlocEventStrategy class >> bindAction: anEventBinding [
 	anEventBinding source engineElement 
 		when: BlClickEvent 
 		do: [ :e | anEventBinding executeCallback. e consumed: true. ].
@@ -13,7 +13,7 @@ PenBlocEventStrategy >> bindAction: anEventBinding [
 ]
 
 { #category : #installing }
-PenBlocEventStrategy >> bindClick: anEventBinding [
+PenBlocEventStrategy class >> bindClick: anEventBinding [
 	anEventBinding source engineElement 
 		when: BlClickEvent 
 		do: [ :e | anEventBinding executeCallback: (PenMouseEvent fromBloc: e) ].
@@ -21,7 +21,7 @@ PenBlocEventStrategy >> bindClick: anEventBinding [
 ]
 
 { #category : #installing }
-PenBlocEventStrategy >> bindMouseDown: anEventBinding [
+PenBlocEventStrategy class >> bindMouseDown: anEventBinding [
 	anEventBinding source engineElement 
 		when: BlMouseDownEvent 
 		do: [ :e | anEventBinding executeCallback: (PenMouseEvent fromBloc: e) ].

@@ -8,45 +8,45 @@ Class {
 PenBlocTreeExamples class >> example [
 	| model |
 	model := PenTree new.
-	model root: (self nodeForClass: Model).
+	model root: (self nodeForClass: PenComponent).
 	model dresser: PenBlocTreeDresser new.
 	model sortingBlock: [ :a :b | a key < b key ].
-	model openInWorld
+	model open
 ]
 
 { #category : #examples }
 PenBlocTreeExamples class >> exampleExpandAll [
 	| component |
 	component := PenTree new.
-	component root: (self nodeForClass: Model).
+	component root: (self nodeForClass: PenComponent).
 	component dresser: PenBlocTreeDresser new.
 	component sortingBlock: [ :a :b | a key < b key ].
 	component expandAll.
-	component openInWorld 
+	component open 
 ]
 
 { #category : #examples }
 PenBlocTreeExamples class >> examplePropagateClosure [
 	| component |
 	component := PenTree new.
-	component root: (self nodeForClass: Model).
+	component root: (self nodeForClass: PenComponent).
 	component dresser: PenBlocTreeDresser new.
 	component sortingBlock: [ :a :b | a key < b key ].
 	component expandAll.
 	component showRoot: true.
 	component propagateCollapse: true.
-	component openInWorld 
+	component open
 ]
 
 { #category : #examples }
 PenBlocTreeExamples class >> exampleWithRoot [
 	| component |
 	component := PenTree new.
-	component root: (self nodeForClass: Model).
+	component root: (self nodeForClass: PenComponent).
 	component showRoot: true.
 	component dresser: PenBlocTreeDresser new.
 	component sortingBlock: [ :a :b | a key < b key ].
-	component openInWorld 
+	component open
 ]
 
 { #category : #'examples - instance creation' }

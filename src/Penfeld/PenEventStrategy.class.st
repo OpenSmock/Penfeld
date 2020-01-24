@@ -5,22 +5,27 @@ Class {
 }
 
 { #category : #binding }
-PenEventStrategy >> bindAction: anEventBinding [
+PenEventStrategy class >> bindAction: anEventBinding [
 	^ self subclassResponsibility 
 ]
 
 { #category : #binding }
-PenEventStrategy >> bindClick: anEventBinding [
+PenEventStrategy class >> bindClick: anEventBinding [
 	^ self subclassResponsibility 
 ]
 
 { #category : #binding }
-PenEventStrategy >> bindMouseDown: anEventBinding [
+PenEventStrategy class >> bindMouseDown: anEventBinding [
 	^ self subclassResponsibility 
 ]
 
+{ #category : #'instance creation' }
+PenEventStrategy class >> new [
+	^ self shouldNotImplement 
+]
+
 { #category : #binding }
-PenEventStrategy >> tryToBind: anEventBinding [
+PenEventStrategy class >> tryToBind: anEventBinding [
 	| symbol |
 	
 	anEventBinding isCompositeEvent ifTrue: [ 

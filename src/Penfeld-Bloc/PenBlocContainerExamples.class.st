@@ -44,7 +44,7 @@ PenBlocContainerExamples class >> example2 [
 	container := PenContainer new 
 		addElement: label.
 	
-	container openInWorld 
+	container open
 ]
 
 { #category : #examples }
@@ -94,7 +94,7 @@ PenBlocContainerExamples class >> example3 [
 		layout: PenLinearLayout horizontal;
 		addAllElements: { radiosContainer. visibleShape }.
 		
-	mainContainer openInWorld.
+	mainContainer open.
 ]
 
 { #category : #examples }

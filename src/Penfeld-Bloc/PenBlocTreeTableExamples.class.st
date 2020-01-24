@@ -12,13 +12,13 @@ PenBlocTreeTableExamples class >> example [
 		PenSection new selector: #name.
 		PenSection new selector: #numberOfSubclasses; size: 40.
 		PenSection new selector: #numberOfVariables; size: 40 }.
-	model root: (self nodeForClass: Model).
+	model root: (self nodeForClass: PenComponent).
 	model showRoot: true.
 	model treeSectionSelector: #name.
 	model expandAll.
 	model dresser: PenBlocTreeTableDresser new.
 	model sortingBlock: [ :a :b | a key < b key ].
-	model openInWorld  
+	model open
 ]
 
 { #category : #examples }
@@ -29,7 +29,7 @@ PenBlocTreeTableExamples class >> exampleWithHeader [
 		PenSection new selector: #name.
 		PenSection new selector: #numberOfSubclasses; size: 40.
 		PenSection new selector: #numberOfVariables; size: 40 }.
-	model root: (self nodeForClass: Model).
+	model root: (self nodeForClass: PenComponent).
 	model showRoot: true.
 	model header: self header.
 	model showHeader: true.
@@ -38,8 +38,7 @@ PenBlocTreeTableExamples class >> exampleWithHeader [
 	model expandAll.
 	model dresser: PenBlocTreeTableDresser new.
 	model sortingBlock: [ :a :b | a key < b key ].
-	model build.
-	model openInWorld 
+	model open
 ]
 
 { #category : #'examples - instance creation' }

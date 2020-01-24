@@ -13,7 +13,7 @@ PenBlocTextEditorExamples class >> exampleCodeEditor [
 	component height: 500.
 	component dresser: PenBlocCodeEditorDresser new.
 	component behavior: OrderedCollection.
-	component openInWorld
+	component open
 ]
 
 { #category : #examples }
@@ -24,7 +24,7 @@ PenBlocTextEditorExamples class >> exampleTextEditor [
 	component width: 500.
 	component height: 500.
 	component dresser: PenBlocTextEditorDresser new.
-	component openInWorld
+	component open
 ]
 
 { #category : #'see class side' }

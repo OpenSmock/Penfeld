@@ -27,8 +27,10 @@ PenSpaceBuilder >> buildWindow: aWindow [
 		position: aWindow position;
 		resizable: aWindow isResizable;
 		host: (aWindow isMorphic 
-			ifTrue: [ self worldHost ]
-			ifFalse: [ BlOSWindowHost default ]);
+			ifTrue: [ self morphicWindowHost ]
+			ifFalse: [ aWindow isWorld 
+				ifTrue:[ self worldHost ]
+				ifFalse:[	 self osWindowHost ]]);
 		borderless: aWindow borderless;
 		fullscreen: aWindow fullscreen;
 		yourself.
@@ -71,6 +73,16 @@ PenSpaceBuilder >> initialize [
 	memento := Dictionary new.
 ]
 
+{ #category : #accessing }
+PenSpaceBuilder >> morphicWindowHost [
+	^BlMorphicWindowHost new
+]
+
+{ #category : #accessing }
+PenSpaceBuilder >> osWindowHost [
+	^BlOSWindowHost default
+]
+
 { #category : #building }
 PenSpaceBuilder >> updateViewDock: aDock [
 	| element oldElement |
@@ -82,7 +94,7 @@ PenSpaceBuilder >> updateViewDock: aDock [
 	oldElement ifNotNil: [ space root removeChild: oldElement ].
 	
 	"Add new element"
-	space root addChild: (element engineElement relocate: aDock position + aDock view position).
+	space root addChild: (element engineElement relocate: aDock position + element position).
 	memento at: aDock key put: element engineElement.
 ]
 

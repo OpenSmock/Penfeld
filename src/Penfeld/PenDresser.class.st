@@ -8,6 +8,11 @@ Class {
 	#category : #'Penfeld-Abstracts'
 }
 
+{ #category : #accessing }
+PenDresser class >> systemIcon [ 
+	^ self iconNamed: #paint
+]
+
 { #category : #dressing }
 PenDresser >> applyStyle: aRule [
 	styleSelector := aRule selector.
@@ -32,11 +37,19 @@ PenDresser >> backgroundImage: aValue [
 ]
 
 { #category : #styling }
+PenDresser >> backgroundPosition: aValue [
+]
+
+{ #category : #styling }
 PenDresser >> border: aValue [
 ]
 
 { #category : #styling }
 PenDresser >> borderLeft: aStyle [
+]
+
+{ #category : #styling }
+PenDresser >> borderRadius: aValue [
 ]
 
 { #category : #styling }
@@ -63,9 +76,14 @@ PenDresser >> doBeforeApplyStyle [
 
 { #category : #dressing }
 PenDresser >> dress [
-	self doBeforeApplyStyle.
-	self component matchedRules do: [ :rule | self applyStyle: rule ].
-	self doAfterApplyStyle.
+	self component isVisible 
+		ifTrue: [ 
+			self show.
+			self doBeforeApplyStyle.
+			self component matchedRules do: [ :rule | self applyStyle: rule ].
+			self doAfterApplyStyle.
+		]
+		ifFalse: [ self hide ]
 ]
 
 { #category : #accessing }

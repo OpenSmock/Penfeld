@@ -20,11 +20,36 @@ PenViewDock >> isViewDock [
 ]
 
 { #category : #opening }
-PenViewDock >> openInWorld [
-	| window |
+PenViewDock >> openInMorphic [
 	window := PenWindow withDock: self.
-	window morphic.
+	window useMorphic.
 	window open
+]
+
+{ #category : #opening }
+PenViewDock >> openInMorphicWindow [
+	
+	window := PenWindow withDock: self.
+	window useMorphic.
+	window open
+]
+
+{ #category : #opening }
+PenViewDock >> openInWindow [
+	window := PenWindow withDock: self.
+	window open
+]
+
+{ #category : #opening }
+PenViewDock >> openInWorld [
+	window := PenWindow withDock: self.
+	window useWorld.
+	window open
+]
+
+{ #category : #accessing }
+PenViewDock >> refresh [ 
+	self view refresh
 ]
 
 { #category : #accessing }

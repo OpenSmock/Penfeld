@@ -12,3 +12,14 @@ TPenBlocBackgroundStyle >> backgroundColor: aValue [
 TPenBlocBackgroundStyle >> backgroundImage: aValue [
 	self component engineElement background: aValue
 ]
+
+{ #category : #styling }
+TPenBlocBackgroundStyle >> backgroundPosition: aValue [
+	| element |
+	aValue = #center ifFalse: [ self flag: #toDo. ^ self ].
+	element := self imageElement.
+	element ifNil: [ ^ self ].
+	element constraintsDo: [ :c |
+		c horizontal alignCenter.
+		c vertical alignCenter ]
+]

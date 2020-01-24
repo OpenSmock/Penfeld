@@ -14,11 +14,13 @@ Class {
 		'styleClasses',
 		'visible',
 		'built',
+		'dirty',
 		'parent',
 		'transformation',
 		'alignment',
 		'pseudoClasses',
-		'engineElement'
+		'engineElement',
+		'dirtyLock'
 	],
 	#category : #'Penfeld-Components'
 }
@@ -26,6 +28,11 @@ Class {
 { #category : #accessing }
 PenDisplayComponent class >> styleName [
 	^ self subclassResponsibility 
+]
+
+{ #category : #accessing }
+PenDisplayComponent class >> systemIcon [ 
+	^ self iconNamed: #objects
 ]
 
 { #category : #accessing }
@@ -42,14 +49,18 @@ PenDisplayComponent >> activatePseudoClass: aSymbol value: anArg [
 
 { #category : #accessing }
 PenDisplayComponent >> addStyleClass: aSymbol [
-	self styleClasses add: aSymbol.
-	self refresh.
+	self styleClasses 
+		detect: [ :e | e = aSymbol ]
+		ifFound: [ ^ self ]
+		ifNone: [ 
+			self styleClasses add: aSymbol.
+			self refresh. ]
+	
 ]
 
 { #category : #accessing }
 PenDisplayComponent >> addStyleClasses: aList [
 	aList do: [ :aSymbol | self addStyleClass: aSymbol ].
-	self refresh.
 ]
 
 { #category : #building }
@@ -126,9 +137,12 @@ PenDisplayComponent >> clearAllPseudoClass [
 
 { #category : #accessing }
 PenDisplayComponent >> deactivatePseudoClass: aSymbol [
-	pseudoClasses := pseudoClasses reject: [ :association |
-		association key = aSymbol ].
-	self refresh.
+	| pseudoClass |
+	pseudoClass := pseudoClasses 
+		detect: [ :association | association key = aSymbol ]
+		ifNone: [ ^ self ].
+	pseudoClasses remove: pseudoClass. 
+	self refresh
 ]
 
 { #category : #accessing }
@@ -183,6 +197,8 @@ PenDisplayComponent >> initialize [
 	super initialize.
 	visible := true.
 	built := false.
+	dirty := false.
+	dirtyLock := Semaphore forMutualExclusion.
 	styleClasses := OrderedCollection new.
 	pseudoClasses := OrderedCollection new.
 ]
@@ -202,14 +218,31 @@ PenDisplayComponent >> isVisible [
 	^ visible
 ]
 
+{ #category : #private }
+PenDisplayComponent >> loopRefresh [
+	dirty ifFalse: [ ^ self ].
+	self isBuilt ifFalse: [ ^ self ].
+	dirtyLock critical:
+		[ self dresser dress. 
+		dirty := false ].
+]
+
 { #category : #accessing }
 PenDisplayComponent >> matchedRules [
 	^ self stylesheet matchingRulesFor: self.
 ]
 
 { #category : #opening }
+PenDisplayComponent >> open [
+	Penfeld open: self
+]
+
+{ #category : #opening }
 PenDisplayComponent >> openInWindow [
-	^ self notYetImplemented 
+	| view |
+	self isBuilt ifFalse: [ self build ].
+	view := PenView with: self.
+	view openInWindow
 ]
 
 { #category : #opening }
@@ -243,7 +276,7 @@ PenDisplayComponent >> pseudoClasses [
 
 { #category : #building }
 PenDisplayComponent >> refresh [
-	self isBuilt ifTrue: [ self dresser dress ]
+	dirtyLock critical: [ dirty := true ].
 ]
 
 { #category : #accessing }
@@ -255,6 +288,12 @@ PenDisplayComponent >> removeStyleClass: aSymbol [
 { #category : #accessing }
 PenDisplayComponent >> show [ 
 	self visible: true
+]
+
+{ #category : #accessing }
+PenDisplayComponent >> size: aPoint [
+	super size: aPoint.
+	self refresh
 ]
 
 { #category : #accessing }
@@ -287,7 +326,5 @@ PenDisplayComponent >> stylesheet: aStylesheet [
 PenDisplayComponent >> visible: aBoolean [
 	visible = aBoolean ifTrue: [ ^ self ].
 	visible := aBoolean.
-	self isBuilt ifTrue: [ self isVisible
-		ifTrue: [ self dresser show ]
-		ifFalse: [ self dresser hide ] ]
+	self refresh 
 ]

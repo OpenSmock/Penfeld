@@ -18,7 +18,7 @@ PenBlocBasicExamples class >> example10ComboBox [
 		)
 	].
 	component build.
-	component openInWorld.
+	component open.
 ]
 
 { #category : #examples }
@@ -28,7 +28,7 @@ PenBlocBasicExamples class >> exampleButton [
 		text: 'Button';
 		onActionDo: [ self inform: 'Do Action!' ].
 	component dresser: PenBlocButtonDresser new.
-	component openInWorld 
+	component open
 	
 ]
 
@@ -43,7 +43,7 @@ PenBlocBasicExamples class >> exampleCheckBoxLabelAfter [
 	model onUncheckedDo: [ self inform: 'Unchecked !' ].
 	model onValueChangedDo: [ self inform: 'ValueChanged !' ].
 	model dresser: PenBlocCheckBoxDresser new.
-	model openInWorld
+	model open
 ]
 
 { #category : #examples }
@@ -57,7 +57,7 @@ PenBlocBasicExamples class >> exampleCheckBoxLabelBefore [
 	model onUncheckedDo: [ self inform: 'Unchecked !' ].
 	model onValueChangedDo: [ self inform: 'ValueChanged !' ].
 	model dresser: PenBlocCheckBoxDresser new.
-	model openInWorld
+	model open
 ]
 
 { #category : #examples }
@@ -68,7 +68,7 @@ PenBlocBasicExamples class >> exampleComboBox [
 	model onSelectionChangedDo: [ self inform: model selection printString ].
 	model sortingBlock: [ :a :b | a text < b text ].
 	model dresser: PenBlocComboBoxDresser new.
-	model openInWorld.
+	model open
 ]
 
 { #category : #examples }
@@ -95,7 +95,7 @@ PenBlocBasicExamples class >> exampleDisabledButton [
 		position: 20@20;
 		onActionDo: [ self inform: 'Do Action!' ].
 	component dresser: PenBlocButtonDresser new.
-	component openInWorld 
+	component open
 	
 ]
 
@@ -106,7 +106,7 @@ PenBlocBasicExamples class >> exampleLabel [
 	model dresser: PenBlocLabelDresser new.
 	
 	window := PenWindow withDisplayComponent: model.
-	window openInWorld
+	window open
 ]
 
 { #category : #examples }
@@ -117,8 +117,7 @@ PenBlocBasicExamples class >> exampleLabel2 [
 		position: 100@100;
 		yourself.
 	model dresser: PenBlocLabelDresser new.
-	
-	model openInWorld
+	model open
 ]
 
 { #category : #examples }
@@ -136,7 +135,7 @@ PenBlocBasicExamples class >> exampleLoadingButton [
 		self inform: 'Do Action!' ] fork 
 	].
 	component dresser: PenBlocButtonDresser new.
-	component openInWorld 
+	component open
 	
 ]
 
@@ -146,7 +145,7 @@ PenBlocBasicExamples class >> exampleProgressBar [
 	progressBar := PenProgressBar new interval: (1 to: 10 by: 0.01).
 	progressBar position: 20@20.
 	progressBar dresser: PenBlocProgressBarDresser new.
-	progressBar openInWorld.
+	progressBar open.
 		
 	[[progressBar isMax] whileFalse: [ progressBar increment. (Duration milliSeconds: 10) wait ]] fork.
 ]
@@ -167,7 +166,7 @@ PenBlocBasicExamples class >> exampleProgressBarWithPercentage [
 	
 	progressBar onValueChangedDo: [ label text: (self textInPercent: progressBar) ].
 	
-	container openInWorld.
+	container open.
 		
 	[[progressBar isMax] whileFalse: [ progressBar increment. (Duration milliSeconds: 10) wait ]] fork.
 ]
@@ -179,7 +178,7 @@ PenBlocBasicExamples class >> exampleRadioButton [
 		text: 'Radio Button';
 		labelAfter.
 	button dresser: PenBlocRadioButtonDresser new. 
-	button openInWorld
+	button open
 ]
 
 { #category : #examples }
@@ -194,22 +193,22 @@ PenBlocBasicExamples class >> exampleRadioGroupLabelAfter [
 	container := PenContainer new 
 		layout: PenLinearLayout vertical;
 		addAllElements: radios.
-	container openInWorld
+	container open
 ]
 
 { #category : #examples }
 PenBlocBasicExamples class >> exampleRadioGroupLabelBefore [
-	| radios container group |
+	| radios container |
 	radios := ((1 to: 5) collect: [ :i |
 		PenRadioButton new 
 			key: ('radio', i printString) asSymbol;
 			text: 'Radio Button ', i printString;
 			labelBefore. ] ).
-	group := PenRadioGroup new addAll: radios.
+	PenRadioGroup new addAll: radios.
 	container := PenContainer new 
 		layout: PenLinearLayout vertical;
 		addAllElements: radios.
-	container openInWorld
+	container open
 ]
 
 { #category : #examples }
@@ -229,7 +228,7 @@ PenBlocBasicExamples class >> exampleSlider [
 	
 	slider onValueChangedDo: [ label text: (slider value round: 1) printString ].
 	
-	container openInWorld
+	container open
 	
 ]
 
@@ -250,7 +249,7 @@ PenBlocBasicExamples class >> exampleSlider2 [
 	
 	slider onValueChangedDo: [ label text: (slider value round: 1) printString ].
 	
-	container openInWorld
+	container open
 	
 ]
 
@@ -264,7 +263,7 @@ PenBlocBasicExamples class >> exampleToggleButton [
 		onUncheckedDo: [ self inform: 'Unchecked!' ];
 		onActionDo: [ self inform: 'Action' ].
 	component dresser: PenBlocButtonDresser new.
-	component openInWorld 
+	component open
 	
 ]
 

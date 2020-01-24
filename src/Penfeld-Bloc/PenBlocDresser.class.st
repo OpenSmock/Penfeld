@@ -4,6 +4,15 @@ Class {
 	#category : #'Penfeld-Bloc-Dressers'
 }
 
+{ #category : #dressing }
+PenBlocDresser >> dress [ 
+	self component key = #radarMenuRadio ifTrue: [ ('Value of radarMenuRadio before dress: ', self component value printString) traceCr ].
+	super dress.
+	self component key = #radarMenuRadio ifTrue: [ ('Value of radarMenuRadio after dress: ', self component value printString) traceCr ].
+	self component engineElement invalidate.
+	self component key = #radarMenuRadio ifTrue: [ self component engineElement background paint stops first printString traceCr ]
+]
+
 { #category : #accessing }
 PenBlocDresser >> dressersMap [ 
 	^ PenBlocDressersMap new
@@ -11,7 +20,7 @@ PenBlocDresser >> dressersMap [
 
 { #category : #accessing }
 PenBlocDresser >> eventStrategy [
-	^ PenBlocEventStrategy new
+	^ PenBlocEventStrategy
 ]
 
 { #category : #helpers }

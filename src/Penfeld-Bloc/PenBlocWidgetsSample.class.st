@@ -7,7 +7,7 @@ Class {
 { #category : #'instance creation' }
 PenBlocWidgetsSample class >> open [
 	<script: 'self open'>
-	^ self new open
+	^ self new openInWindow
 ]
 
 { #category : #accessing }
@@ -167,11 +167,6 @@ PenBlocWidgetsSample >> nodeForClass: aClass [
 	aClass subclasses do: [ :subclass | 
 		node addNode: (self nodeForClass: subclass)].
 	^ node
-]
-
-{ #category : #opening }
-PenBlocWidgetsSample >> open [
-	self openInWorld 
 ]
 
 { #category : #accessing }

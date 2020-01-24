@@ -12,7 +12,7 @@ PenBlocInputExamples class >> exampleInput [
 	component width: 200.
 	component height: 50.
 	component dresser: PenBlocInputDresser new.
-	component openInWorld
+	component open
 ]
 
 { #category : #'see class side' }

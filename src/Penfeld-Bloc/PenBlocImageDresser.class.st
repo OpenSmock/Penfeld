@@ -16,28 +16,34 @@ PenBlocImageDresser >> color: aValue [
 
 { #category : #dressing }
 PenBlocImageDresser >> doAfterApplyStyle [ 
-	| var element |
+	| element width height position x y |
 	
 	element := self component engineElement.
+	
+	form ifNil: [ ^ self ].
 
+	"Size"
+	width := self component width ifNotNil: [ self component width pref ].
+	width ifNil: [ width := form width ].
+	height := self component height ifNotNil: [ self component height pref ].
+	height ifNil: [ height := form height ].
+	form := form scaledToSize: width @ height.
+	
+	"Center image in shape"
+	x := (width - form width) / 2.
+	y := (height - form height) / 2.
+	(element childNamed: #image) 
+		background: form asBlBackground;
+		size: form width @ form height;
+		relocate: x @ y.
+	
 	"Position"
-	var := self component position.
-	var ifNotNil: [ element relocate: var ].
-
-	"Width"
-	var := self component width.
-	var ifNotNil: [ form := form scaledToSize: var pref @ form height ].
+	position := self component position.
+	position ifNotNil: [ element relocate: position ].	
 	
-	"Height"
-	var := self component height.
-	var ifNotNil: [ form := form scaledToSize: form width @ var pref ].
-		
 	element constraintsDo: [ :c | 
-		c horizontal exact: form width.
-		c vertical exact: form height ].	
-	
-	"Apply form"
-	element background: form asBlBackground.
+		c horizontal exact: width.
+		c vertical exact: height ].	
 ]
 
 { #category : #dressing }
@@ -47,7 +53,7 @@ PenBlocImageDresser >> doBeforeApplyStyle [
 
 { #category : #dressing }
 PenBlocImageDresser >> initEngineElement [
-	self component engineElement: BlElement new.
+	self component engineElement: (BlElement new addChild: BlElement new as: #image).
 	self component hasEvents ifFalse: [ self component engineElement preventMeAndChildrenMouseEvents ].
 ]
 

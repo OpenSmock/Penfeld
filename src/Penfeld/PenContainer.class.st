@@ -3,7 +3,8 @@ Class {
 	#superclass : #PenDisplayComponent,
 	#instVars : [
 		'elements',
-		'layout'
+		'layout',
+		'scrollable'
 	],
 	#category : #'Penfeld-Components'
 }
@@ -71,12 +72,18 @@ PenContainer >> getElement: aKey [
 PenContainer >> initialize [
 	super initialize.
 	elements := OrderedCollection new.
-	layout := PenFlowLayout new.
+	layout := PenAbsoluteLayout new.
+	scrollable := false.
 ]
 
 { #category : #testing }
 PenContainer >> isContainer [
 	^ true
+]
+
+{ #category : #testing }
+PenContainer >> isScrollable [
+	^ scrollable
 ]
 
 { #category : #accessing }
@@ -87,6 +94,12 @@ PenContainer >> layout [
 { #category : #accessing }
 PenContainer >> layout: anObject [
 	layout := anObject
+]
+
+{ #category : #private }
+PenContainer >> loopRefresh [
+	super loopRefresh.
+	self elements do: [ :e | e loopRefresh ]
 ]
 
 { #category : #accessing }
@@ -101,6 +114,11 @@ PenContainer >> removeAllElements [
 PenContainer >> removeElement: anElement [
 	self elements remove: anElement ifAbsent: [ ^ self].
 	self isBuilt ifTrue: [ self dresser removeElement: anElement ].
+]
+
+{ #category : #accessing }
+PenContainer >> scrollable [ 
+	scrollable := true.
 ]
 
 { #category : #accessing }

@@ -96,3 +96,15 @@ PenSliderTest >> testUpdateFraction [
 	self assert: slider index equals: 5.
 	self assert: slider value equals: 50.
 ]
+
+{ #category : #test }
+PenSliderTest >> testValue [
+	slider value: 30.
+	self assert: slider value equals: 30.
+	
+	"If value is not found in interval, do not change it."
+	slider value: 38.
+	self deny: slider value equals: 38.
+	self assert: slider value equals: 30.
+	
+]

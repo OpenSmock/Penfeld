@@ -2,7 +2,8 @@ Class {
 	#name : #PenTableItem,
 	#superclass : #PenInteractionElement,
 	#instVars : [
-		'content'
+		'content',
+		'raw'
 	],
 	#category : #'Penfeld-Elements'
 }
@@ -48,6 +49,22 @@ PenTableItem >> content [
 PenTableItem >> initialize [
 	super initialize.
 	content := Dictionary new
+]
+
+{ #category : #private }
+PenTableItem >> loopRefresh [
+	super loopRefresh.
+	self content valuesDo: [ :c | c loopRefresh ].
+]
+
+{ #category : #accessing }
+PenTableItem >> raw [
+	^ raw
+]
+
+{ #category : #accessing }
+PenTableItem >> raw: anObject [
+	raw := anObject
 ]
 
 { #category : #building }

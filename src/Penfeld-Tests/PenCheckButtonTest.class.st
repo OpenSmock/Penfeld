@@ -12,19 +12,23 @@ PenCheckButtonTest >> testOnCheckedDo [
 	| component i |
 	i := 0.
 	component := PenCheckButton new.
-	component value: false.
+	component uncheck.
 	component onCheckedDo: [ i := i + 1 ].
 	
-	component value: true.
+	component check.
+	Processor yield.
 	self assert: i equals: 1.
 	
-	component value: true.
+	component check.
+	Processor yield.
 	self assert: i equals: 1.
 	
-	component value: false.
+	component uncheck.
+	Processor yield.
 	self assert: i equals: 1.
 	
-	component value: true.
+	component check.
+	Processor yield.
 	self assert: i equals: 2.
 ]
 
@@ -33,11 +37,12 @@ PenCheckButtonTest >> testOnCheckedDo2Subscribptions [
 	| component i |
 	i := 0.
 	component := PenCheckButton new.
-	component value: false.
+	component setValue: false.
 	component onCheckedDo: [ i := i + 2 ].
 	component onCheckedDo: [ i := i - 1 ].
 	
 	component toggle.
+	Processor yield.
 	self assert: i equals: 1.
 ]
 
@@ -49,19 +54,24 @@ PenCheckButtonTest >> testOnUncheckedDo [
 	component value: false.
 	component onUncheckedDo: [ i := i + 1 ].
 	
-	component value: true.
+	component check.
+	Processor yield.
 	self assert: i equals: 0.
 	
-	component value: false.
+	component uncheck.
+	Processor yield.
 	self assert: i equals: 1.
 	
-	component value: false.
+	component uncheck.
+	Processor yield.
 	self assert: i equals: 1.
 	
-	component value: true.
+	component check.
+	Processor yield.
 	self assert: i equals: 1.
 	
-	component value: false.
+	component uncheck.
+	Processor yield.
 	self assert: i equals: 2.
 ]
 
@@ -74,12 +84,15 @@ PenCheckButtonTest >> testOnValueChangedDo [
 	component onValueChangedDo: [ i := i + 1 ].
 	
 	component value: true.
+	Processor yield.
 	self assert: i equals: 1.
 	
 	component value: true.
+	Processor yield.
 	self assert: i equals: 1.
 	
 	component value: false.
+	Processor yield.
 	self assert: i equals: 2.
 ]
 

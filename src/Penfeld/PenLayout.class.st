@@ -5,6 +5,11 @@ Class {
 }
 
 { #category : #testing }
+PenLayout >> isAbsolute [
+	^ false
+]
+
+{ #category : #testing }
 PenLayout >> isFlow [
 	^ false
 ]
@@ -15,6 +20,7 @@ PenLayout >> isLinear [
 ]
 
 { #category : #testing }
-PenLayout >> isPosition [
+PenLayout >> isPosition [ 
+	self deprecated: 'rename: absolute'.
 	^ false
 ]

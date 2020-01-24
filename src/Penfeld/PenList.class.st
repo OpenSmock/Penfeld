@@ -9,9 +9,7 @@ Class {
 		'sortingBlock',
 		'allowToDeselect',
 		'verticalScrollBar',
-		'horizontalScrollBar',
-		'showVerticalScrollBar',
-		'showHorizontalScrollBar'
+		'horizontalScrollBar'
 	],
 	#category : #'Penfeld-Elements'
 }
@@ -75,18 +73,6 @@ PenList >> defaultSortingBlock [
 	^ [:a :b | true]
 ]
 
-{ #category : #API }
-PenList >> hideHorizontalScrollBar [
-	self deprecated: ''.
-	showHorizontalScrollBar := false
-]
-
-{ #category : #API }
-PenList >> hideVerticalScrollBar [
-	self deprecated: ''.
-	showVerticalScrollBar := false
-]
-
 { #category : #initialization }
 PenList >> initialize [
 	super initialize.
@@ -96,25 +82,17 @@ PenList >> initialize [
 	allowToDeselect := true.
 	multiSelection := false.
 	sortingBlock := self defaultSortingBlock.
-	showHorizontalScrollBar := true.
-	showVerticalScrollBar := true.
-]
-
-{ #category : #testing }
-PenList >> isHorizontalScrollBarVisible [
-	self deprecated: ''.
-	^ showHorizontalScrollBar 
-]
-
-{ #category : #testing }
-PenList >> isVerticalScrollBarVisible [
-	self deprecated: ''.
-	^ showVerticalScrollBar
 ]
 
 { #category : #accessing }
 PenList >> items [
 	^ items sorted: self sortingBlock
+]
+
+{ #category : #dressing }
+PenList >> loopRefresh [
+	super loopRefresh.
+	self items do: [ :e | e loopRefresh ]
 ]
 
 { #category : #accessing }
@@ -154,14 +132,23 @@ PenList >> refresh [
 
 { #category : #removing }
 PenList >> removeAllItems [
+	items do: [ :item | self removeItem: item ].
 	self clearSelectedList.
-	items removeAll
+]
+
+{ #category : #removing }
+PenList >> removeItem: anElement [
+	self flag: #toDo.
+	"If an element is selected, unselect it first"
+	
+	self items remove: anElement ifAbsent: [ ^ self ].
+	self refresh
 ]
 
 { #category : #selecting }
 PenList >> select: anItem [
 	| index |
-	self flag: 'To optimize: Send selection changed when selection has changed.'.
+	self flag: 'Send selection changed when selection has changed.'.
 	
 	self allowToSelect ifFalse: [ ^self ].
 	
@@ -209,30 +196,21 @@ PenList >> selectionChangedEvent [
 			ifTrue: [ eventBinding executeCallback ]].
 ]
 
+{ #category : #accessing }
+PenList >> selectionValues [
+	^ self selectedIndexList collect: [ :i | self items at: i ].
+]
+
 { #category : #private }
 PenList >> setSelected: anItem [
 	anItem activatePseudoClass: #checked.
 	anItem deactivatePseudoClass: #unchecked.
-	anItem refresh
 ]
 
 { #category : #private }
 PenList >> setUnselected: anItem [
 	anItem deactivatePseudoClass: #checked.
 	anItem activatePseudoClass: #unchecked.
-	anItem refresh
-]
-
-{ #category : #API }
-PenList >> showHorizontalScrollBar [
-	self deprecated: ''.
-	showHorizontalScrollBar := true
-]
-
-{ #category : #API }
-PenList >> showVerticalScrollBar [
-	self deprecated: ''.
-	showVerticalScrollBar := true
 ]
 
 { #category : #accessing }

@@ -19,7 +19,7 @@ PenBlocTreeTableWithWidgetsExamples class >> example [
 		PenSection new selector: #numberOfVariables; size: 40.
 		PenSection new selector: #checkbox; size: 60.
 		PenSection new selector: #radioGroup; size: 100 }.
-	model root: (self nodeForClass: Model).
+	model root: (self nodeForClass: PenComponent).
 	model showRoot: true.
 	model header: self header.
 	model showHeader: true.
@@ -28,7 +28,7 @@ PenBlocTreeTableWithWidgetsExamples class >> example [
 	model expandAll.
 	model dresser: PenBlocTreeTableDresser new.
 	model sortingBlock: [ :a :b | a key < b key ].
-	model openInWorld 
+	model open
 ]
 
 { #category : #'examples - instance creation' }

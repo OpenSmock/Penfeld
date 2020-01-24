@@ -8,14 +8,20 @@ Class {
 PenBlocTableExamples class >> allSubclasses: aClass [
 	| list |
 	list := OrderedCollection new.
-	aClass withAllSubclassesDo: [ :class | | row |
-		row := PenTableItem new.
-		row key: class name asSymbol.
-		row dresser: PenBlocTableItemDresser new.
-		row atSection: #name put: (PenLabel text: class name).
-		row atSection: #numberOfSubclasses put: (PenLabel text: class subclasses size printString).
-		row atSection: #numberOfVariables put: (PenLabel text: class instanceVariables size printString).
-		list add: row].
+	aClass
+		withAllSubclassesDo: [ :class | 
+			| row |
+			row := PenTableItem new.
+			row key: class name asSymbol.
+			row dresser: PenBlocTableItemDresser new.
+			row atSection: #name put: (PenLabel text: class name).
+			row
+				atSection: #numberOfSubclasses
+				put: (PenLabel text: class subclasses size printString).
+			row
+				atSection: #numberOfVariables
+				put: (PenLabel text: class instVarNames size printString).
+			list add: row ].
 	^ list
 ]
 
@@ -28,12 +34,13 @@ PenBlocTableExamples class >> example [
 		PenSection new selector: #numberOfSubclasses; size: 40.
 		PenSection new selector: #numberOfVariables; size: 40 }.
 	component header: self header.
-	component addAllItems: (self allSubclasses: Model).
+	component addAllItems: (self allSubclasses: PenComponent).
 	component dresser: PenBlocTableDresser new.
 	component sortingBlock: [ :a :b | a key < b key ].
 	component dragSections: true.
 	component allowToSelect: true.
-	component openInWorld
+	component onSelectionChangedDo: [ self inform: component selection printString ].
+	component open
 
 ]
 
@@ -46,7 +53,7 @@ PenBlocTableExamples class >> exampleMultiSelection [
 		PenSection new selector: #numberOfSubclasses; size: 40.
 		PenSection new selector: #numberOfVariables; size: 40 }.
 	component header: self header.
-	component addAllItems: (self allSubclasses: Model).
+	component addAllItems: (self allSubclasses: PenComponent).
 	component dresser: PenBlocTableDresser new.
 	component sortingBlock: [ :a :b | a key < b key ].
 	component dragSections: true.
@@ -64,7 +71,7 @@ PenBlocTableExamples class >> exampleWithScrollBar [
 		PenSection new selector: #numberOfSubclasses; size: 40.
 		PenSection new selector: #numberOfVariables; size: 40 }.
 	component header: self header.
-	component addAllItems: (self allSubclasses: Model).
+	component addAllItems: (self allSubclasses: PenComponent).
 	component dresser: PenBlocTableDresser new.
 	component sortingBlock: [ :a :b | a key < b key ].
 	component dragSections: true.
