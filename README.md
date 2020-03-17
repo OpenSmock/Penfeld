@@ -3,7 +3,7 @@
 ```Smalltalk
 Metacello new
    baseline: 'Penfeld';
-   repository: 'github://plantec/penfeld/src';
+   repository: 'github://OpenSmock/Penfeld/src';
    load
 ```
 # Examples
