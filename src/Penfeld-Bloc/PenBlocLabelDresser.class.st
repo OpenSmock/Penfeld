@@ -1,8 +1,6 @@
 Class {
 	#name : #PenBlocLabelDresser,
 	#superclass : #PenBlocDresser,
-	#traits : 'TPenBlocFontStyle + TPenBlocMarginStyle',
-	#classTraits : 'TPenBlocFontStyle classTrait + TPenBlocMarginStyle classTrait',
 	#instVars : [
 		'ropedText'
 	],
@@ -57,6 +55,19 @@ PenBlocLabelDresser >> initEngineElement [
 	element := self component engineElement.
 	element layout: BlFrameLayout new.
 	self component hasEvents ifFalse: [ element preventMeAndChildrenMouseEvents ].
+	element constraintsDo: [ :c |
+		c horizontal fitContent.
+		c vertical fitContent ].
+	element addChild: BlTextElement new as: #text.
+]
+
+{ #category : #dressing }
+PenBlocLabelDresser >> initEngineElementFor: aComponent [
+	| element |
+	aComponent engineElement: BlElement new.
+	element := aComponent engineElement.
+	element layout: BlFrameLayout new.
+	aComponent hasEvents ifFalse: [ element preventMeAndChildrenMouseEvents ].
 	element constraintsDo: [ :c |
 		c horizontal fitContent.
 		c vertical fitContent ].

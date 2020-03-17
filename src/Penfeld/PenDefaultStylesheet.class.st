@@ -1,24 +1,27 @@
 Class {
-	#name : #PenStylesheet,
-	#superclass : #Object,
+	#name : #PenDefaultStylesheet,
+	#superclass : #PenStylesheet,
+	#classVars : [
+		'Current'
+	],
 	#category : #'Penfeld-Utils'
 }
 
 { #category : #cleanup }
-PenStylesheet class >> cleanUp [ 
+PenDefaultStylesheet class >> cleanUp [ 
 	Current := nil
 ]
 
 { #category : #styles }
-PenStylesheet class >> colored [
+PenDefaultStylesheet class >> colored [
 	<script: 'self colored'>
 	Current := #coloredStyle.
 	^ self current 
 ]
 
 { #category : #private }
-PenStylesheet class >> coloredStyle [
-	^ self parse: (self createStylesheet2: {
+PenDefaultStylesheet class >> coloredStyle [
+	^ self parseString: (self createStylesheet2: {
 		#lightTextColor -> '#CDE1E4'.
 		#darkTextColor -> '#343A3B'.
 		#backgroundColor -> '#9AA3A4'.
@@ -32,7 +35,7 @@ PenStylesheet class >> coloredStyle [
 ]
 
 { #category : #private }
-PenStylesheet class >> createStylesheet2: colors [
+PenDefaultStylesheet class >> createStylesheet2: colors [
 	^ '
 * { 
 	font-size: 16;
@@ -107,7 +110,7 @@ comboBox.cbbutton {
 ]
 
 { #category : #private }
-PenStylesheet class >> createStylesheet: colors [
+PenDefaultStylesheet class >> createStylesheet: colors [
 	^ '
 * { 
 	font-size: 14;
@@ -140,11 +143,14 @@ label.title {
 	background-color: ', (colors at: #disabledColor), ';
  }
 
-button, toggle { 
+button { 
 	width: 100;
 	height: 30;
-	text-align: center;
 	margin: 5px 10px;
+}
+
+button,
+checkBox > box { 
 	background-color: ', (colors at: #buttonBackgroundColor), ';
 	border: 1px solid ', (colors at: #borderColor), ';
  }
@@ -181,22 +187,22 @@ shape {
 ]
 
 { #category : #accesing }
-PenStylesheet class >> current [
+PenDefaultStylesheet class >> current [
 	Current ifNil: [ Current := #lightStyle ].
 	^ self perform: Current.
 	
 ]
 
 { #category : #styles }
-PenStylesheet class >> dark [
+PenDefaultStylesheet class >> dark [
 	<script: 'self dark'>
 	Current := #darkStyle.
 	^ self current 
 ]
 
 { #category : #private }
-PenStylesheet class >> darkStyle [
-	^ self parse: (self createStylesheet: {
+PenDefaultStylesheet class >> darkStyle [
+	^ self parseString: (self createStylesheet: {
 		#textColor -> '#E6E6E6'.
 		#backgroundColor -> '#141414'.
 		#borderColor -> '#C8C8C8'.
@@ -208,15 +214,15 @@ PenStylesheet class >> darkStyle [
 ]
 
 { #category : #styles }
-PenStylesheet class >> light [
+PenDefaultStylesheet class >> light [
 	<script: 'self light'>
 	Current := #lightStyle.
 	^ self current 
 ]
 
 { #category : #private }
-PenStylesheet class >> lightStyle [
-	^ self parse: (self createStylesheet: {
+PenDefaultStylesheet class >> lightStyle [
+	^ self parseString: (self createStylesheet: {
 		#textColor -> '#1E1E1E'.
 		#backgroundColor -> '#F0F0F0'.
 		#borderColor -> '#505050'.
@@ -225,19 +231,4 @@ PenStylesheet class >> lightStyle [
 		#disabledColor -> '#787878'.
 		#buttonBackgroundColor -> '#D2D2D2'.
 	} asDictionary).
-]
-
-{ #category : #parsing }
-PenStylesheet class >> parse: aString [
-	^ PssSimpleParser parse: aString
-]
-
-{ #category : #parsing }
-PenStylesheet class >> parseString: aString [
-	^ self parserClass parse: aString
-]
-
-{ #category : #parsing }
-PenStylesheet class >> parserClass [ 
-	^ PssModelParser
 ]

@@ -6,5 +6,5 @@ Class {
 
 { #category : #accessing }
 PenToggleButton class >> styleName [
-	^ #toggle
+	^ #button
 ]

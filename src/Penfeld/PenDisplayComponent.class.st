@@ -10,6 +10,8 @@ Class {
 		'dresser',
 		'engine',
 		'dressersMap',
+		'style',
+		'customStyle',
 		'stylesheet',
 		'styleClasses',
 		'visible',
@@ -37,14 +39,36 @@ PenDisplayComponent class >> systemIcon [
 
 { #category : #accessing }
 PenDisplayComponent >> activatePseudoClass: aSymbol [
-	self pseudoClasses add: aSymbol -> nil.
-	self refresh.
+	self activatePseudoClass: aSymbol value: nil.
 ]
 
 { #category : #accessing }
 PenDisplayComponent >> activatePseudoClass: aSymbol value: anArg [
 	self pseudoClasses add: aSymbol -> anArg.
-	self refresh.
+	self isBuilt ifTrue: [ 
+		self buildStyle.
+		self refresh.
+	].
+]
+
+{ #category : #style }
+PenDisplayComponent >> addCustomStyle: aPropertyModel [
+	| decl |
+	decl := PssModelPropertyDeclaration new.
+	decl property: aPropertyModel class symbol.
+	decl model: aPropertyModel.
+	customStyle add: decl. 
+	self isBuilt ifTrue: [ self buildStyle ].
+]
+
+{ #category : #style }
+PenDisplayComponent >> addCustomStyle: aPropertyModel named: aSymbol [
+	| decl |
+	decl := PssModelPropertyDeclaration new.
+	decl property: aSymbol.
+	decl model: aPropertyModel.
+	customStyle add: decl. 
+	self isBuilt ifTrue: [ self buildStyle ].
 ]
 
 { #category : #accessing }
@@ -54,7 +78,10 @@ PenDisplayComponent >> addStyleClass: aSymbol [
 		ifFound: [ ^ self ]
 		ifNone: [ 
 			self styleClasses add: aSymbol.
-			self refresh. ]
+			self isBuilt ifTrue: [ 
+				self buildStyle.
+				self refresh.	
+			] ]
 	
 ]
 
@@ -69,14 +96,15 @@ PenDisplayComponent >> build [
 	self isBuilt ifTrue: [ ^ self ].
 	
 	self stylesheet ifNil: [ self stylesheet: self chooseStylesheet ].
+	self buildStyle.
 	
 	self dresser ifNil: [ self dresser: (self chooseDresserFor: self) new ].
-	self dresser initEngineElement.
-	self dresser dress.
+	self dresser initEngineElementFor: self.
+	self dresser dress: self.
 	
 	self isVisible
-		ifTrue: [ self dresser show ]
-		ifFalse: [ self dresser hide ].
+		ifTrue: [ self dresser show: self ]
+		ifFalse: [ self dresser hide: self ].
 	
 	eventStrategy := self dresser eventStrategy.
 	eventBindings do: [ :eventBinding | (eventStrategy tryToBind: eventBinding)
@@ -92,6 +120,21 @@ PenDisplayComponent >> build: anIndex [
 		ifTrue: [ self activatePseudoClass: #nthChild value: #even ]
 		ifFalse: [ self activatePseudoClass: #nthChild value: #odd ].
 	self build.
+]
+
+{ #category : #building }
+PenDisplayComponent >> buildStyle [
+	self stylesheet ifNil: [ ^ self ].
+	
+	style := self stylesheet reducedDeclarationsFor: self.
+	
+	"Add custom style"
+	customStyle do: [ :customDecl |
+		style
+			detect: [ :decl | customDecl property = decl property ]	
+			ifFound: [ :decl | decl model overwriteMerge: customDecl model ]
+			ifNone: [ style add: customDecl ]
+	]
 ]
 
 { #category : #building }
@@ -124,7 +167,7 @@ PenDisplayComponent >> chooseStylesheet [
 				ifNil: [ ^ self parent chooseStylesheet ] 
 				ifNotNil: [ ^ self parent stylesheet ]
 		]
-		ifNil: [ 	^ PenStylesheet current ]
+		ifNil: [ 	^ PenDefaultStylesheet current ]
 	
 	
 ]
@@ -142,6 +185,7 @@ PenDisplayComponent >> deactivatePseudoClass: aSymbol [
 		detect: [ :association | association key = aSymbol ]
 		ifNone: [ ^ self ].
 	pseudoClasses remove: pseudoClass. 
+	self buildStyle.
 	self refresh
 ]
 
@@ -153,7 +197,6 @@ PenDisplayComponent >> dresser [
 { #category : #accessing }
 PenDisplayComponent >> dresser: aDresser [
 	dresser := aDresser.
-	aDresser component: self.
 	self refresh
 ]
 
@@ -187,6 +230,47 @@ PenDisplayComponent >> engineElement: anObject [
 	engineElement := anObject
 ]
 
+{ #category : #private }
+PenDisplayComponent >> forceRefresh [
+	"Do not use me, I am a private / debug utility method to force redraw."
+	self dresser dress: self.
+]
+
+{ #category : #style }
+PenDisplayComponent >> getCustomStyle: aSymbol [
+	customStyle 
+		detect: [ :decl | decl property = aSymbol ]
+		ifFound: [ :decl | ^ decl model ]
+		ifNone: [ ^ nil ]
+]
+
+{ #category : #style }
+PenDisplayComponent >> getStyle: aSymbol [
+	self isBuilt ifFalse: [ ^ nil ].
+	style 
+		detect: [ :decl | decl property = aSymbol ]
+		ifFound: [ :decl | ^ decl model ]
+		ifNone: [ ^ nil ]
+]
+
+{ #category : #accessing }
+PenDisplayComponent >> height [
+	^ (self getCustomStyle: #height)
+		ifNotNil: [ :model | model value ]
+		ifNil: [ 	nil ].
+]
+
+{ #category : #accessing }
+PenDisplayComponent >> height: aNumber [ 
+	| model declaration |
+	model := PssLengthModel new value: aNumber.
+	declaration := self getCustomStyle: #height.
+	declaration 
+		ifNotNil: [ declaration model overwriteMerge: model ]
+		ifNil: [ 	self addCustomStyle: model named: #height ].
+	self refresh
+]
+
 { #category : #accessing }
 PenDisplayComponent >> hide [ 
 	self visible: false
@@ -201,6 +285,7 @@ PenDisplayComponent >> initialize [
 	dirtyLock := Semaphore forMutualExclusion.
 	styleClasses := OrderedCollection new.
 	pseudoClasses := OrderedCollection new.
+	customStyle := OrderedCollection new.
 ]
 
 { #category : #testing }
@@ -223,7 +308,7 @@ PenDisplayComponent >> loopRefresh [
 	dirty ifFalse: [ ^ self ].
 	self isBuilt ifFalse: [ ^ self ].
 	dirtyLock critical:
-		[ self dresser dress. 
+		[ self dresser dress: self. 
 		dirty := false ].
 ]
 
@@ -265,7 +350,16 @@ PenDisplayComponent >> parent: aModel [
 
 { #category : #accessing }
 PenDisplayComponent >> position: aPoint [
+	| model positionDcl |
 	super position: aPoint.
+	model := PssPositionModel new 
+		position: PssPosition relative;
+		left: aPoint x;
+		top: aPoint y.
+	positionDcl := self getCustomStyle: #position.
+	positionDcl 
+		ifNotNil: [ positionDcl model overwriteMerge: model ]
+		ifNil: [ 	self addCustomStyle: model ].
 	self refresh
 ]
 
@@ -291,9 +385,26 @@ PenDisplayComponent >> show [
 ]
 
 { #category : #accessing }
-PenDisplayComponent >> size: aPoint [
-	super size: aPoint.
-	self refresh
+PenDisplayComponent >> size [
+	| width height |
+	width := (self getCustomStyle: #width)
+		ifNotNil: [ :model | model value ]
+		ifNil: [ ^ nil ].
+	height := (self getCustomStyle: #height)
+		ifNotNil: [ :model | model value ]
+		ifNil: [ ^ nil ].
+	^ width @ height
+]
+
+{ #category : #accessing }
+PenDisplayComponent >> size: aPoint [ 
+	self width: aPoint x.
+	self height: aPoint y.
+]
+
+{ #category : #accessing }
+PenDisplayComponent >> style [
+	^ style
 ]
 
 { #category : #accessing }
@@ -319,7 +430,8 @@ PenDisplayComponent >> stylesheet [
 { #category : #accessing }
 PenDisplayComponent >> stylesheet: aStylesheet [
 	stylesheet := aStylesheet.
-	self refresh.
+	self buildStyle.
+	self refresh
 ]
 
 { #category : #accessing }
@@ -327,4 +439,22 @@ PenDisplayComponent >> visible: aBoolean [
 	visible = aBoolean ifTrue: [ ^ self ].
 	visible := aBoolean.
 	self refresh 
+]
+
+{ #category : #accessing }
+PenDisplayComponent >> width [
+	^ (self getCustomStyle: #width)
+		ifNotNil: [ :model | model value ]
+		ifNil: [ 	nil ].
+]
+
+{ #category : #accessing }
+PenDisplayComponent >> width: aNumber [ 
+	| model declaration |
+	model := PssLengthModel new value: aNumber.
+	declaration := self getCustomStyle: #width.
+	declaration 
+		ifNotNil: [ declaration model overwriteMerge: model ]
+		ifNil: [ 	self addCustomStyle: model named: #width ].
+	self refresh
 ]

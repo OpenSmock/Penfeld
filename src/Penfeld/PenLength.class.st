@@ -9,6 +9,11 @@ Class {
 	#category : #'Penfeld-Elements support'
 }
 
+{ #category : #testing }
+PenLength class >> isDeprecated [
+	^ true
+]
+
 { #category : #'instance creation' }
 PenLength class >> pref: aNumber [
 	^ self new pref: aNumber

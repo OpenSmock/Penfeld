@@ -48,6 +48,18 @@ PenDisplayComponentTest >> testAddCallbackFor [
 ]
 
 { #category : #'tests-private' }
+PenDisplayComponentTest >> testBuildStyle [
+	| button |
+	button := PenButton new
+		stylesheet: PenDefaultStylesheet dark;
+		addCustomStyle: (PssBackgroundModel new color: (PssColorValue value: Color white));
+		build.
+	
+	"Button background color in PenStylesheet dark is #323232"
+	self assert: (button getStyle: #background) color equals: Color white. 
+]
+
+{ #category : #'tests-private' }
 PenDisplayComponentTest >> testBuildWithIndex [
 	| container item1 item2 item3 |
 	
@@ -82,4 +94,46 @@ PenDisplayComponentTest >> testChooseStylesheet [
 	container build.
 	
 	self assert: button stylesheet == stylesheet 
+]
+
+{ #category : #test }
+PenDisplayComponentTest >> testHeight [
+	| cmp |
+	cmp := PenDisplayComponent new.
+	cmp height: 120.
+	self assert: cmp height equals: 120.
+
+]
+
+{ #category : #test }
+PenDisplayComponentTest >> testSize [
+	| cmp |
+	"Normal case"
+	cmp := PenDisplayComponent new.
+	cmp size: 120 @ 130.
+	self assert: cmp width equals: 120.
+	self assert: cmp height equals: 130.
+	self assert: cmp size equals: 120 @ 130.
+	
+	"Height is not specified"
+	cmp := PenDisplayComponent new.
+	cmp width: 120.
+	self assert: cmp width equals: 120.
+	self assert: cmp height equals: nil.
+	self assert: cmp size equals: nil.
+	
+	"Width is not specified"
+	cmp := PenDisplayComponent new.
+	cmp height: 130.
+	self assert: cmp width equals: nil.
+	self assert: cmp height equals: 130.
+	self assert: cmp size equals: nil.
+]
+
+{ #category : #test }
+PenDisplayComponentTest >> testWidth [
+	| cmp |
+	cmp := PenDisplayComponent new.
+	cmp width: 130.
+	self assert: cmp width equals: 130.
 ]

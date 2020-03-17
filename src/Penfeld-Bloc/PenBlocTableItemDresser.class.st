@@ -1,8 +1,6 @@
 Class {
 	#name : #PenBlocTableItemDresser,
 	#superclass : #PenBlocDresser,
-	#traits : 'TPenBlocSizeStyle + TPenBlocBackgroundStyle + TPenBlocBorderStyle + TPenBlocMarginStyle',
-	#classTraits : 'TPenBlocSizeStyle classTrait + TPenBlocBackgroundStyle classTrait + TPenBlocBorderStyle classTrait + TPenBlocMarginStyle classTrait',
 	#category : #'Penfeld-Bloc-Dressers'
 }
 

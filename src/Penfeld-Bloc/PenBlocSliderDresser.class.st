@@ -1,8 +1,6 @@
 Class {
 	#name : #PenBlocSliderDresser,
 	#superclass : #PenBlocDresser,
-	#traits : 'TPenBlocMarginStyle',
-	#classTraits : 'TPenBlocMarginStyle classTrait',
 	#instVars : [
 		'progression',
 		'cursorSize',

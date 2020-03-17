@@ -50,5 +50,5 @@ BaselineOfPenfeld >> geometry: spec [
 BaselineOfPenfeld >> stylesheet: spec [
 	spec
 		baseline: 'PharoStylesheet'
-		with: [ spec repository: 'github://GlennCavarle/PharoStylesheet/src' ]
+		with: [ spec repository: 'github://OpenSmock/PharoStylesheet/src' ]
 ]

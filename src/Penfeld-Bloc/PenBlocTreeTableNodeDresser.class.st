@@ -1,8 +1,6 @@
 Class {
 	#name : #PenBlocTreeTableNodeDresser,
 	#superclass : #PenBlocDresser,
-	#traits : 'TPenBlocBackgroundStyle',
-	#classTraits : 'TPenBlocBackgroundStyle classTrait',
 	#instVars : [
 		'iconPushed'
 	],

@@ -9,6 +9,11 @@ Class {
 	#category : #'Penfeld-Elements support'
 }
 
+{ #category : #testing }
+PenSize class >> isDeprecated [
+	^ true
+]
+
 { #category : #'instance creation' }
 PenSize class >> width: x height: y [
 	^ self new

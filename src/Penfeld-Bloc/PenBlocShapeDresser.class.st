@@ -1,8 +1,6 @@
 Class {
 	#name : #PenBlocShapeDresser,
 	#superclass : #PenBlocDresser,
-	#traits : 'TPenBlocSizeStyle + TPenBlocMarginStyle + TPenBlocBackgroundStyle + TPenBlocBorderStyle',
-	#classTraits : 'TPenBlocSizeStyle classTrait + TPenBlocMarginStyle classTrait + TPenBlocBackgroundStyle classTrait + TPenBlocBorderStyle classTrait',
 	#category : #'Penfeld-Bloc-Dressers'
 }
 
@@ -24,6 +22,11 @@ PenBlocShapeDresser >> doAfterApplyStyle [
 	var ifNotNil: [ element height: var pref ].
 ]
 
+{ #category : #styling }
+PenBlocShapeDresser >> font: aModel on: aComponent [
+	"There is no text on shape"
+]
+
 { #category : #dressing }
 PenBlocShapeDresser >> initEngineElement [
 	| element |
@@ -35,4 +38,21 @@ PenBlocShapeDresser >> initEngineElement [
 	self component hasEvents ifFalse: [ element preventMeAndChildrenMouseEvents ].
 	
 	self component engineElement: element .
+]
+
+{ #category : #dressing }
+PenBlocShapeDresser >> initEngineElementFor: aComponent [
+	| element |
+	element := aComponent shape asBlElement.
+	element
+		border: BlBorder empty;
+		background: BlBackground transparent.
+	
+	aComponent hasEvents ifFalse: [ element preventMeAndChildrenMouseEvents ].
+	aComponent engineElement: element.
+]
+
+{ #category : #styling }
+PenBlocShapeDresser >> text: aModel on: aComponent [
+	"There is no text on shape"
 ]

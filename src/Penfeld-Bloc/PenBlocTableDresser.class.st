@@ -1,8 +1,6 @@
 Class {
 	#name : #PenBlocTableDresser,
 	#superclass : #PenBlocDresser,
-	#traits : 'TPenBlocBackgroundStyle + TPenBlocBorderStyle',
-	#classTraits : 'TPenBlocBackgroundStyle classTrait + TPenBlocBorderStyle classTrait',
 	#instVars : [
 		'dataSource',
 		'pushedItem'

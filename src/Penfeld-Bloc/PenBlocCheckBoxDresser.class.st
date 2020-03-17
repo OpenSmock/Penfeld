@@ -1,8 +1,6 @@
 Class {
 	#name : #PenBlocCheckBoxDresser,
 	#superclass : #PenBlocDresser,
-	#traits : 'TPenBlocMarginStyle + TPenBlocFontStyle',
-	#classTraits : 'TPenBlocMarginStyle classTrait + TPenBlocFontStyle classTrait',
 	#instVars : [
 		'ropedText',
 		'pushed'

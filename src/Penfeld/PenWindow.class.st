@@ -128,7 +128,7 @@ PenWindow >> getWindowSize [
 			ifNil: [ self defaultHeight ] ]
 		ifNotNil: [ self height ].
 	
-	^ width pref @ height pref
+	^ width @ height
 ]
 
 { #category : #accessing }
@@ -192,6 +192,28 @@ PenWindow >> isWindow [
 { #category : #testing }
 PenWindow >> isWorld [
 	^ type = #world
+]
+
+{ #category : #closing }
+PenWindow >> onCloseExecute: aBlock [
+	builder ifNil: [ self error: 'Nil builder !' ].
+	builder onClosing: handle do: aBlock
+]
+
+{ #category : #closing }
+PenWindow >> onCloseQuit [
+	^self onCloseExecute: [ self quitImage ].
+]
+
+{ #category : #closing }
+PenWindow >> onLastCloseExecute: aBlock [
+	builder ifNil: [ self error: 'Nil builder !' ].
+	builder onLastClose: handle do: aBlock
+]
+
+{ #category : #closing }
+PenWindow >> onLastCloseQuit [
+	^self onLastCloseExecute: [ self quitImage ]
 ]
 
 { #category : #opening }

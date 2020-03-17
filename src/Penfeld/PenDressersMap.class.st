@@ -8,6 +8,11 @@ Class {
 	#category : #'Penfeld-Abstracts'
 }
 
+{ #category : #'actions api' }
+PenDressersMap class >> new [
+	self shouldNotImplement 
+]
+
 { #category : #accessing }
 PenDressersMap >> dresserFor: aModelClass [
 	^ map at: aModelClass

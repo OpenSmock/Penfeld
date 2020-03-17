@@ -73,9 +73,42 @@ PenSpaceBuilder >> initialize [
 	memento := Dictionary new.
 ]
 
+{ #category : #closing }
+PenSpaceBuilder >> isLastOpened: handle [
+	| list |
+	list := BlSpace allInstances select: [ :e | e isOpened ].
+	(list size = 1 and: [ list includes: handle ])
+		ifTrue: [ ^ true ].
+	^ false
+]
+
+{ #category : #closing }
+PenSpaceBuilder >> isNoWindowOpened [
+	| list |
+	list := BlSpace allInstances select: [ :e | e isOpened ].
+	list size isEmpty
+		ifTrue: [ ^ true ].
+	^ false
+]
+
 { #category : #accessing }
 PenSpaceBuilder >> morphicWindowHost [
 	^BlMorphicWindowHost new
+]
+
+{ #category : #closing }
+PenSpaceBuilder >> onClosing: handle do: aBlock [
+		handle
+		addEventHandlerOn: BlSpaceClosedEvent
+		do: aBlock
+]
+
+{ #category : #closing }
+PenSpaceBuilder >> onLastClose: handle do: aBlock [
+	handle
+		addEventHandlerOn: BlSpaceClosedEvent
+		do: [ ((self isLastOpened: handle) or: [ self isNoWindowOpened ])
+				ifTrue: aBlock ]
 ]
 
 { #category : #accessing }

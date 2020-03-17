@@ -1,8 +1,6 @@
 Class {
 	#name : #PenBlocInputDresser,
 	#superclass : #PenBlocDresser,
-	#traits : 'TPenBlocBackgroundStyle + TPenBlocBorderStyle + TPenBlocFontStyle + TPenBlocMarginStyle + TPenBlocSizeStyle',
-	#classTraits : 'TPenBlocBackgroundStyle classTrait + TPenBlocBorderStyle classTrait + TPenBlocFontStyle classTrait + TPenBlocMarginStyle classTrait + TPenBlocSizeStyle classTrait',
 	#instVars : [
 		'dataSource',
 		'ropedText'

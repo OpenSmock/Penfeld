@@ -1,7 +1,7 @@
 Class {
 	#name : #PenBlocDresserTest,
 	#superclass : #TestCase,
-	#category : #'Penfeld-Bloc-Tests'
+	#category : #'Penfeld-Bloc-Tests-Dressers'
 }
 
 { #category : #parsing }

@@ -1,8 +1,17 @@
 Class {
 	#name : #PenBlocDressersMap,
 	#superclass : #PenDressersMap,
+	#classVars : [
+		'uniqInstance'
+	],
 	#category : #'Penfeld-Bloc-Utils'
 }
+
+{ #category : #'actions api' }
+PenBlocDressersMap class >> get [ 
+	uniqInstance ifNil: [ uniqInstance := self basicNew initialize ].
+	^ uniqInstance
+]
 
 { #category : #initialization }
 PenBlocDressersMap >> initMap [

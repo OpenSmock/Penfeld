@@ -31,7 +31,7 @@ PenContainer >> addElement: anElement afterIndex: anIndex [
 	
 	self isBuilt ifFalse: [ ^ self ].
 	anElement isBuilt ifFalse: [ anElement build ].
-	self dresser addElement: anElement at: anIndex.
+	self dresser addElement: anElement on: self at: anIndex.
 ]
 
 { #category : #accessing }
@@ -48,7 +48,7 @@ PenContainer >> build [
 	super build.
 	self elements withIndexDo: [ :element :index | 
 		element build: index.
-		self dresser addElement: element ].
+		self dresser addElement: element on: self].
 ]
 
 { #category : #accessing }

@@ -9,25 +9,56 @@ Class {
 
 { #category : #'tests - build geometry' }
 PenBlocShapeDresserTest >> testBuildCircle [
-	PenShape new shape: (GCircle center: 100 , 100 radius: 30); build.
+	<PenExample>
+	| shape |
+	shape := PenShape new 
+		shape: (GCircle center: 100 , 100 radius: 30); 
+		dresser: PenBlocShapeDresser new;
+		build.
+	^ shape engineElement
 ]
 
 { #category : #'tests - build geometry' }
 PenBlocShapeDresserTest >> testBuildEllipse [
-	PenShape new shape: (GEllipse center: 40 , 10 vertex: 60 , 10 coVertex: 40 , 20); build.
+	<PenExample>
+	| shape |
+	shape := PenShape new
+		shape: (GEllipse center: 40 , 10 vertex: 60 , 10 coVertex: 40 , 20);
+		dresser: PenBlocShapeDresser new;
+		build.
+	^ shape engineElement
 ]
 
 { #category : #'tests - build geometry' }
 PenBlocShapeDresserTest >> testBuildPolygon [
-	PenShape new shape: (GPolygon vertices: {(10 , 10) . (-10 , 10) . (-10 , -10)}); build.
+	<PenExample>
+	| shape |
+	shape := PenShape new 
+		shape: (GPolygon vertices: {(10 , 10) . (30 , 10) . (50 , 50) . (30 , 70) . (10 , 50)}); 
+		dresser: PenBlocShapeDresser new;
+		build.
+	^ shape engineElement
 ]
 
 { #category : #'tests - build geometry' }
 PenBlocShapeDresserTest >> testBuildRectangle [
-	PenShape new shape: (GRectangle origin: 1 , 3 corner: 3 , 0); build.
+	<PenExample>
+	| shape |
+	shape := PenShape new 
+		shape: (GRectangle origin: 0 , 0 corner: 100 , 50);
+		dresser: PenBlocShapeDresser new;
+		build.
+	^ shape engineElement
 ]
 
 { #category : #'tests - build geometry' }
 PenBlocShapeDresserTest >> testBuildTriangle [
-	PenShape new shape: (GTriangle with: 0 , 0 with: 2 , 0 with: 0 , 2); build.
+	<PenExample>
+	| shape |
+	shape := PenShape new 
+		shape: (GTriangle with: 10 , 10 with: 50 , 0 with: 50 , 50);
+		dresser: PenBlocShapeDresser new;
+		build.
+	
+	^ shape engineElement
 ]
