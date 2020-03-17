@@ -37,6 +37,7 @@ PenBlocContainerDresser >> initEngineElement [
 	| element |
 	self component engineElement: BlElement new.
 	element := self component engineElement.
+	self component hasEvents ifFalse: [ element preventMouseEvents ].
 	
 	element layout: (self component layout isLinear
 		ifTrue: [ self component layout isHorizontal 

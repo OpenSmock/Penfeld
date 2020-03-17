@@ -61,7 +61,6 @@ PenCheckButton >> onUncheckedDo: aBlock [
 PenCheckButton >> setValue: aBoolean [
 	value = aBoolean ifTrue: [ ^ false ].
 	value := aBoolean.
-	self key ifNotNil: [(self key, ' move to ', value printString) traceCr].
 	value 
 	ifTrue: [ 
 		self activatePseudoClass: #checked.

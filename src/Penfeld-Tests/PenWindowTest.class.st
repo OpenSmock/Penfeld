@@ -13,15 +13,15 @@ PenWindowTest >> testGetView [
 	view := PenView new key: #myView.
 	
 	window := PenWindow new 
-		addDock: (PenViewDock with: (PenView new key: #view2));
-		addDock: PenViewDock new;
-		addDock: (PenViewDock with: view).
+		addView: (PenView new key: #view2);
+		addView: PenView new;
+		addView: view.
 		
 	self assert: (window getView: #myView) equals: view.
 	
 	window := PenWindow new 
-		addDock: (PenViewDock with: (PenView new key: #view2));
-		addDock: PenViewDock new.
+		addView: (PenView new key: #view2);
+		addView: PenView new.
 		
 	self assert: (window getView: #myView) equals: nil.
 ]

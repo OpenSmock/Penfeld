@@ -11,6 +11,11 @@ Class {
 }
 
 { #category : #dressing }
+PenBlocTableDresser >> addComponent: anElement [
+	dataSource addElement: anElement engineElement.
+]
+
+{ #category : #dressing }
 PenBlocTableDresser >> doAfterApplyStyle [ 
 	| var element |
 	element := self component engineElement.
@@ -57,6 +62,11 @@ PenBlocTableDresser >> initEngineElement [
 		item engineElement when: BlMouseDownEvent do: [ :e | self whenMouseDownEventOn: item ].
 		item engineElement when: BlMouseUpEvent do: [ :e | self whenMouseUpEventOn: item ].
 		item engineElement when: BlMouseLeaveEvent do: [ :e | self whenMouseLeaveEventOn: item ].].
+]
+
+{ #category : #dressing }
+PenBlocTableDresser >> removeComponent: anElement [
+	dataSource removeElement: anElement engineElement.
 ]
 
 { #category : #events }

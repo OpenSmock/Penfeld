@@ -98,8 +98,8 @@ PenContainer >> layout: anObject [
 
 { #category : #private }
 PenContainer >> loopRefresh [
+	self elements do: [ :e | e loopRefresh ].
 	super loopRefresh.
-	self elements do: [ :e | e loopRefresh ]
 ]
 
 { #category : #accessing }

@@ -3,7 +3,7 @@ Class {
 	#superclass : #PenComponent,
 	#instVars : [
 		'screenConfiguration',
-		'docks',
+		'views',
 		'type',
 		'title',
 		'resizable',
@@ -19,6 +19,30 @@ Class {
 	],
 	#category : #'Penfeld-Components'
 }
+
+{ #category : #opening }
+PenWindow class >> openInMorphicWindow: aView [
+	^ self new 
+		addView: aView;
+		openInMorphicWindow;
+		yourself
+]
+
+{ #category : #opening }
+PenWindow class >> openInWindow: aView [
+	^ self new 
+		addView: aView;
+		openInWindow;
+		yourself
+]
+
+{ #category : #opening }
+PenWindow class >> openInWorld: aView [
+	^ self new 
+		addView: aView;
+		openInWorld;
+		yourself
+]
 
 { #category : #wizard }
 PenWindow class >> withDisplayComponent: anElement [
@@ -45,6 +69,11 @@ PenWindow class >> withView: aView [
 PenWindow >> addDock: aDock [
 	self docks add: aDock.
 	aDock window: self.
+]
+
+{ #category : #accessing }
+PenWindow >> addView: aView [
+	self views add: aView.
 ]
 
 { #category : #accessing }
@@ -100,33 +129,29 @@ PenWindow >> getDock: aKey [
 
 { #category : #accessing }
 PenWindow >> getView: aKey [
-	^ self docks 
-		detect: [ :d |
-			d view 
-				ifNil: [ false ]
-				ifNotNil: [ d view key = aKey ] ] 
-		ifFound: [ :d | d view ]
-		ifNone: [ nil ]
+	^ self views detect: [ :d | d key = aKey ] ifNone: [ nil ]
 ]
 
 { #category : #opening }
 PenWindow >> getWindowSize [
 	| width height element |
-	element := self docks first view displayComponent.
-	self flag: 'TODO: calulate size of all docks'.
+	element := self views first displayComponent.
 	
-	"Width and height"
-	width := self width 
-		ifNil: [ element width 
-			ifNotNil: [ element width ]
-			ifNil: [ self defaultWidth ] ]
-		ifNotNil: [ self width ].
-	
-	height := self height 
-		ifNil: [ element height 
-			ifNotNil: [ element height ]
-			ifNil: [ self defaultHeight ] ]
-		ifNotNil: [ self height ].
+	"Width"
+	width := self width.
+	width ifNil:[
+		element 
+			ifNil:[width := self defaultWidth]
+			ifNotNil:[width := (element width ifNotNil: [ element width ] ifNil: [ self defaultWidth ])].
+	].
+
+	"Height"
+	height := self height.
+	height ifNil:[
+		element 
+			ifNil:[height := self defaultHeight]
+			ifNotNil:[height := (element height ifNotNil: [ element height ] ifNil: [ self defaultHeight ])].
+	].
 	
 	^ width pref @ height pref
 ]
@@ -150,7 +175,7 @@ PenWindow >> id [
 PenWindow >> initialize [
 	super initialize.
 	type := #external.
-	docks := OrderedCollection new.
+	views := OrderedCollection new.
 	screenConfiguration := PenScreenConfiguration new.
 	resizable := true.
 	borderless := false.
@@ -194,12 +219,34 @@ PenWindow >> isWorld [
 	^ type = #world
 ]
 
+{ #category : #closing }
+PenWindow >> onCloseExecute: aBlock [
+	builder ifNil: [ self error: 'Nil builder !' ].
+	builder onClosing: handle do: aBlock
+]
+
+{ #category : #closing }
+PenWindow >> onCloseQuit [
+	^self onCloseExecute: [ self quitImage ].
+]
+
+{ #category : #closing }
+PenWindow >> onLastCloseExecute: aBlock [
+	builder ifNil: [ self error: 'Nil builder !' ].
+	builder onLastClose: handle do: aBlock
+]
+
+{ #category : #closing }
+PenWindow >> onLastCloseQuit [
+	^self onLastCloseExecute: [ self quitImage ]
+]
+
 { #category : #opening }
 PenWindow >> open [
 	handle := builder buildWindow: self.
 	opened := true.
 	process := [ [ 
-			self docks do: [ :aDock | aDock refresh ]. 
+			self views do: [ :aView | aView refresh ]. 
 			20 milliSeconds wait ] 
 		repeat ] fork.
 ]
@@ -211,14 +258,20 @@ PenWindow >> openInMorphic [
 ]
 
 { #category : #opening }
-PenWindow >> openInWindow [
-	self useWindow.
+PenWindow >> openInMorphicWindow [
+	self useMorphic.
 	self open 
 ]
 
 { #category : #opening }
+PenWindow >> openInWindow [
+	self useWindow.
+	self open
+]
+
+{ #category : #opening }
 PenWindow >> openInWorld [
-	self useMorphic.
+	self useWorld.
 	self open
 ]
 
@@ -253,6 +306,15 @@ PenWindow >> title: aString [
 ]
 
 { #category : #building }
+PenWindow >> updateView: aKey [
+	| view |
+	self flag: 'utility ?'.
+	self isOpened ifFalse: [ ^ self ].
+	view := self getView: aKey.
+	builder updateView: view
+]
+
+{ #category : #building }
 PenWindow >> updateViewDock: aViewDock [
 	self isOpened ifFalse: [ ^ self ].
 	builder updateViewDock: aViewDock
@@ -271,6 +333,11 @@ PenWindow >> useWindow [
 { #category : #accessing }
 PenWindow >> useWorld [
 	type := #world
+]
+
+{ #category : #accessing }
+PenWindow >> views [
+	^ views
 ]
 
 { #category : #wizard }

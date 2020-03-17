@@ -39,6 +39,16 @@ PenWindowBuilder >> fullscreen: aBoolean [
 	fullscreen := aBoolean
 ]
 
+{ #category : #closing }
+PenWindowBuilder >> onClosing: handle do: aBlock [
+	^self subclassResponsibility 
+]
+
+{ #category : #closing }
+PenWindowBuilder >> onLastClose: handle do: aBlock [
+	^ self subclassResponsibility
+]
+
 { #category : #building }
 PenWindowBuilder >> updateViewDock: aDock [
 	^ self subclassResponsibility  

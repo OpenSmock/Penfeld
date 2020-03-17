@@ -14,8 +14,6 @@ PenRadioGroup >> add: aRadioButton [
 	aRadioButton group: self.
 	aRadioButton uncheck.
 	aRadioButton onCheckedDo: [ self buttonStateChange: aRadioButton ].
-	
-	self radioButtons size = 1 ifTrue: [ aRadioButton check ]
 ]
 
 { #category : #adding }
@@ -29,6 +27,11 @@ PenRadioGroup >> buttonStateChange: aRadioButton [
 	checkedButton ifNotNil: [ checkedButton uncheck ].
 	checkedButton := aRadioButton.
 	self selectionChangedEvent
+]
+
+{ #category : #accessing }
+PenRadioGroup >> checkedButton [
+	^ checkedButton
 ]
 
 { #category : #initialization }

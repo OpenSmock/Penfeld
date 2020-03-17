@@ -30,6 +30,10 @@ PenList >> addItem: anItem [
 	anItem parent: self.
 	anItem onActionDo: [ self select: anItem ].
 	self setUnselected: anItem.
+	self isBuilt ifTrue: [ 
+		anItem build.
+		self dresser addComponent: anItem. ].
+	^ self
 ]
 
 { #category : #accessing }
@@ -126,21 +130,27 @@ PenList >> refresh [
 	| sortedList |
 	super refresh.
 	sortedList := self items.
+	sortedList withIndexDo: [ :item :index |
+		index odd 
+			ifTrue: [ item nthChildOdd ]
+			ifFalse: [ item nthChildEven ]
+	].
 	self selectedIndexList do: [ :i |
 		(sortedList at: i) activatePseudoClass: #checked ]
 ]
 
 { #category : #removing }
 PenList >> removeAllItems [
-	items do: [ :item | self removeItem: item ].
+	items copy do: [ :item | self removeItem: item ].
 	self clearSelectedList.
+	items := OrderedCollection new.
 ]
 
 { #category : #removing }
 PenList >> removeItem: anElement [
 	self flag: #toDo.
 	"If an element is selected, unselect it first"
-	
+	self dresser removeComponent: anElement.
 	self items remove: anElement ifAbsent: [ ^ self ].
 	self refresh
 ]

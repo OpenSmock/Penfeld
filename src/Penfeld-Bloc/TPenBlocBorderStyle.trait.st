@@ -11,7 +11,7 @@ TPenBlocBorderStyle >> border: aValue [
 	aValue do: 
 	[ :property | 
 		property value isNumber 
-		ifTrue: [ borderBuilder width: property ] 
+		ifTrue: [ borderBuilder width: property value ] 
 		ifFalse: 
 		[
 			property value isSymbol

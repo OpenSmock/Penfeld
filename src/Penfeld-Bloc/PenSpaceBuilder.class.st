@@ -20,7 +20,7 @@ PenSpaceBuilder >> borderless: aBoolean [
 
 { #category : #building }
 PenSpaceBuilder >> buildWindow: aWindow [
-	aWindow docks isEmpty ifTrue: [ self error: 'nothing to show' ].
+	aWindow views isEmpty ifTrue: [ self error: 'nothing to show' ].
 	
 	space := BlSpace new
 		title: aWindow title;
@@ -35,10 +35,8 @@ PenSpaceBuilder >> buildWindow: aWindow [
 		fullscreen: aWindow fullscreen;
 		yourself.
 	
-	aWindow docks do: [ :dock |
-		dock isViewDock 
-			ifTrue: [ self displayViewDock: dock on: space ]
-			ifFalse: [ self displayExternalDock: dock on: space ] ].
+	aWindow views do: [ :view |
+		view hasComponent ifTrue: [ self displayLeafView: view on: space ]].
 	
 	aWindow fullscreen 
 		ifTrue: [
@@ -54,6 +52,18 @@ PenSpaceBuilder >> buildWindow: aWindow [
 { #category : #building }
 PenSpaceBuilder >> displayExternalDock: aDock on: aWindow [
 	"do nothing yet"
+]
+
+{ #category : #building }
+PenSpaceBuilder >> displayLeafView: aView on: aSpace [
+	| element |
+	element := aView displayComponent.
+	element isBuilt ifFalse: [ element build ].
+	
+	aSpace root addChild: (element engineElement relocate: aView position).
+	
+	"Save DockView - BlElement association"
+	memento at: aView key put: element engineElement.
 ]
 
 { #category : #building }
@@ -73,14 +83,62 @@ PenSpaceBuilder >> initialize [
 	memento := Dictionary new.
 ]
 
+{ #category : #closing }
+PenSpaceBuilder >> isLastOpened: handle [
+	| list |
+	list := BlSpace allInstances select: [ :e | e isOpened ].
+	(list size = 1 and: [ list includes: handle ])
+		ifTrue: [ ^ true ].
+	^ false
+]
+
+{ #category : #closing }
+PenSpaceBuilder >> isNoWindowOpened [
+	| list |
+	list := BlSpace allInstances select: [ :e | e isOpened ].
+	list size isEmpty
+		ifTrue: [ ^ true ].
+	^ false
+]
+
 { #category : #accessing }
 PenSpaceBuilder >> morphicWindowHost [
 	^BlMorphicWindowHost new
 ]
 
+{ #category : #closing }
+PenSpaceBuilder >> onClosing: handle do: aBlock [
+		handle
+		addEventHandlerOn: BlSpaceClosedEvent
+		do: aBlock
+]
+
+{ #category : #closing }
+PenSpaceBuilder >> onLastClose: handle do: aBlock [
+	handle
+		addEventHandlerOn: BlSpaceClosedEvent
+		do: [ ((self isLastOpened: handle) or: [ self isNoWindowOpened ])
+				ifTrue: aBlock ]
+]
+
 { #category : #accessing }
 PenSpaceBuilder >> osWindowHost [
 	^BlOSWindowHost default
+]
+
+{ #category : #building }
+PenSpaceBuilder >> updateView: aView [
+	| element oldElement |
+	element := aView displayComponent.
+	element isBuilt ifFalse: [ element build ].
+	
+	"Remove previous element"
+	oldElement := memento at: aView key ifAbsent: [ nil ].
+	oldElement ifNotNil: [ space root removeChild: oldElement ].
+	
+	"Add new element"
+	space root addChild: (element engineElement relocate: aView position + element position).
+	memento at: aView key put: element engineElement.
 ]
 
 { #category : #building }

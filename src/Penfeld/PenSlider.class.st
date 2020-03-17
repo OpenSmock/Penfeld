@@ -108,6 +108,5 @@ PenSlider >> value [
 
 { #category : #api }
 PenSlider >> value: anObject [
-	index := self interval indexOf: anObject ifAbsent: [ ^ self ].
-	self index: index
+	self index: (self interval indexOf: anObject ifAbsent: [ ^ self ])
 ]

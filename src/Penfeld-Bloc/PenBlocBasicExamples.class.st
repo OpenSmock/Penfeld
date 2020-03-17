@@ -101,12 +101,10 @@ PenBlocBasicExamples class >> exampleDisabledButton [
 
 { #category : #examples }
 PenBlocBasicExamples class >> exampleLabel [
-	| model window |
+	| model |
 	model := PenLabel text: 'A Simple Label'.
 	model dresser: PenBlocLabelDresser new.
-	
-	window := PenWindow withDisplayComponent: model.
-	window open
+	model open
 ]
 
 { #category : #examples }

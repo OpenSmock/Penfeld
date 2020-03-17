@@ -5,7 +5,12 @@ Trait {
 
 { #category : #'styling - font' }
 TPenBlocFontStyle >> color: aValue [
-	self ropedText foreground: aValue
+	| element |
+	self ropedText foreground: aValue.
+	
+	self component icon ifNil: [ ^ self ].
+	element := self component engineElement childNamed: #icon.
+	element background: (self component icon repaintWith: aValue).
 ]
 
 { #category : #'styling - font' }

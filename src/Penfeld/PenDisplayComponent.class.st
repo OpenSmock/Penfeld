@@ -232,24 +232,44 @@ PenDisplayComponent >> matchedRules [
 	^ self stylesheet matchingRulesFor: self.
 ]
 
+{ #category : #styling }
+PenDisplayComponent >> nthChildEven [
+	self deactivatePseudoClass: #nthChild.
+	self activatePseudoClass: #nthChild value: #even.
+]
+
+{ #category : #styling }
+PenDisplayComponent >> nthChildOdd [
+	self deactivatePseudoClass: #nthChild.
+	self activatePseudoClass: #nthChild value: #odd.
+]
+
 { #category : #opening }
-PenDisplayComponent >> open [
+PenDisplayComponent >> open [ 
 	Penfeld open: self
+]
+
+{ #category : #opening }
+PenDisplayComponent >> openInMorphicWindow [
+	| view |
+	self isBuilt ifFalse: [ self build ].
+	view := PenView new displayComponent: self.
+	^view openInMorphicWindow
 ]
 
 { #category : #opening }
 PenDisplayComponent >> openInWindow [
 	| view |
 	self isBuilt ifFalse: [ self build ].
-	view := PenView with: self.
-	view openInWindow
+	view := PenView new displayComponent: self.
+	^view openInWindow
 ]
 
 { #category : #opening }
 PenDisplayComponent >> openInWorld [
 	| view |
 	self isBuilt ifFalse: [ self build ].
-	view := PenView with: self.
+	view := PenView new displayComponent: self.
 	view openInWorld
 ]
 
@@ -276,6 +296,7 @@ PenDisplayComponent >> pseudoClasses [
 
 { #category : #building }
 PenDisplayComponent >> refresh [
+	dirty ifTrue: [ ^ self ].
 	dirtyLock critical: [ dirty := true ].
 ]
 

@@ -180,6 +180,14 @@ shape {
 	border: 1px solid ', (colors at: #borderColor), ';
 }
 
+.center { 
+	text-align: center;
+}
+
+.red { 
+	color: red;
+}
+
 '
 ]
 

@@ -2,7 +2,6 @@ Class {
 	#name : #PenView,
 	#superclass : #PenComponent,
 	#instVars : [
-		'dock',
 		'displayComponent'
 	],
 	#category : #'Penfeld-Components'
@@ -23,7 +22,8 @@ PenView >> displayComponent [
 { #category : #accessing }
 PenView >> displayComponent: anObject [
 	displayComponent := anObject.
-	anObject addStyleClass: #root.
+	anObject ifNotNil:[ :d | d addStyleClass: #root].
+	
 ]
 
 { #category : #accessing }
@@ -36,6 +36,24 @@ PenView >> dock: anObject [
 	dock := anObject
 ]
 
+{ #category : #testing }
+PenView >> hasComponent [
+	^ self displayComponent notNil
+]
+
+{ #category : #accessing }
+PenView >> hide [
+	self hasComponent ifFalse: [ ^ self ].
+	self displayComponent hide.
+]
+
+{ #category : #testing }
+PenView >> isBuilt [
+	"return true when the view have no display component or return the build state of the display component"
+	self hasComponent ifFalse: [ ^ true ].
+	^ self displayComponent isBuilt
+]
+
 { #category : #opening }
 PenView >> openInMorphic [
 	dock ifNil: [ dock := PenViewDock with: self ].
@@ -44,23 +62,27 @@ PenView >> openInMorphic [
 
 { #category : #opening }
 PenView >> openInMorphicWindow [
-	dock ifNil: [ dock := PenViewDock with: self ].
-	dock openInWindow.
+	^PenWindow openInMorphicWindow: self
 ]
 
 { #category : #opening }
 PenView >> openInWindow [
-	dock ifNil: [ dock := PenViewDock with: self ].
-	dock openInWindow.
+	^PenWindow openInWindow: self
 ]
 
 { #category : #opening }
 PenView >> openInWorld [
-	dock ifNil: [ dock := PenViewDock with: self ].
-	dock openInWorld.
+	^PenWindow openInWorld: self
 ]
 
 { #category : #accessing }
 PenView >> refresh [
-	self displayComponent loopRefresh
+	self hasComponent ifFalse: [ ^ self ].
+	self displayComponent loopRefresh.
+]
+
+{ #category : #accessing }
+PenView >> show [
+	self hasComponent ifFalse: [ ^ self ].
+	self displayComponent show.
 ]

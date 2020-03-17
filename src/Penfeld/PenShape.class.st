@@ -23,7 +23,6 @@ PenShape >> fillColor [
 
 { #category : #accessing }
 PenShape >> fillColor: aColor [
-	self deprecated: 'Use stylesheet instead'.
 	fillColor = aColor ifTrue: [ ^ self ].
 	fillColor := aColor.
 	self refresh.
@@ -31,6 +30,9 @@ PenShape >> fillColor: aColor [
 
 { #category : #accessing }
 PenShape >> shape [
+	shape ifNil: [ ^ GRectangle 
+		origin: self position asGPoint 
+		corner: (self position + (self width pref @ self height pref)) asGPoint ].
 	^ shape
 ]
 
