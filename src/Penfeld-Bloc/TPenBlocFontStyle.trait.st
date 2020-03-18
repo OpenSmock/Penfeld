@@ -3,6 +3,11 @@ Trait {
 	#category : #'Penfeld-Bloc-Styles'
 }
 
+{ #category : #testing }
+TPenBlocFontStyle classSide >> isDeprecated [
+	^ true
+]
+
 { #category : #'styling - font' }
 TPenBlocFontStyle >> color: aValue [
 	self ropedText foreground: aValue

@@ -3,6 +3,11 @@ Trait {
 	#category : #'Penfeld-Bloc-Styles'
 }
 
+{ #category : #testing }
+TPenBlocBorderStyle classSide >> isDeprecated [
+	^ true
+]
+
 { #category : #'styling - border' }
 TPenBlocBorderStyle >> border: aValue [
 	| borderBuilder |	

@@ -3,6 +3,11 @@ Trait {
 	#category : #'Penfeld-Bloc-Styles'
 }
 
+{ #category : #testing }
+TPenBlocSizeStyle classSide >> isDeprecated [
+	^ true
+]
+
 { #category : #'styling - size' }
 TPenBlocSizeStyle >> height: aValue [
 	self component engineElement constraintsDo: [ :c |

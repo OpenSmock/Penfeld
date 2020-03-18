@@ -3,6 +3,11 @@ Trait {
 	#category : #'Penfeld-Bloc-Styles'
 }
 
+{ #category : #testing }
+TPenBlocMarginStyle classSide >> isDeprecated [
+	^ true
+]
+
 { #category : #'styling - margin' }
 TPenBlocMarginStyle >> margin: aValue [
 	| insets array |

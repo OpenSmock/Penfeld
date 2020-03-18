@@ -267,6 +267,11 @@ PenBlocBasicExamples class >> exampleToggleButton [
 	
 ]
 
+{ #category : #testing }
+PenBlocBasicExamples class >> isDeprecated [ 
+	^ true
+]
+
 { #category : #examples }
 PenBlocBasicExamples class >> textInPercent: aSlider [
 	^ (aSlider fraction * 100) rounded printString, ' pourcents'

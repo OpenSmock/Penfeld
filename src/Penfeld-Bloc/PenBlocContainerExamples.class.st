@@ -105,6 +105,11 @@ PenBlocContainerExamples class >> exampleShape [
 		openInWorld 
 ]
 
+{ #category : #testing }
+PenBlocContainerExamples class >> isDeprecated [ 
+	^ true
+]
+
 { #category : #examples }
 PenBlocContainerExamples class >> showShape: aShape [
 	mainContainer ifNil: [ ^ self ].

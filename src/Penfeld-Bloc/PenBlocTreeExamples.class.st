@@ -49,6 +49,11 @@ PenBlocTreeExamples class >> exampleWithRoot [
 	component open
 ]
 
+{ #category : #testing }
+PenBlocTreeExamples class >> isDeprecated [ 
+	^ true
+]
+
 { #category : #'examples - instance creation' }
 PenBlocTreeExamples class >> nodeForClass: aClass [
 	| node |

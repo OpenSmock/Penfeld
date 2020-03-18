@@ -59,6 +59,11 @@ PenBlocListExamples class >> exampleWithoutSelection [
 	model open
 ]
 
+{ #category : #testing }
+PenBlocListExamples class >> isDeprecated [ 
+	^ true
+]
+
 { #category : #opening }
 PenBlocListExamples class >> spaceBackground [
 	^ Color r: 128 g: 128 b: 128 range: 255

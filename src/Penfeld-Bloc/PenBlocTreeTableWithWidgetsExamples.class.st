@@ -44,6 +44,11 @@ PenBlocTreeTableWithWidgetsExamples class >> header [
 	
 ]
 
+{ #category : #testing }
+PenBlocTreeTableWithWidgetsExamples class >> isDeprecated [ 
+	^ true
+]
+
 { #category : #'examples - instance creation' }
 PenBlocTreeTableWithWidgetsExamples class >> nodeForClass:  aClass [
 	| node |

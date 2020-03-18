@@ -92,6 +92,11 @@ PenBlocTableExamples class >> header [
 	
 ]
 
+{ #category : #testing }
+PenBlocTableExamples class >> isDeprecated [ 
+	^ true
+]
+
 { #category : #'see class side' }
 PenBlocTableExamples >> seeClassSide [
 ]

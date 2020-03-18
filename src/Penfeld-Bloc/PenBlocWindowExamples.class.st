@@ -32,6 +32,11 @@ PenBlocWindowExamples class >> exampleFullscreenWindow [
 		open
 ]
 
+{ #category : #testing }
+PenBlocWindowExamples class >> isDeprecated [ 
+	^ true
+]
+
 { #category : #examples }
 PenBlocWindowExamples class >> window1 [
 	| container label button window |

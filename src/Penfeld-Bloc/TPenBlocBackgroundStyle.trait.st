@@ -3,6 +3,11 @@ Trait {
 	#category : #'Penfeld-Bloc-Styles'
 }
 
+{ #category : #testing }
+TPenBlocBackgroundStyle classSide >> isDeprecated [
+	^ true
+]
+
 { #category : #'styling - background' }
 TPenBlocBackgroundStyle >> backgroundColor: aValue [
 	self component engineElement background: aValue
