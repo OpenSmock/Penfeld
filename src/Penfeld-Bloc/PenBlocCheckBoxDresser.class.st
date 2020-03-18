@@ -26,6 +26,7 @@ PenBlocCheckBoxDresser >> doBeforeApplyStyleOn: aComponent [
 		ifTrue: [ BlVisibility visible ]
 		ifFalse: [ BlVisibility gone ]).
 
+	(aComponent engineElement childNamed: #text) text: aComponent text asRopedText
 ]
 
 { #category : #dressing }
