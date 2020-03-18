@@ -13,85 +13,72 @@ Class {
 	#category : #'Penfeld-Bloc-Dressers'
 }
 
-{ #category : #styling }
-PenBlocComboBoxDresser >> backgroundColor: aValue [
-	(styleSelector styleClasses includes: #cbbutton) 
-	ifTrue: [ 
-		button background: aValue.
-		list background: aValue.
-	]
-	ifFalse: [ 
-		self component engineElement background: aValue.	
-		(button childNamed: #triangle) background: aValue
-	]
-]
-
 { #category : #events }
-PenBlocComboBoxDresser >> buttonReceiveMouseDownEvent [
-	self component activatePseudoClass: #active.
+PenBlocComboBoxDresser >> buttonReceiveMouseDownEventOn: aComponent [
+	aComponent activatePseudoClass: #active.
 	buttonPushed := true.
 ]
 
 { #category : #events }
-PenBlocComboBoxDresser >> buttonReceiveMouseLeaveEvent [
-	self component clearAllPseudoClass.
+PenBlocComboBoxDresser >> buttonReceiveMouseLeaveEventOn: aComponent [
+	aComponent clearAllPseudoClass.
 	buttonPushed := false.
 ]
 
 { #category : #events }
-PenBlocComboBoxDresser >> buttonReceiveMouseUpEvent [
+PenBlocComboBoxDresser >> buttonReceiveMouseUpEventOn: aComponent [
 	buttonPushed ifFalse: [^ self].
-	self toggleList.
-	self component refresh.
+	self toggleList: aComponent.
+	aComponent refresh.
 	buttonPushed := false.
 ]
 
 { #category : #dressing }
-PenBlocComboBoxDresser >> doAfterApplyStyle [
+PenBlocComboBoxDresser >> doAfterApplyStyleOn: aComponent [
 	
 	"Apply roped text"
-	self component engineElement childNamed: #text
+	aComponent engineElement childNamed: #text
 		ifFound: [ :anElement | anElement text: ropedText ]
 		ifNone: [].
 ]
 
 { #category : #dressing }
-PenBlocComboBoxDresser >> doBeforeApplyStyle [
-	ropedText := self component selectedItemString asRopedText
+PenBlocComboBoxDresser >> doBeforeApplyStyleOn: aComponent [
+	ropedText := aComponent selectedItemString asRopedText
 ]
 
 { #category : #protocol }
-PenBlocComboBoxDresser >> hideList [
-	self component engineElement space root removeChildNamed: #comboBoxList.
+PenBlocComboBoxDresser >> hideList: aComponent [
+	aComponent engineElement space root removeChildNamed: #comboBoxList.
 	listDisplayed := false.
 ]
 
 { #category : #dressing }
-PenBlocComboBoxDresser >> initEngineElement [
+PenBlocComboBoxDresser >> initEngineElementFor: aComponent [
 	listDisplayed := false.
 	
-	self component engineElement: BlElement new.
-	self component engineElement layout: BlLinearLayout vertical.
-	self component engineElement constraintsDo: [ :c |
+	aComponent engineElement: BlElement new.
+	aComponent engineElement layout: BlLinearLayout vertical.
+	aComponent engineElement constraintsDo: [ :c |
 		c horizontal fitContent.
 		c vertical fitContent ].
-	self initTop.
-	self initList.
+	self initTop: aComponent.
+	self initList: aComponent.
 	
-	button := self component engineElement childNamed: #button.
-	button when: BlMouseDownEvent do: [ :e | self buttonReceiveMouseDownEvent ].
-	button when: BlMouseUpEvent do: [ :e | self buttonReceiveMouseUpEvent ].
-	button when: BlMouseLeaveEvent do: [ :e | self buttonReceiveMouseLeaveEvent ].
+	button := aComponent engineElement childNamed: #button.
+	button when: BlMouseDownEvent do: [ :e | self buttonReceiveMouseDownEventOn: aComponent ].
+	button when: BlMouseUpEvent do: [ :e | self buttonReceiveMouseUpEventOn: aComponent ].
+	button when: BlMouseLeaveEvent do: [ :e | self buttonReceiveMouseLeaveEventOn: aComponent ].
 	
 	pushedItem := false.
-	self component items do: [ :item |
+	aComponent items do: [ :item |
 		item engineElement when: BlMouseDownEvent do: [ :e | self whenMouseDownEventOn: item ].
 		item engineElement when: BlMouseUpEvent do: [ :e | self whenMouseUpEventOn: item ].
 		item engineElement when: BlMouseLeaveEvent do: [ :e | self whenMouseLeaveEventOn: item ]].
 ]
 
 { #category : #dressing }
-PenBlocComboBoxDresser >> initList [
+PenBlocComboBoxDresser >> initList: aComponent [
 	| listElements |
 	dataSource := PenInfiniteDataSource new.
 	list := PenInfiniteListElement new.
@@ -99,7 +86,7 @@ PenBlocComboBoxDresser >> initList [
 		c horizontal exact: 170.
 		c vertical exact: 120]. 
 	
-	listElements := self component items collect: [ :item | 
+	listElements := aComponent items collect: [ :item | 
 		item engineElement 
 			constraintsDo: [ :c | c horizontal matchParent ];
 			yourself ].
@@ -108,7 +95,7 @@ PenBlocComboBoxDresser >> initList [
 ]
 
 { #category : #dressing }
-PenBlocComboBoxDresser >> initTop [
+PenBlocComboBoxDresser >> initTop: aComponent [
 	| group selectedItemGroup selectedItemText triangle |
 	group := BlElement new.
 	group layout: BlLinearLayout horizontal.
@@ -140,23 +127,23 @@ PenBlocComboBoxDresser >> initTop [
 	group addChild: selectedItemGroup as: #selectedItem.
 	group addChild: button as: #button.
 	
-	self component engineElement addChild: group as: #top.
+	aComponent engineElement addChild: group as: #top.
 ]
 
 { #category : #protocol }
-PenBlocComboBoxDresser >> showList [
+PenBlocComboBoxDresser >> showList: aComponent [
 	listDisplayed := true.
-	list relocate: self component engineElement positionInSpace + (0 @ 20). 
-	self component engineElement space root childNamed: #comboBoxList
+	list relocate: aComponent engineElement positionInSpace + (0 @ 20). 
+	aComponent engineElement space root childNamed: #comboBoxList
 		ifFound: [ :e | self halt: 'TODO: close the first comboBox before open a second.' ]
-		ifNone: [ self component engineElement space root addChild: list as: #comboBoxList ]
+		ifNone: [ aComponent engineElement space root addChild: list as: #comboBoxList ]
 ]
 
 { #category : #protocol }
-PenBlocComboBoxDresser >> toggleList [
+PenBlocComboBoxDresser >> toggleList: aComponent [
 	listDisplayed
-		ifTrue: [ self hideList ]
-		ifFalse: [ self showList ]
+		ifTrue: [ self hideList: aComponent ]
+		ifFalse: [ self showList: aComponent ]
 ]
 
 { #category : #events }

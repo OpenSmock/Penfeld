@@ -5,12 +5,12 @@ Class {
 }
 
 { #category : #dressing }
-PenBlocTableItemDresser >> doAfterApplyStyle [ 
-	self component parent sections do: [ :section | 
+PenBlocTableItemDresser >> doAfterApplyStyleOn: aComponent [
+	aComponent parent sections do: [ :section | 
 		| selector content fixedSize |
 		selector := section selector.
 		fixedSize := section size.
-		content := self component atSection: selector.
+		content := aComponent atSection: selector.
 		content engineElement constraintsDo: [ :c | 
 			fixedSize isNumber ifTrue: [ c horizontal exact: fixedSize ].
 			fixedSize = #maximized ifTrue: [ c horizontal matchParent ]
@@ -18,29 +18,20 @@ PenBlocTableItemDresser >> doAfterApplyStyle [
 	].
 ]
 
-{ #category : #'styling - size' }
-PenBlocTableItemDresser >> height: aValue [
-	self component engineElement constraintsDo: [ :c |
-		c vertical exact: aValue ].
-	self component content do: [ :element |
-		element height: aValue.
-		element refresh ]
-]
-
 { #category : #dressing }
-PenBlocTableItemDresser >> initEngineElement [
-	self component engineElement: BlElement new.
-	self component engineElement layout: BlLinearLayout horizontal.
-	self component engineElement constraintsDo: [ :c |
+PenBlocTableItemDresser >> initEngineElementFor: aComponent [
+	aComponent engineElement: BlElement new.
+	aComponent engineElement layout: BlLinearLayout horizontal.
+	aComponent engineElement constraintsDo: [ :c |
 		c horizontal matchParent.
 		c vertical fitContent.
 	].
 	
-	self component parent sections do: [ :section | 
+	aComponent parent sections do: [ :section | 
 		| selector content |
 		selector := section selector.
-		content := self component atSection: selector.
-		self component engineElement addChild: content engineElement as: selector
+		content := aComponent atSection: selector.
+		aComponent engineElement addChild: content engineElement as: selector
 	].
 ]
 

@@ -7,45 +7,22 @@ Class {
 	#category : #'Penfeld-Bloc-Dressers'
 }
 
-{ #category : #styling }
-PenBlocTreeDresser >> backgroundColor: aValue [
-	self component engineElement background: aValue
-]
-
 { #category : #dressing }
-PenBlocTreeDresser >> doAfterApplyStyle [ 
-	| var element |
-	element := self component engineElement.
-
-	"Position"
-	var := self component position.
-	var ifNotNil: [ element relocate: var ].
-
-	"Width"
-	var := self component width.
-	var ifNotNil: [ element width: var pref ].
-	
-	"Height"
-	var := self component height.
-	var ifNotNil: [ element height: var pref ].
-]
-
-{ #category : #dressing }
-PenBlocTreeDresser >> doBeforeApplyStyle [
+PenBlocTreeDresser >> doBeforeApplyStyleOn: aComponent [
 	| listElements |
-	listElements := self component getExpandedNodesAsList collect: [ :item | 
+	listElements := aComponent getExpandedNodesAsList collect: [ :item | 
 		item engineElement ].
 	dataSource elements: listElements.
 	dataSource notifyChanged
 ]
 
 { #category : #dressing }
-PenBlocTreeDresser >> initEngineElement [
-	self component engineElement: PenInfiniteListElement new.
-	self component engineElement constraintsDo: [ :c |
+PenBlocTreeDresser >> initEngineElementFor: aComponent [
+	aComponent engineElement: PenInfiniteListElement new.
+	aComponent engineElement constraintsDo: [ :c |
 		c horizontal matchParent.
 		c vertical matchParent ].
 	
 	dataSource := PenInfiniteDataSource new.
-	self component engineElement dataSource: dataSource.
+	aComponent engineElement dataSource: dataSource.
 ]

@@ -4,11 +4,6 @@ Class {
 	#category : #'Penfeld-Bloc-Examples'
 }
 
-{ #category : #testing }
-PenBlocWidgetsSample class >> isDeprecated [ 
-	^ true
-]
-
 { #category : #'instance creation' }
 PenBlocWidgetsSample class >> open [
 	<script: 'self open'>

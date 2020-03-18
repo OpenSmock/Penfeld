@@ -17,7 +17,6 @@ PenBlocDressersMap class >> get [
 PenBlocDressersMap >> initMap [
 	map
 		at: PenContainer put: PenBlocContainerDresser ;
-		at: PenWindow put: PenBlocMorphicWindowDresser ;
 		at: PenLabel put: PenBlocLabelDresser ;
 		at: PenButton put: PenBlocButtonDresser ;
 		at: PenToggleButton put: PenBlocButtonDresser ;

@@ -9,28 +9,28 @@ Class {
 }
 
 { #category : #dressing }
-PenBlocTreeTableDresser >> doBeforeApplyStyle [
+PenBlocTreeTableDresser >> doBeforeApplyStyleOn: aComponent [
 	| listElements i |
 	i := 0.
-	listElements := self component getExpandedNodesAsList collect: [ :item | 
+	listElements := aComponent getExpandedNodesAsList collect: [ :item | 
 		i = 0 
 			ifTrue: [ i := 1 ]
 			ifFalse: [ i := 0. item refresh].
 		item engineElement ].
-	self component showHeader ifTrue: 
-		[ listElements addFirst: self component header engineElement ].
+	aComponent showHeader ifTrue: 
+		[ listElements addFirst: aComponent header engineElement ].
 	dataSource elements: listElements.
-	self component engineElement dataSource: dataSource.
+	aComponent engineElement dataSource: dataSource.
 	dataSource notifyChanged
 ]
 
 { #category : #dressing }
-PenBlocTreeTableDresser >> initEngineElement [
-	self component engineElement: PenInfiniteListElement new.
-	self component engineElement constraintsDo: [ :c |
+PenBlocTreeTableDresser >> initEngineElementFor: aComponent [
+	aComponent engineElement: PenInfiniteListElement new.
+	aComponent engineElement constraintsDo: [ :c |
 		c horizontal matchParent.
 		c vertical matchParent ].
 	
 	dataSource := PenInfiniteDataSource new.
-	self component engineElement dataSource: dataSource.
+	aComponent engineElement dataSource: dataSource.
 ]
