@@ -8,6 +8,11 @@ Class {
 }
 
 { #category : #dressing }
+PenBlocLabelDresser >> doBeforeApplyStyleOn: aComponent [
+	(aComponent engineElement childNamed: #text) text: aComponent text asRopedText
+]
+
+{ #category : #dressing }
 PenBlocLabelDresser >> initEngineElementFor: aComponent [
 	| element |
 	aComponent engineElement: BlElement new.

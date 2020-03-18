@@ -8,43 +8,26 @@ Class {
 	#category : #'Penfeld-Bloc-Dressers'
 }
 
-{ #category : #rendering }
-PenBlocListDresser >> doAfterApplyStyle [ 
-	| var |
-
-	"Position"
-	var := self component position.
-	var ifNotNil: [ self component engineElement relocate: var ].
-
-	"Width"
-	var := self component width.
-	var ifNotNil: [ self component engineElement width: var pref ].
-	
-	"Height"
-	var := self component height.
-	var ifNotNil: [ self component engineElement height: var pref ]
-]
-
 { #category : #dressing }
-PenBlocListDresser >> initEngineElement [
+PenBlocListDresser >> initEngineElementFor: aComponent [
 	| list |
 	dataSource := PenInfiniteDataSource new.
-	self component engineElement: PenInfiniteListElement new.
-	self component engineElement constraintsDo: [:c |
+	aComponent engineElement: PenInfiniteListElement new.
+	aComponent engineElement constraintsDo: [:c |
 		c horizontal matchParent.
 		c vertical matchParent]. 
 	
-	list := self component items collect: [ :item | 
+	list := aComponent items collect: [ :item | 
 		item engineElement 
 			constraintsDo: [ :c | c horizontal matchParent ];
 			yourself ].
 	dataSource elements: list.
-	self component engineElement dataSource: dataSource.
+	aComponent engineElement dataSource: dataSource.
 	
-	self component allowToSelect ifFalse: [ ^ self ].
+	aComponent allowToSelect ifFalse: [ ^ self ].
 
 	pushedItem := false.
-	self component items do: [ :item |
+	aComponent items do: [ :item |
 		item engineElement when: BlMouseDownEvent do: [ :e | self whenMouseDownEventOn: item ].
 		item engineElement when: BlMouseUpEvent do: [ :e | self whenMouseUpEventOn: item ].
 		item engineElement when: BlMouseLeaveEvent do: [ :e | self whenMouseLeaveEventOn: item ].].
