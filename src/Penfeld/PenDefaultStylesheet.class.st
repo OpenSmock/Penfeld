@@ -150,7 +150,7 @@ button {
 }
 
 button,
-checkBox > box { 
+checkBox { 
 	background-color: ', (colors at: #buttonBackgroundColor), ';
 	border: 1px solid ', (colors at: #borderColor), ';
  }
@@ -215,7 +215,7 @@ PenDefaultStylesheet class >> darkStyle [
 
 { #category : #styles }
 PenDefaultStylesheet class >> light [
-	<script: 'self light'>
+	<script>
 	Current := #lightStyle.
 	^ self current 
 ]
