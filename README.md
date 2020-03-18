@@ -8,4 +8,4 @@ Metacello new
 ```
 # Examples
 
-See `Penfeld-Bloc-Examples` or execute `PenBlocWidgetsSample>>#open`.
+See `Penfeld-Bloc-Tests` or execute `PenExamplesViewer>>#open`.
