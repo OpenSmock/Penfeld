@@ -23,3 +23,18 @@ PenBlocCheckBoxDresserTest >> testBuild [
 	
 	^ element
 ]
+
+{ #category : #tests }
+PenBlocCheckBoxDresserTest >> testBuildChecked [
+	<PenExample>
+	| cmp element |
+	cmp := PenCheckBox new
+		dresser: PenBlocCheckBoxDresser new;
+		check;
+		text: 'Hello world';
+		build.
+	element := cmp engineElement.
+	element forceLayout.
+	
+	^ element
+]
