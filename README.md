@@ -26,7 +26,7 @@ See `Penfeld-Bloc-Tests` or execute `PenExamplesViewer>>#open`.
 * **Eric Le Pors** - *Initial work* - [ELePors](https://github.com/ELePors)
 * **Pierre Laborde** - *Initial work* - [labordep](https://github.com/labordep)
 * **Steven Costiou** - *Initial work* - [StevenCostiou](https://github.com/StevenCostiou)
-* **Glenn** - *Pharo Stylesheet*
+* **Glenn** - *Pharo Stylesheet* - [GlennCavarle](https://github.com/GlennCavarle)
 
 ## License
 
