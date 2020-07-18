@@ -1,5 +1,7 @@
 # Penfeld
 
+![Penfeld Banner](PenfeldBanner.jpg)
+
 Penfeld is an User-Interface (UI) definition model framework for Pharo.
 Main principe of Penfeld is to be apart of UI technologies or engine.
 
