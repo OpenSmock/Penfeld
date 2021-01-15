@@ -17,14 +17,13 @@ BaselineOfPenfeld >> baseline: spec [
 			"Penfeld"
 			spec
 				package: 'Penfeld'
-				with: [ spec requires: #('PharoStylesheet' 'Bloc') ].
+				with: [ spec requires: #('PharoStylesheet' 'Geometry') ].
 			spec package: 'Penfeld-Tests' with: [ spec requires: 'Penfeld' ].
-			spec package: 'Penfeld-Bloc' with: [ spec requires: 'Penfeld' ].
+			spec package: 'Penfeld-Bloc' with: [ spec requires: #('Penfeld' 'Bloc') ].
 			spec package: 'Penfeld-Brick-TextEditor' with: [ spec requires: 'Penfeld-Bloc' ].
 			spec
 				package: 'Penfeld-Bloc-Tests'
-				with: [ spec requires: 'Penfeld-Bloc' ].
-			spec package: 'Penfeld-Tests' with: [ spec requires: 'Penfeld' ] ]
+				with: [ spec requires: 'Penfeld-Bloc' ] ]
 ]
 
 { #category : #dependencies }
