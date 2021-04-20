@@ -35,6 +35,8 @@ PenBlocScrollBarDresser >> initButtons [
 
 { #category : #initialization }
 PenBlocScrollBarDresser >> initEngineElement [
+
+	self deprecated: 'implement initEngineElementFor:'.
 	self model engineElement: BlElement new.
 	self model isHorizontal
 		ifTrue: [ 

@@ -97,6 +97,7 @@ PenBlocSliderDresser >> doBeforeApplyStyle [
 { #category : #dressing }
 PenBlocSliderDresser >> initEngineElement [
 	| bar |
+	self deprecated: 'implement initEngineElementFor:'.
 	cursorSize := 8@15.
 	barSize := 200@5.
 	sliderSize := (barSize x + cursorSize x) @ cursorSize y.
@@ -117,6 +118,31 @@ PenBlocSliderDresser >> initEngineElement [
 	self component engineElement when: BlDragEvent do: [ :e | self whenDragEvent: e ].
 	self component engineElement when: BlDragEndEvent do: [ :e | self whenDragEndEvent: e ].
 
+]
+
+{ #category : #dressing }
+PenBlocSliderDresser >> initEngineElementFor: aComponent [
+	
+	| bar |
+	cursorSize := 8@15.
+	barSize := 200@5.
+	sliderSize := (barSize x + cursorSize x) @ cursorSize y.
+	barPosition := (cursorSize x / 2) @ ((sliderSize y - barSize y) / 2).
+	
+	bar := (BlRectangle new extent: barSize) asElement.
+	bar relocate: barPosition.
+	bar border: BlBorder empty.
+	
+	aComponent engineElement: BlElement new.
+	aComponent engineElement size: sliderSize.
+	aComponent engineElement addChild: bar as: #bar.
+	aComponent engineElement addChild: (BlRectangle new extent: 8@15 ) asElement as: #cursor.
+	
+	minX := 0.
+	maxX := aComponent dresser barSize x.
+	aComponent engineElement when: BlDragStartEvent do: [ :e | self whenDragStartEvent: e ].
+	aComponent engineElement when: BlDragEvent do: [ :e | self whenDragEvent: e ].
+	aComponent engineElement when: BlDragEndEvent do: [ :e | self whenDragEndEvent: e ].
 ]
 
 { #category : #events }

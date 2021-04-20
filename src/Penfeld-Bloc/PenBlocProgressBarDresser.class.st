@@ -61,6 +61,8 @@ PenBlocProgressBarDresser >> height: aValue [
 
 { #category : #dressing }
 PenBlocProgressBarDresser >> initEngineElement [
+
+	self deprecated: 'implement initEngineElementFor:'.
 	self component engineElement: BlElement new.
 	self component engineElement addChild: BlElement new as: #bar.
 	

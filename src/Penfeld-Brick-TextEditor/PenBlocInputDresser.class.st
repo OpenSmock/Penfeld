@@ -45,6 +45,7 @@ PenBlocInputDresser >> doBeforeApplyStyle [
 { #category : #dressing }
 PenBlocInputDresser >> initEngineElement [
 	
+	self deprecated: 'implement initEngineElementFor:'.
 	self component engineElement: BrEditorElement new.	
 	dataSource := BrTextEditor new.
 	

@@ -20,6 +20,8 @@ PenBlocCodeEditorDresser >> behavior: aBehavior [
 
 { #category : #dressing }
 PenBlocCodeEditorDresser >> initEngineElement [
+
+	self deprecated: 'implement initEngineElementFor:'.
 	super initEngineElement.
 	styler := BrRBTextStyler new.
 	styler classOrMetaClass: self behavior.
