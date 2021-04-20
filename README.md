@@ -11,12 +11,24 @@ Penfeld provide instanciation of his model to some supported UI engine in Pharo 
 
 ### Installing Penfeld
 
+#### Complete (with Bloc)
+
 ```Smalltalk
 Metacello new
    baseline: 'Penfeld';
    repository: 'github://OpenSmock/Penfeld/src';
    load
 ```
+
+#### Only Core
+
+```Smalltalk
+Metacello new
+   baseline: 'PenfeldCore';
+   repository: 'github://OpenSmock/Penfeld/src';
+   load
+```
+
 ### Examples
 
 See `Penfeld-Bloc-Tests` or execute `PenExamplesViewer>>#open`.
