@@ -24,6 +24,15 @@ Metacello new
 
 Work in progress...
 
+#### For Pharo 8 - Only Penfeld core (without graphic engine)
+
+```Smalltalk
+Metacello new
+   baseline: 'PenfeldCore';
+   repository: 'github://OpenSmock/Penfeld/src';
+   load
+```
+
 #### For Pharo 8 with Bloc dependency
 
 ```Smalltalk
