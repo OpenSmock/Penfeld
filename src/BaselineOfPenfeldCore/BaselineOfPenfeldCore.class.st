@@ -19,9 +19,7 @@ BaselineOfPenfeldCore >> baseline: spec [
 			self stylesheet: spec.
 
 			"Penfeld"
-			spec
-				package: 'Penfeld'
-				with: [ spec requires: #('PharoStylesheet' 'Geometry') ].
+			spec package: 'Penfeld' with: [ spec requires: #('PharoStylesheet') ].
 			spec package: 'Penfeld-Tests' with: [ spec requires: 'Penfeld' ] ]
 ]
 
