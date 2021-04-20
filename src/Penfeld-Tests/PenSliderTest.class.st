@@ -92,7 +92,7 @@ PenSliderTest >> testUpdateFraction [
 	self assert: slider index equals: 6.
 	self assert: slider value equals: 60.
 	
-	slider updateFraction: 108/200.
+	slider updateFraction: 90/200.
 	self assert: slider index equals: 5.
 	self assert: slider value equals: 50.
 ]

@@ -48,6 +48,7 @@ PenComponentTest >> testOnActionPerformOn [
 	
 	self deny: status.
 	c eventBindings first executeCallback.
+	(Delay forMilliseconds: 10) wait. "callback execution is forked"
 	self assert: status.
 ]
 
@@ -78,14 +79,17 @@ PenComponentTest >> testResizeEvent [
 	component onResizeDo: [ i := i + 1 ].
 	
 	component size: 600@400.
+	(Delay forMilliseconds: 10) wait. "callback execution is forked"
 	self assert: i equals: 1.
 	self assert: component size equals: (600@400) asSize.
 	
 	component size x: 700.
+	(Delay forMilliseconds: 10) wait. "callback execution is forked"
 	self assert: i equals: 2.
 	self assert: component size equals: (700@400) asSize.
 	
 	component size x min: 200.
+	(Delay forMilliseconds: 10) wait. "callback execution is forked"
 	self assert: i equals: 3.
 	self assert: component size x min equals: 200.
 ]

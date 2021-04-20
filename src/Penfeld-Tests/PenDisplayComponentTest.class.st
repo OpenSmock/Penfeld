@@ -47,55 +47,6 @@ PenDisplayComponentTest >> testAddCallbackFor [
 	self assert: binding symbol equals: PenEventSymbol mouseDown.
 ]
 
-{ #category : #'tests-private' }
-PenDisplayComponentTest >> testBuildStyle [
-	| button |
-	button := PenButton new
-		stylesheet: PenDefaultStylesheet dark;
-		addCustomStyle: (PssBackgroundModel new color: (PssColorValue value: Color white));
-		build.
-	
-	"Button background color in PenStylesheet dark is #323232"
-	self assert: (button getStyle: #background) color equals: Color white. 
-]
-
-{ #category : #'tests-private' }
-PenDisplayComponentTest >> testBuildWithIndex [
-	| container item1 item2 item3 |
-	
-	item1 := PenButton new.
-	item2 := PenLabel new.
-	item3 := PenLabel new.
-	container := PenContainer new addAllElements: { item1. item2. item3 }.	
-	container build.
-	
-	self assert: item1 pseudoClasses size equals: 2.
-	self assert: item2 pseudoClasses size equals: 2.
-	self assert: item3 pseudoClasses size equals: 2.
-	
-	self assert: (item1 pseudoClasses includes: (#nthChild -> 1)).
-	self assert: (item1 pseudoClasses includes: (#nthChild -> #odd)).
-	
-	self assert: (item2 pseudoClasses includes: (#nthChild -> 2)).
-	self assert: (item2 pseudoClasses includes: (#nthChild -> #even)).
-	
-	self assert: (item3 pseudoClasses includes: (#nthChild -> 3)).
-	self assert: (item3 pseudoClasses includes: (#nthChild -> #odd)).
-]
-
-{ #category : #'tests-private' }
-PenDisplayComponentTest >> testChooseStylesheet [
-	| container button stylesheet |
-	stylesheet := PssStylesheet new.
-	button := PenButton new.
-	container := PenContainer new.
-	container stylesheet: stylesheet.
-	container addElement: button.
-	container build.
-	
-	self assert: button stylesheet == stylesheet 
-]
-
 { #category : #test }
 PenDisplayComponentTest >> testHeight [
 	| cmp |
