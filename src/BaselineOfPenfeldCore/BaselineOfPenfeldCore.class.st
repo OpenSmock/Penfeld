@@ -10,7 +10,12 @@ BaselineOfPenfeldCore >> baseline: spec [
 	spec
 		for: #common
 		do: [
-			self geometry: spec.
+			
+			"Dependencies for Pharo 8"
+			spec for: #'pharo8.x'do: [ 
+				self geometry: spec.
+			].
+			
 			self stylesheet: spec.
 
 			"Penfeld"
