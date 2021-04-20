@@ -32,10 +32,10 @@ PenComponentTest >> testHeight [
 	component := PenComponent new.
 	
 	"Height must be nil"
-	self assert: component height equals: nil.
+	self assert: component height equals: 0.
 	
 	component height: 200.
-	self assert: component height equals: 200 asLength.
+	self assert: component height equals: 200.
 	
 ]
 
@@ -81,17 +81,12 @@ PenComponentTest >> testResizeEvent [
 	component size: 600@400.
 	(Delay forMilliseconds: 10) wait. "callback execution is forked"
 	self assert: i equals: 1.
-	self assert: component size equals: (600@400) asSize.
+	self assert: component size equals: (600@400).
 	
-	component size x: 700.
+	component size: 700@400.
 	(Delay forMilliseconds: 10) wait. "callback execution is forked"
 	self assert: i equals: 2.
-	self assert: component size equals: (700@400) asSize.
-	
-	component size x min: 200.
-	(Delay forMilliseconds: 10) wait. "callback execution is forked"
-	self assert: i equals: 3.
-	self assert: component size x min equals: 200.
+	self assert: component size equals: (700@400).
 ]
 
 { #category : #test }
@@ -101,9 +96,8 @@ PenComponentTest >> testSize [
 	self assert: component size equals: nil.
 	
 	component size: 200@300.
-	self assert: component size class equals: PenSize.
-	self assert: component size x equals: 200 asLength.
-	self assert: component size y equals: 300 asLength.
+	self assert: component size x equals: 200.
+	self assert: component size y equals: 300.
 	
 ]
 
@@ -111,12 +105,12 @@ PenComponentTest >> testSize [
 PenComponentTest >> testSizeXNil [
 	| component |
 	component := PenComponent new.
-	self assert: component width equals: nil.
-	self assert: component height equals: nil.
+	self assert: component width equals: 0.
+	self assert: component height equals: 0.
 	
 	component height: 200.
-	self assert: component height equals: 200 asLength.
-	self assert: component width equals: nil.
+	self assert: component height equals: 200.
+	self assert: component width equals: 0.
 	
 ]
 
@@ -124,12 +118,12 @@ PenComponentTest >> testSizeXNil [
 PenComponentTest >> testSizeYNil [
 	| component |
 	component := PenComponent new.
-	self assert: component width equals: nil.
-	self assert: component height equals: nil.
+	self assert: component width equals: 0.
+	self assert: component height equals: 0.
 	
 	component width: 200.
-	self assert: component width equals: 200 asLength.
-	self assert: component height equals: nil.
+	self assert: component width equals: 200.
+	self assert: component height equals: 0.
 	
 ]
 
@@ -138,11 +132,11 @@ PenComponentTest >> testWidth [
 	| component |
 	component := PenComponent new.
 	
-	"Width must be nil"
-	self assert: component width equals: nil.
+	"Width must be 0"
+	self assert: component width equals: 0.
 	
 	component width: 200.
-	self assert: component width equals: 200 asLength.
+	self assert: component width equals: 200.
 	
 ]
 

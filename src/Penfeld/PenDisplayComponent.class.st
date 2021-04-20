@@ -257,7 +257,7 @@ PenDisplayComponent >> getStyle: aSymbol [
 PenDisplayComponent >> height [
 	^ (self getCustomStyle: #height)
 		ifNotNil: [ :model | model value ]
-		ifNil: [ 	nil ].
+		ifNil: [ 	0 ].
 ]
 
 { #category : #accessing }
@@ -389,10 +389,10 @@ PenDisplayComponent >> size [
 	| width height |
 	width := (self getCustomStyle: #width)
 		ifNotNil: [ :model | model value ]
-		ifNil: [ ^ nil ].
+		ifNil: [ 0 ].
 	height := (self getCustomStyle: #height)
 		ifNotNil: [ :model | model value ]
-		ifNil: [ ^ nil ].
+		ifNil: [ 0 ].
 	^ width @ height
 ]
 
@@ -445,7 +445,7 @@ PenDisplayComponent >> visible: aBoolean [
 PenDisplayComponent >> width [
 	^ (self getCustomStyle: #width)
 		ifNotNil: [ :model | model value ]
-		ifNil: [ 	nil ].
+		ifNil: [ 	0 ].
 ]
 
 { #category : #accessing }

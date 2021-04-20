@@ -65,12 +65,12 @@ PenWindow >> close [
 
 { #category : #defaults }
 PenWindow >> defaultHeight [
-	^ 600 asLength
+	^ 600
 ]
 
 { #category : #defaults }
 PenWindow >> defaultWidth [ 
-	^ 800 asLength
+	^ 800
 ]
 
 { #category : #accessing }

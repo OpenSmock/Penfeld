@@ -66,18 +66,19 @@ PenComponent >> hasEvents [
 { #category : #accessing }
 PenComponent >> height [ 
 	^ self size
-		ifNil: [ nil ] 
-		ifNotNil: [ self size height ]
+		ifNil: [ 0 ] 
+		ifNotNil: [ self size y ]
 ]
 
 { #category : #accessing }
 PenComponent >> height: aNumber [
-	self size ifNil: [ self size: PenSize new ].
-	self size height: aNumber asLength
+	self size ifNil: [ self size: 0@aNumber].
+	self size setX: (self size x) setY: aNumber
 ]
 
 { #category : #initialization }
 PenComponent >> initialize [
+	super initialize.
 	enabled := true.
 	eventBindings := OrderedCollection new.
 	position := 0@0
@@ -215,7 +216,7 @@ PenComponent >> size [
 
 { #category : #accessing }
 PenComponent >> size: aSize [
-	size := aSize asSize.
+	size := aSize.
 	size when: #resize send: #resizeEvent to: self.
 	self resizeEvent.
 ]
@@ -223,12 +224,12 @@ PenComponent >> size: aSize [
 { #category : #accessing }
 PenComponent >> width [ 
 	^ self size
-		ifNil: [ nil ] 
-		ifNotNil: [ self size width ]
+		ifNil: [ 0 ] 
+		ifNotNil: [ self size x ]
 ]
 
 { #category : #accessing }
 PenComponent >> width: aNumber [
-	self size ifNil: [ self size: PenSize new ].
-	self size width: aNumber asLength
+	self size ifNil: [ self size: aNumber@0 ].
+	self size setX: aNumber setY: self size y
 ]

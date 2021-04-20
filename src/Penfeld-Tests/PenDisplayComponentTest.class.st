@@ -70,15 +70,15 @@ PenDisplayComponentTest >> testSize [
 	cmp := PenDisplayComponent new.
 	cmp width: 120.
 	self assert: cmp width equals: 120.
-	self assert: cmp height equals: nil.
-	self assert: cmp size equals: nil.
+	self assert: cmp height equals: 0.
+	self assert: cmp size equals: 120@0.
 	
 	"Width is not specified"
 	cmp := PenDisplayComponent new.
 	cmp height: 130.
-	self assert: cmp width equals: nil.
+	self assert: cmp width equals: 0.
 	self assert: cmp height equals: 130.
-	self assert: cmp size equals: nil.
+	self assert: cmp size equals: 0@130.
 ]
 
 { #category : #test }
