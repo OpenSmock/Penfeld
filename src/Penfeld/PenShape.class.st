@@ -32,7 +32,7 @@ PenShape >> fillColor: aColor [
 PenShape >> shape [
 	shape ifNil: [ ^ GRectangle 
 		origin: self position asGPoint 
-		corner: (self position + (self width pref @ self height pref)) asGPoint ].
+		corner: (self position + (self width @ self height)) asGPoint ].
 	^ shape
 ]
 
