@@ -11,7 +11,7 @@ Penfeld provide instanciation of his model to some supported UI engine in Pharo 
 
 ### Installing Penfeld
 
-#### For Pharo 8 without Bloc dependency
+#### For Pharo 9 - Only Penfeld core (without graphic engine)
 
 ```Smalltalk
 Metacello new
@@ -19,6 +19,10 @@ Metacello new
    repository: 'github://OpenSmock/Penfeld/src';
    load
 ```
+
+#### For Pharo 9 - With Bloc implementation
+
+Work in progress...
 
 #### For Pharo 8 with Bloc dependency
 
