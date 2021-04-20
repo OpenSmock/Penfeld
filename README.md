@@ -31,6 +31,11 @@ Metacello new
 
 ### Examples
 
+Some examples are available supporting Bloc engine.
+See `Penfeld-Bloc` package, `Examples` tag contains somes examples classes.
+
+### Tests
+
 See `Penfeld-Bloc-Tests` or execute `PenExamplesViewer>>#open`.
 
 ## Credits
