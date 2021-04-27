@@ -24,7 +24,7 @@ BaselineOfPenfeld >> baseline: spec [
 			self stylesheet: spec.
 
 			"Penfeld"
-			spec package: 'Penfeld' with: [ spec requires: #('PharoStylesheet') ].
+			spec package: 'Penfeld' with: [ spec requires: #('PharoStylesheet' 'NewBrick') ].
 			spec package: 'Penfeld-Tests' with: [ spec requires: 'Penfeld' ].
 			spec package: 'Penfeld-Bloc' with: [ spec requires: #('Penfeld') ].
 			spec package: 'Penfeld-Brick-TextEditor' with: [ spec requires: 'Penfeld-Bloc' ].
@@ -53,10 +53,6 @@ BaselineOfPenfeld >> geometry: spec [
 
 { #category : #dependencies }
 BaselineOfPenfeld >> newBloc: spec [
-	spec
-		baseline: 'NewBloc'
-		with: [ spec repository: 'github://pharo-graphics/Bloc/src' ].
-		
 	"Brick text editor"
 	spec
 		baseline: 'NewBrick'
