@@ -48,7 +48,7 @@ BaselineOfPenfeld >> bloc: spec [
 BaselineOfPenfeld >> geometry: spec [
 	spec
 		baseline: 'Geometry'
-		with: [ spec repository: 'github://TelescopeSt/Geometry/src' ]
+		with: [ spec repository: 'github://pharo-contributions/Geometry/src' ]
 ]
 
 { #category : #dependencies }
